@@ -1,0 +1,11 @@
+# VS Code workspace files
+*.code-workspace
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
