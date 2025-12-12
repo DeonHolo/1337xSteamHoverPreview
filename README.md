@@ -24,7 +24,7 @@ A userscript that displays Steam game information when hovering over torrent tit
    - [Greasemonkey](https://www.greasespot.net/)
 
 2. Install the script:
-   - **[Install from Greasy Fork](https://greasyfork.org/en/scripts/your-script-id)** (Recommended)
+   - **[Install from Greasy Fork](https://greasyfork.org/en/scripts/533774-1337x-steam-hover-preview)** (Recommended)
    - Or copy the script manually from this repo
 
 ## 🌐 Supported Sites
