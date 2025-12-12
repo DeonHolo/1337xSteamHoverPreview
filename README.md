@@ -56,17 +56,6 @@ The script works on all 1337x mirror domains:
 - **Rate Limiting**: 50ms minimum between API requests
 - **Preloading**: Concurrent fetching when tab is hidden
 
-## 📋 Changelog
-
-### v3.4.0
-- 🏷️ Now displays actual Steam user-defined tags instead of genres/categories
-- Tags now match exactly what's shown on Steam store pages
-
-### v3.3.1
-- 🧲 Added Magnet Download button in tooltip
-- ⚡ Improved background preloading with concurrent fetches
-- 💾 Added persistent caching across browser sessions
-
 ## 📄 License
 
 MIT License - feel free to use and modify!
