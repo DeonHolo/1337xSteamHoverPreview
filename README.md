@@ -2,7 +2,7 @@
 
 A userscript that displays Steam game information when hovering over torrent titles on 1337x. Get instant access to game details without leaving the page!
 
-![Preview](https://i.imgur.com/DDJ3nyA.png)
+![Preview](https://i.imgur.com/ENXaBgw.png)
 
 ## ✨ Features
 
