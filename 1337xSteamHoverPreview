@@ -2,7 +2,7 @@
 // @name         1337x - Steam Hover Preview 
 // @namespace    https://greasyfork.org/en/users/1340389-deonholo
 // @version      3.4.0
-// @description  On-hover Steam thumbnail, description, Steam Ratings, user-defined tags (same as Steam store page), release date, and a direct "Open on Steam" link for 1337x torrent titles
+// @description  On-hover Steam thumbnail, description, Steam Ratings, user-defined tags (same as Steam store page), release date, and a direct "Open on Steam" link for 1337x game torrent titles
 // @icon         https://greasyfork.s3.us-east-2.amazonaws.com/x432yc9hx5t6o2gbe9ccr7k5l6u8
 // @author       DeonHolo
 // @license      MIT
