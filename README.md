@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="https://i.imgur.com/GX3lUNF.png" alt="1337x Logo" width="200">
+</p>
+
 # 1337x Steam Hover Preview
 
 A userscript that displays Steam game information when hovering over torrent titles on 1337x. Get instant access to game details without leaving the page!
