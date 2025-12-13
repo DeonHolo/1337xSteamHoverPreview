@@ -2,7 +2,7 @@
 
 A userscript that displays Steam game information when hovering over torrent titles on 1337x. Get instant access to game details without leaving the page!
 
-![Preview](https://i.imgur.com/DDJ3nyA.png)
+![Preview](https://i.imgur.com/ENXaBgw.png)
 
 ## ✨ Features
 
@@ -24,7 +24,7 @@ A userscript that displays Steam game information when hovering over torrent tit
    - [Greasemonkey](https://www.greasespot.net/)
 
 2. Install the script:
-   - **[Install from Greasy Fork](https://greasyfork.org/en/scripts/your-script-id)** (Recommended)
+   - **[Install from Greasy Fork](https://greasyfork.org/en/scripts/533774-1337x-steam-hover-preview)** (Recommended)
    - Or copy the script manually from this repo
 
 ## 🌐 Supported Sites
@@ -55,17 +55,6 @@ The script works on all 1337x mirror domains:
 - **Cache Duration**: 24 hours (persistent) / 15 minutes (memory)
 - **Rate Limiting**: 50ms minimum between API requests
 - **Preloading**: Concurrent fetching when tab is hidden
-
-## 📋 Changelog
-
-### v3.4.0
-- 🏷️ Now displays actual Steam user-defined tags instead of genres/categories
-- Tags now match exactly what's shown on Steam store pages
-
-### v3.3.1
-- 🧲 Added Magnet Download button in tooltip
-- ⚡ Improved background preloading with concurrent fetches
-- 💾 Added persistent caching across browser sessions
 
 ## 📄 License
 
