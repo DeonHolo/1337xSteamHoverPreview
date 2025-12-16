@@ -8,7 +8,7 @@ A userscript that displays Steam game information when hovering over torrent tit
 
 ![Preview](https://i.imgur.com/ENXaBgw.png)
 
-## ✨ Features
+## Features
 
 - **🖼️ Game Thumbnail** - Steam header image displayed in tooltip
 - **📝 Description** - Short game description from Steam
@@ -20,7 +20,7 @@ A userscript that displays Steam game information when hovering over torrent tit
 - **⚡ Smart Caching** - Persistent cache across sessions (24hr TTL)
 - **🔄 Background Preloading** - Preloads game data when tab is idle
 
-## 📦 Installation
+## Installation
 
 1. Install a userscript manager:
    - [Tampermonkey](https://www.tampermonkey.net/) (Recommended)
@@ -31,7 +31,7 @@ A userscript that displays Steam game information when hovering over torrent tit
    - **[Install from Greasy Fork](https://greasyfork.org/en/scripts/533774-1337x-steam-hover-preview)** (Recommended)
    - Or copy the script manually from this repo
 
-## 🌐 Supported Sites
+## Supported Sites
 
 The script works on all 1337x mirror domains:
 - `1337x.to`
@@ -45,7 +45,7 @@ The script works on all 1337x mirror domains:
 - `1337x.se`
 - And more...
 
-## 🎯 How It Works
+## How It Works
 
 1. Hover over any game torrent title
 2. The script extracts the game name from the torrent title
@@ -53,18 +53,18 @@ The script works on all 1337x mirror domains:
 4. Displays a beautiful tooltip with game information
 5. Data is cached for instant access on subsequent hovers
 
-## ⚙️ Technical Details
+## Technical Details
 
 - **API Used**: Steam Store API + Steam Store Page scraping
 - **Cache Duration**: 24 hours (persistent) / 15 minutes (memory)
 - **Rate Limiting**: 50ms minimum between API requests
 - **Preloading**: Concurrent fetching when tab is hidden
 
-## 📄 License
+## License
 
-MIT License - feel free to use and modify!
+MIT License - see [LICENSE](LICENSE) for details.
 
-## 👤 Author
+## Author
 
 **DeonHolo**
 - [Greasy Fork Profile](https://greasyfork.org/en/users/1340389-deonholo)
