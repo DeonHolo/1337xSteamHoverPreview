@@ -45,6 +45,73 @@
     const CONCURRENT_HIDDEN = 4; // Fetch 4 games at once when tab is hidden
     const DEBUG_MODE = false; // Set to true for debugging
 
+    // Game detection - URL-based + uploader name detection
+    const isGameCategoryPage = /\/(Games|category-search\/[^\/]+\/Games)\//i.test(window.location.pathname);
+
+    // Known game uploaders/repackers
+    const GAME_UPLOADERS = [
+        'fitgirl', 'dodi', 'elamigos', 'kaoskrew', 'kaos', 'johncena141',
+        'masquerade', 'gnarly', 'cpasbien', 'rg mechanics', 'flt', 'codex',
+        'plaza', 'skidrow', 'razor1911', 'prophet', 'reloaded', 'hoodlum',
+        'darksiders', 'empress', 'tenoke', 'tinyiso', 'gog', 'igggamescom',
+        'igggames', 'ovagames', 'xatab', 'r.g. catalyst', 'decepticon',
+        'heroskeep', 'gamedrive', 'emadmoner'
+    ];
+
+    function isGameTorrent(link) {
+        // If we're on a Games category page, all torrents are games
+        if (isGameCategoryPage) return true;
+
+        const row = link.closest('tr');
+        if (!row) return false;
+
+        const titleText = link.textContent.toLowerCase();
+
+        // EXCLUSION: Skip if title contains software keywords
+        const softwareKeywords = [
+            'adobe', 'photoshop', 'illustrator', 'premiere', 'after effects', 'acrobat',
+            'microsoft', 'office', 'windows', 'visual studio', 'autocad', 'matlab',
+            'pdf', 'antivirus', 'vmware', 'virtualbox', 'driver', 'daemon tools',
+            'spotify', 'netflix', 'vlc', 'winrar', 'idm', 'internet download',
+            'fl studio', 'ableton', 'logic pro', 'cubase', 'pro tools',
+            'final cut', 'davinci', 'sony vegas', 'camtasia', 'obs studio',
+            'malwarebytes', 'avast', 'kaspersky', 'norton', 'bitdefender',
+            'ccleaner', 'teamviewer', 'anydesk', 'zoom', 'discord', 'slack',
+            'android', 'apk', 'mod apk', 'ipa', 'ios app'
+        ];
+        if (softwareKeywords.some(kw => titleText.includes(kw))) {
+            return false;
+        }
+
+        // EXCLUSION: Known software uploaders
+        const uploaderLink = row.querySelector('td a[href*="/user/"]');
+        const uploaderName = uploaderLink ? uploaderLink.textContent.trim().toLowerCase() : '';
+        const softwareUploaders = ['crackshash', 'appdoze', 'haxnode', 'softwarecave'];
+        if (softwareUploaders.some(u => uploaderName.includes(u))) {
+            return false;
+        }
+
+        // DETECTION: Check for PC icon (flaticon-apps)
+        const nameCell = link.closest('td');
+        if (nameCell) {
+            const pcIcon = nameCell.querySelector('i.flaticon-apps');
+            if (pcIcon) return true;
+        }
+
+        // DETECTION: Known game uploaders
+        if (uploaderLink && GAME_UPLOADERS.some(u => uploaderName.includes(u))) {
+            return true;
+        }
+
+        // DETECTION: Title contains repacker markers
+        const titleMarkers = ['fitgirl', 'dodi', 'elamigos', 'plaza', 'codex', 'skidrow', 'repack', 'gog'];
+        if (titleMarkers.some(m => titleText.includes(m))) {
+            return true;
+        }
+
+        return false;
+    }
+
     // Debug logger helper
     function debugLog(...args) {
         if (DEBUG_MODE) console.log('[Steam Hover]', ...args);
@@ -127,6 +194,9 @@
         const toFetch = [];
 
         for (const link of links) {
+            // Only preload game torrents
+            if (!isGameTorrent(link)) continue;
+
             const name = cleanName(link.textContent);
             if (name && !apiCache.has(name)) {
                 toFetch.push(name);
@@ -681,6 +751,11 @@
         }
 
         if (!targetLink || (targetLink === currentHoveredLink && !trackingMove)) {
+            return;
+        }
+
+        // Only show Steam info for game torrents
+        if (!isGameTorrent(targetLink)) {
             return;
         }
 
