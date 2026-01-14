@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         1337x - Steam Hover Preview 
 // @namespace    https://greasyfork.org/en/users/1340389-deonholo
-// @version      3.5.0
+// @version      3.5.2
 // @description  On-hover Steam thumbnail, description, Steam Ratings, user-defined tags (same as Steam store page), release date, and a direct "Open on Steam" link for 1337x game torrent titles
 // @icon         https://greasyfork.s3.us-east-2.amazonaws.com/x432yc9hx5t6o2gbe9ccr7k5l6u8
 // @author       DeonHolo
@@ -91,11 +91,11 @@
             return false;
         }
 
-        // DETECTION: Check for PC icon (flaticon-apps)
+        // DETECTION: Check for game/PC icons
         const nameCell = link.closest('td');
         if (nameCell) {
-            const pcIcon = nameCell.querySelector('i.flaticon-apps');
-            if (pcIcon) return true;
+            const gameIcon = nameCell.querySelector('i.flaticon-games, i.flaticon-apps');
+            if (gameIcon) return true;
         }
 
         // DETECTION: Known game uploaders
