@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         1337x - Steam Hover Preview 
 // @namespace    https://greasyfork.org/en/users/1340389-deonholo
-// @version      3.5.2
+// @version      3.6.0
 // @description  On-hover Steam thumbnail, description, Steam Ratings, user-defined tags (same as Steam store page), release date, and a direct "Open on Steam" link for 1337x game torrent titles
 // @icon         https://greasyfork.s3.us-east-2.amazonaws.com/x432yc9hx5t6o2gbe9ccr7k5l6u8
 // @author       DeonHolo
@@ -36,13 +36,14 @@
     const MIN_INTERVAL = 50;
     const MAX_CACHE = 100;
     const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours for persistent cache
-    const MEMORY_CACHE_TTL = 15 * 60 * 1000; // 15 min for in-memory during session
+    const MEMORY_CACHE_TTL = 15 * 60 * 1000; // 15 min for failed lookups during session
     const HIDE_DELAY = 100;
     const FADE_DURATION = 200;
     const API_TIMEOUT = 8000;
     const SHOW_DELAY = 0;
-    const STORAGE_KEY = 'steamHoverCache_v1';
+    const STORAGE_KEY = 'steamHoverCache_v2';
     const CONCURRENT_HIDDEN = 4; // Fetch 4 games at once when tab is hidden
+    const MAX_SEARCH_CANDIDATES = 5; // Check top Steam results to avoid DLC/store-extra mismatches
     const DEBUG_MODE = false; // Set to true for debugging
 
     // Game detection - URL-based + uploader name detection
@@ -115,6 +116,16 @@
     // Debug logger helper
     function debugLog(...args) {
         if (DEBUG_MODE) console.log('[Steam Hover]', ...args);
+    }
+
+    function escapeHtml(value) {
+        return String(value ?? '').replace(/[&<>"']/g, (ch) => ({
+            '&': '&amp;',
+            '<': '&lt;',
+            '>': '&gt;',
+            '"': '&quot;',
+            "'": '&#39;'
+        }[ch]));
     }
 
     // Flag to pause preloading when user is actively hovering
@@ -337,14 +348,14 @@
             margin: 0;
             border: none;
             background: none;
-            color: #66c0f4;
+            color: #0645ad;
             font-size: 12px;
             cursor: pointer;
             text-decoration: underline;
             font-family: inherit;
         }
         .steamHoverTip .magnetDownloadBtn:hover {
-            color: #fff;
+            color: #043b91;
         }
         .steamHoverTip .magnetDownloadBtn.loading {
             pointer-events: none;
@@ -505,19 +516,44 @@
             }));
     }
 
-    // Fallback strategy: progressively remove words from the end
+    function stripEditionSuffixForSearch(name) {
+        return name
+            .replace(/\s*[:\-]\s*(Digital\s+Deluxe|Deluxe|Ultimate|Gold|Premium|Collector'?s)\s+Edition\b.*$/i, '')
+            .replace(/\s+(Digital\s+Deluxe|Deluxe|Ultimate|Gold|Premium|Collector'?s)\s+Edition\b.*$/i, '')
+            .replace(/\s{2,}/g, ' ')
+            .trim();
+    }
+
+    // Fallback strategy: try the base game, then progressively remove words from the end
     async function fetchSteamWithFallback(originalName) {
         const words = originalName.split(/\s+/);
+        const attempts = [];
+        const baseName = stripEditionSuffixForSearch(originalName);
 
-        // Always try the full name first, then progressively shorter versions
+        if (baseName && baseName.toLowerCase() !== originalName.toLowerCase()) {
+            attempts.push(baseName);
+        }
+
+        attempts.push(originalName);
+
+        // Try the full name and progressively shorter versions after any base-game attempt.
         // For single-word names, only try once. For multi-word, try up to 4 versions.
         const maxAttempts = Math.min(words.length, 4);
 
         for (let i = 0; i < maxAttempts; i++) {
             const tryName = words.slice(0, words.length - i).join(' ');
+            if (tryName.length >= 2) {
+                attempts.push(tryName);
+            }
+        }
+
+        const uniqueAttempts = [...new Set(attempts)];
+
+        for (let i = 0; i < uniqueAttempts.length; i++) {
+            const tryName = uniqueAttempts[i];
             if (tryName.length < 2) continue;
 
-            debugLog(`🔄 Fallback attempt ${i + 1}/${maxAttempts}: "${tryName}"`);
+            debugLog(`🔄 Fallback attempt ${i + 1}/${uniqueAttempts.length}: "${tryName}"`);
             const result = await fetchSteam(tryName);
             if (result) return result;
         }
@@ -525,16 +561,109 @@
         return null;
     }
 
+    async function fetchAppDetailsForIds(appIds) {
+        const ids = [...new Set(appIds.filter(Boolean))].slice(0, MAX_SEARCH_CANDIDATES);
+        if (!ids.length) return {};
+
+        const batchUrl = `https://store.steampowered.com/api/appdetails?appids=${ids.join(',')}&cc=us&l=en`;
+        try {
+            return await gmFetch(batchUrl, 'json');
+        } catch (batchErr) {
+            debugLog('Batch appdetails lookup failed, trying individually:', batchErr.message);
+            const details = {};
+            for (const id of ids) {
+                const singleUrl = `https://store.steampowered.com/api/appdetails?appids=${id}&cc=us&l=en`;
+                const singleRes = await gmFetch(singleUrl, 'json').catch(() => null);
+                if (singleRes?.[id]) {
+                    details[id] = singleRes[id];
+                }
+            }
+            return details;
+        }
+    }
+
+    function getReviewInfo(reviewRes) {
+        if (!reviewRes?.success || !reviewRes.query_summary) return null;
+
+        const summary = reviewRes.query_summary;
+        const percent = summary.total_reviews ? Math.round((summary.total_positive / summary.total_reviews) * 100) : null;
+        return {
+            desc: summary.review_score_desc || 'No Reviews',
+            percent: percent,
+            total: summary.total_reviews || 0
+        };
+    }
+
+    function normalizeForMatch(value) {
+        return String(value ?? '')
+            .toLowerCase()
+            .replace(/&/g, ' and ')
+            .replace(/[®™©]/g, '')
+            .replace(/['’]/g, '')
+            .replace(/[^a-z0-9]+/g, ' ')
+            .replace(/\s+/g, ' ')
+            .trim();
+    }
+
+    function getBaseMatchName(value) {
+        return normalizeForMatch(stripEditionSuffixForSearch(value));
+    }
+
+    function hasDlcNameMarker(item, data) {
+        const type = normalizeForMatch(data?.type);
+        const name = normalizeForMatch(`${item?.name || ''} ${data?.name || ''}`);
+
+        return type === 'dlc' ||
+            /\b(dlc|upgrade|season pass|expansion pass|soundtrack|ost|artbook|skin pack|costume pack|weapon pack|bonus content)\b/.test(name);
+    }
+
+    function getTokenOverlapScore(baseName, candidateName) {
+        const tokens = baseName.split(' ').filter(token => token.length > 1);
+        if (!tokens.length) return 0;
+
+        const candidateTokens = new Set(candidateName.split(' '));
+        const matches = tokens.filter(token => candidateTokens.has(token)).length;
+        return matches / tokens.length;
+    }
+
+    function scoreSearchCandidate(searchName, candidate, index) {
+        const itemName = candidate.item?.name || '';
+        const dataName = candidate.data?.name || itemName;
+        const candidateName = normalizeForMatch(dataName);
+        const itemMatchName = normalizeForMatch(itemName);
+        const searchMatchName = normalizeForMatch(searchName);
+        const baseMatchName = getBaseMatchName(searchName);
+        const type = normalizeForMatch(candidate.data?.type);
+
+        let score = 100 - index;
+
+        if (type === 'game') score += 40;
+        else if (type) score -= 120;
+
+        if (candidateName === searchMatchName || itemMatchName === searchMatchName) score += 35;
+        if (baseMatchName && (candidateName === baseMatchName || itemMatchName === baseMatchName)) score += 120;
+        if (baseMatchName && (candidateName.startsWith(baseMatchName) || itemMatchName.startsWith(baseMatchName))) score += 35;
+        if (baseMatchName) score += Math.round(getTokenOverlapScore(baseMatchName, candidateName) * 50);
+
+        if (hasDlcNameMarker(candidate.item, candidate.data)) score -= 170;
+
+        return score;
+    }
+
     async function fetchSteam(name) {
         debugLog(`🔍 Searching for: "${name}"`);
         const now = Date.now();
         const hit = apiCache.get(name);
-        if (hit && now - hit.ts < CACHE_TTL) {
+        if (hit && now - hit.ts < (hit.data ? CACHE_TTL : MEMORY_CACHE_TTL)) {
             debugLog(`📦 Cache hit for "${name}"`, hit.data ? '✓ has data' : '✗ cached as null');
             return hit.data;
+        } else if (hit) {
+            apiCache.delete(name);
         }
 
         let appId = null;
+        let appData = null;
+        let reviewInfo = null;
 
         // First: Search for the game
         try {
@@ -542,20 +671,63 @@
             debugLog(`📡 Fetching search API:`, searchUrl);
             const searchRes = await gmFetch(searchUrl, 'json');
             debugLog(`📥 Search response:`, searchRes ? `${searchRes.total || 0} results` : 'null/undefined');
-            let result = searchRes?.items?.[0];
-            if (searchRes?.items?.length > 1) {
-                const exactMatch = searchRes.items.find(item => item.name.toLowerCase() === name.toLowerCase());
-                if (exactMatch) {
-                    debugLog(`🎯 Found exact match: "${exactMatch.name}" (AppID: ${exactMatch.id})`);
-                    result = exactMatch;
+            const items = searchRes?.items || [];
+            if (!items.length) {
+                throw new Error('No suitable AppID found in search results.');
+            }
+
+            const exactMatches = items.filter(item => item.name?.toLowerCase() === name.toLowerCase());
+            const orderedCandidates = [];
+            const seenIds = new Set();
+            for (const item of [...exactMatches, ...items]) {
+                if (!item?.id || seenIds.has(item.id)) continue;
+                orderedCandidates.push(item);
+                seenIds.add(item.id);
+                if (orderedCandidates.length >= MAX_SEARCH_CANDIDATES) break;
+            }
+
+            const detailsRes = await fetchAppDetailsForIds(orderedCandidates.map(item => item.id));
+            const enriched = orderedCandidates.map(item => ({
+                item,
+                data: detailsRes?.[item.id]?.success ? detailsRes[item.id].data : null
+            }));
+
+            const scoredCandidates = enriched
+                .map((candidate, index) => ({
+                    ...candidate,
+                    score: scoreSearchCandidate(name, candidate, index)
+                }))
+                .sort((a, b) => b.score - a.score);
+            const result = scoredCandidates[0] || { item: orderedCandidates[0], data: null, score: 0 };
+
+            debugLog('Candidate scores:', scoredCandidates.map(candidate =>
+                `${candidate.item?.name || candidate.data?.name || candidate.item?.id}: ${candidate.score}`
+            ).join(' | '));
+
+            appId = result.item?.id;
+            appData = result.data;
+
+            if (appId && result.item?.name?.toLowerCase() === name.toLowerCase()) {
+                debugLog(`🎯 Found exact match: "${result.item.name}" (AppID: ${appId})`);
+            } else if (appId && appData?.type === 'game') {
+                debugLog(`🎮 Selected main game: "${appData.name || result.item?.name}" (AppID: ${appId})`);
+            } else if (appId) {
+                debugLog(`✓ Selected AppID: ${appId} for "${result.item?.name}"`);
+            }
+
+            if (appData?.type && appData.type !== 'game') {
+                const mainGame = enriched.find(candidate => candidate.data?.type === 'game');
+                if (mainGame) {
+                    appId = mainGame.item.id;
+                    appData = mainGame.data;
+                    debugLog(`🎮 Switched from ${result.data?.type || 'non-game'} to main game "${appData.name}" (AppID: ${appId})`);
                 }
             }
-            appId = result?.id;
+
             if (!appId) {
                 debugLog(`❌ No AppID found for "${name}"`);
                 throw new Error('No suitable AppID found in search results.');
             }
-            debugLog(`✓ Found AppID: ${appId} for "${result?.name}"`);
         } catch (err) {
             debugLog(`❌ Steam search failed for "${name}":`, err.message);
             console.warn(`Steam search failed for "${name}":`, err.message);
@@ -564,35 +736,33 @@
             return null;
         }
 
-        // Second: Fetch details and reviews in parallel for speed
-        let reviewInfo = null;
-        let appData = null;
+        // Second: Fetch reviews, and details if the search-candidate lookup did not already get them
         try {
             const detailsUrl = `https://store.steampowered.com/api/appdetails?appids=${appId}&cc=us&l=en`;
             const reviewUrl = `https://store.steampowered.com/appreviews/${appId}?json=1&language=all&purchase_type=all&filter=summary`;
-            debugLog(`📡 Fetching details and reviews for AppID: ${appId}`);
+            debugLog(appData ? `📡 Fetching reviews for AppID: ${appId}` : `📡 Fetching details and reviews for AppID: ${appId}`);
 
-            const [detailsRes, reviewRes] = await Promise.all([
-                gmFetch(detailsUrl, 'json').catch((e) => { debugLog(`❌ Details fetch error:`, e.message); return null; }),
-                gmFetch(reviewUrl, 'json').catch((e) => { debugLog(`❌ Reviews fetch error:`, e.message); return null; })
-            ]);
-
-            debugLog(`📥 Details response:`, detailsRes ? (detailsRes[appId]?.success ? '✓ success' : '✗ failed') : 'null');
-            if (detailsRes?.[appId]?.success) {
-                appData = detailsRes[appId].data;
-                debugLog(`✓ Got app data: "${appData.name}"`);
+            if (appData) {
+                const reviewRes = await gmFetch(reviewUrl, 'json').catch((e) => { debugLog(`❌ Reviews fetch error:`, e.message); return null; });
+                reviewInfo = getReviewInfo(reviewRes);
             } else {
-                throw new Error('Failed to fetch app details or API indicated failure.');
+                const [detailsRes, reviewRes] = await Promise.all([
+                    gmFetch(detailsUrl, 'json').catch((e) => { debugLog(`❌ Details fetch error:`, e.message); return null; }),
+                    gmFetch(reviewUrl, 'json').catch((e) => { debugLog(`❌ Reviews fetch error:`, e.message); return null; })
+                ]);
+
+                debugLog(`📥 Details response:`, detailsRes ? (detailsRes[appId]?.success ? '✓ success' : '✗ failed') : 'null');
+                if (detailsRes?.[appId]?.success) {
+                    appData = detailsRes[appId].data;
+                    debugLog(`✓ Got app data: "${appData.name}"`);
+                } else {
+                    throw new Error('Failed to fetch app details or API indicated failure.');
+                }
+
+                reviewInfo = getReviewInfo(reviewRes);
             }
 
-            if (reviewRes?.success && reviewRes.query_summary) {
-                const summary = reviewRes.query_summary;
-                const percent = summary.total_reviews ? Math.round((summary.total_positive / summary.total_reviews) * 100) : null;
-                reviewInfo = {
-                    desc: summary.review_score_desc || 'No Reviews',
-                    percent: percent,
-                    total: summary.total_reviews || 0
-                };
+            if (reviewInfo) {
                 debugLog(`✓ Got reviews: ${reviewInfo.desc} (${reviewInfo.total} reviews)`);
             }
         } catch (err) {
@@ -723,7 +893,7 @@
     function triggerShowAndFadeIn(event, gameName) {
         cancelHideTip();
         clearTimeout(displayTimeout);
-        tip.innerHTML = `<div class="loadingContainer"><div class="spinner"></div><span>Loading <strong>${gameName}</strong>…</span></div>`;
+        tip.innerHTML = `<div class="loadingContainer"><div class="spinner"></div><span>Loading <strong>${escapeHtml(gameName)}</strong>…</span></div>`;
         positionTip(event);
         tip.style.display = 'block';
         void tip.offsetHeight;
@@ -823,28 +993,34 @@
 
             if (!data) {
                 const searchUrl = `https://store.steampowered.com/search/?term=${encodeURIComponent(gameName)}`;
-                tip.innerHTML = `<p>No Steam info found for<br><strong>${gameName}</strong></p><p><a href="${searchUrl}" target="_blank" rel="noopener noreferrer">Search on Steam</a></p>`;
+                tip.innerHTML = `<p>No Steam info found for<br><strong>${escapeHtml(gameName)}</strong></p><p><a href="${escapeHtml(searchUrl)}" target="_blank" rel="noopener noreferrer">Search on Steam</a></p>`;
             } else {
+                const title = escapeHtml(data.name || gameName);
+                const headerImage = escapeHtml(data.header_image || '');
+                const shortDescription = escapeHtml(data.short_description || 'No description available.');
+                const releaseDate = escapeHtml(data.releaseDate || '');
+                const storeUrl = escapeHtml(data.storeUrl || '');
+                const torrentUrl = escapeHtml(`${window.location.origin}${targetLink.getAttribute('href')}`);
                 const tagsHtml = data.tags?.length ?
-                    `<p class="steamTags"><strong>Tags:</strong> ${data.tags.join(' • ')}</p>` :
+                    `<p class="steamTags"><strong>Tags:</strong> ${data.tags.map(escapeHtml).join(' • ')}</p>` :
                     '';
                 const reviewHtml = (data.reviewInfo && data.reviewInfo.desc !== 'N/A' && data.reviewInfo.desc !== 'No Reviews') ?
-                    `<p class="steamRating"><strong>Rating:</strong> ${getRatingStars(data.reviewInfo.percent, data.reviewInfo.desc)}<span class="ratingText">${data.reviewInfo.desc}${data.reviewInfo.total ? `  |  ${data.reviewInfo.total.toLocaleString()} reviews` : ''}</span></p>` :
+                    `<p class="steamRating"><strong>Rating:</strong> ${getRatingStars(data.reviewInfo.percent, data.reviewInfo.desc)}<span class="ratingText">${escapeHtml(data.reviewInfo.desc)}${data.reviewInfo.total ? `  |  ${escapeHtml(data.reviewInfo.total.toLocaleString())} reviews` : ''}</span></p>` :
                     '';
                 const releaseDateHtml = data.releaseDate ?
-                    `<p class="steamReleaseDate"><strong>Released:</strong> ${data.releaseDate}</p>` :
+                    `<p class="steamReleaseDate"><strong>Released:</strong> ${releaseDate}</p>` :
                     '';
 
                 tip.innerHTML = `
-                    ${data.header_image ? `<img src="${data.header_image}" alt="${data.name || gameName}" onerror="this.style.display='none'">` : ''}
-                    <p><strong>${data.name || gameName}</strong></p>
+                    ${data.header_image ? `<img src="${headerImage}" alt="${title}" onerror="this.style.display='none'">` : ''}
+                    <p><strong>${title}</strong></p>
                     ${releaseDateHtml}
-                    <p>${data.short_description || 'No description available.'}</p>
+                    <p>${shortDescription}</p>
                     ${reviewHtml}
                     ${tagsHtml}
                     <div class="tipActions">
-                        ${data.storeUrl ? `<a href="${data.storeUrl}" target="_blank" rel="noopener noreferrer">🎮 Open on Steam</a>` : '<span></span>'}
-                        <button class="magnetDownloadBtn" data-torrent-url="${window.location.origin}${targetLink.getAttribute('href')}">
+                        ${data.storeUrl ? `<a href="${storeUrl}" target="_blank" rel="noopener noreferrer">🎮 Open on Steam</a>` : '<span></span>'}
+                        <button class="magnetDownloadBtn" data-torrent-url="${torrentUrl}">
                             🧲 Magnet Download
                         </button>
                     </div>
