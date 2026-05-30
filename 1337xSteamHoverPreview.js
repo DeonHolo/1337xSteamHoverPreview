@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         1337x - Steam Hover Preview 
 // @namespace    https://greasyfork.org/en/users/1340389-deonholo
-// @version      3.6.0
+// @version      3.6.2
 // @description  On-hover Steam thumbnail, description, Steam Ratings, user-defined tags (same as Steam store page), release date, and a direct "Open on Steam" link for 1337x game torrent titles
 // @icon         https://greasyfork.s3.us-east-2.amazonaws.com/x432yc9hx5t6o2gbe9ccr7k5l6u8
 // @author       DeonHolo
@@ -316,10 +316,15 @@
         .steamHoverTip .ratingText {
             vertical-align: middle;
         }
-        .steamHoverTip a {
-            color: #0645ad;
+        .steamHoverTip a,
+        .steamHoverTip a:visited {
+            color: #0645ad !important;
             text-decoration: underline;
             cursor: pointer;
+        }
+        .steamHoverTip a:hover,
+        .steamHoverTip a:visited:hover {
+            color: #043b91 !important;
         }
         .steamHoverTip .loadingContainer {
             display: flex;
@@ -348,14 +353,14 @@
             margin: 0;
             border: none;
             background: none;
-            color: #0645ad;
+            color: #0645ad !important;
             font-size: 12px;
             cursor: pointer;
             text-decoration: underline;
             font-family: inherit;
         }
         .steamHoverTip .magnetDownloadBtn:hover {
-            color: #043b91;
+            color: #043b91 !important;
         }
         .steamHoverTip .magnetDownloadBtn.loading {
             pointer-events: none;
