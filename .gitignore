@@ -9,3 +9,6 @@ Thumbs.db
 # Backup files
 *.bak
 *.backup
+
+# Local project notes
+CHAT_NOTES_2026-06-01.md
