@@ -1,0 +1,150 @@
+{
+  "checkedAt": "2026-11-03T18:49:01.016Z",
+  "environment": "Live Steam requests from Node fetch; actual Chromium DOMParser; shared provider engine without UI/network-image loading. One connection; not a representative p95 benchmark.",
+  "results": [
+    {
+      "query": "From Space",
+      "candidates": [
+        {
+          "appId": 1502190,
+          "name": "From Space",
+          "score": null,
+          "nameScore": 100
+        },
+        {
+          "appId": 315070,
+          "name": "Blob From Space",
+          "score": null,
+          "nameScore": 67
+        },
+        {
+          "appId": 1779310,
+          "name": "Bugs From Space",
+          "score": null,
+          "nameScore": 67
+        },
+        {
+          "appId": 437610,
+          "name": "SQUIDS FROM SPACE",
+          "score": null,
+          "nameScore": 59
+        },
+        {
+          "appId": 5375630,
+          "name": "Escape From Space",
+          "score": null,
+          "nameScore": 59
+        },
+        {
+          "appId": 1885460,
+          "name": "Invasion From Space",
+          "score": null,
+          "nameScore": 53
+        },
+        {
+          "appId": 4870780,
+          "name": "They Came From Space",
+          "score": null,
+          "nameScore": 50
+        },
+        {
+          "appId": 206370,
+          "name": "Tales From Space: Mutant Blobs Attack",
+          "score": null,
+          "nameScore": 31
+        }
+      ],
+      "selectedAppId": 1502190,
+      "selectedName": "From Space",
+      "tags": [
+        "Action",
+        "Co-op",
+        "Online Co-Op",
+        "Top-Down Shooter",
+        "Multiplayer"
+      ],
+      "correctionsBeforeSelection": 0,
+      "correctionsAfterSelection": 1
+    }
+  ],
+  "diagnostics": {
+    "coreVersion": "1.0.5",
+    "textMatcher": "Fuse.js 7.5.0 basic, local conservative fallback",
+    "schema": 3,
+    "resolver": 7,
+    "provider": 2,
+    "capturedAt": "2026-11-03T18:49:01.012Z",
+    "settings": {
+      "preload": "nearby",
+      "theme": "site",
+      "debug": false,
+      "reviewPurchaseType": 1
+    },
+    "cache": {
+      "details": 1,
+      "tags": 1,
+      "reviews": 0,
+      "mappings": 1,
+      "corrections": 1,
+      "negative": 0
+    },
+    "scheduler": {
+      "started": 4,
+      "shared": 0,
+      "cancelled": 0,
+      "retried": 0,
+      "peakActive": 2,
+      "active": 1,
+      "queued": 0
+    },
+    "measurements": {
+      "requests": 4,
+      "bytes": 246583,
+      "previews": 1,
+      "tagCacheHits": 0,
+      "previewCacheHits": 0,
+      "tagReadyMs": [
+        496
+      ],
+      "errors": []
+    },
+    "matches": [
+      {
+        "appId": 1502190,
+        "kind": "correction",
+        "reason": "Saved match correction",
+        "score": null,
+        "parentChain": [],
+        "candidates": []
+      }
+    ],
+    "fieldAges": [
+      {
+        "appId": 1502190,
+        "detailsAgeMs": 496,
+        "tagsAgeMs": 0,
+        "reviewsAgeMs": null
+      }
+    ]
+  },
+  "requests": [
+    {
+      "kind": "search",
+      "status": 200,
+      "ms": 494,
+      "bytes": 3279
+    },
+    {
+      "kind": "details",
+      "status": 200,
+      "ms": 259,
+      "bytes": 31989
+    },
+    {
+      "kind": "tags",
+      "status": 200,
+      "ms": 450,
+      "bytes": 211473
+    }
+  ]
+}

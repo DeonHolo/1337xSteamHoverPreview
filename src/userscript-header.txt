@@ -1,0 +1,36 @@
+// ==UserScript==
+// @name         1337x - Steam Hover Preview 
+// @namespace    https://greasyfork.org/en/users/1340389-deonholo
+// @version      5.00
+// @description  Actual Steam tags first, validated base-game matching, reviews, screenshots, trailers, and quick site actions
+// @icon         https://greasyfork.s3.us-east-2.amazonaws.com/x432yc9hx5t6o2gbe9ccr7k5l6u8
+// @author       DeonHolo
+// @license      MIT
+// @match        *://*.1337x.to/*
+// @match        *://*.1337x.ws/*
+// @match        *://*.1337x.is/*
+// @match        *://*.1337x.gd/*
+// @match        *://*.x1337x.cc/*
+// @match        *://*.1337x.st/*
+// @match        *://*.x1337x.ws/*
+// @match        *://*.1337x.eu/*
+// @match        *://*.1337x.se/*
+// @match        *://*.x1337x.eu/*
+// @match        *://*.x1337x.se/*
+// @match        http://l337xdarkkaqfwzntnfk5bmoaroivtl6xsbatabvlb52umg6v3ch44yd.onion/*
+// @grant        GM_xmlhttpRequest
+// @grant        GM_addStyle
+// @grant        GM_getValue
+// @grant        GM_setValue
+// @grant        GM_registerMenuCommand
+// @grant        GM_addValueChangeListener
+// @grant        GM.getValue
+// @grant        GM.setValue
+// @grant        GM.xmlHttpRequest
+// @grant        GM.registerMenuCommand
+// @grant        GM.addValueChangeListener
+// @connect      api.steampowered.com
+// @connect      store.steampowered.com
+// @connect      steamcdn-a.akamaihd.net
+// @run-at       document-idle
+// ==/UserScript==

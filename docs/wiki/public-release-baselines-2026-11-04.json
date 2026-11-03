@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-11-03T18:44:43.850Z",
+  "results": [
+    {
+      "id": 533774,
+      "url": "https://greasyfork.org/en/scripts/533774.json",
+      "status": 200,
+      "name": "1337x - Steam Hover Preview",
+      "version": "4.1",
+      "updated": "2026-06-05T10:23:27.000Z",
+      "code_url": "https://update.greasyfork.org/scripts/533774/1337x%20-%20Steam%20Hover%20Preview.user.js"
+    },
+    {
+      "id": 580613,
+      "url": "https://greasyfork.org/en/scripts/580613.json",
+      "status": 200,
+      "name": "CS.RIN.RU - Steam Hover Preview",
+      "version": "3.2",
+      "updated": "2026-06-05T10:24:15.000Z",
+      "code_url": "https://update.greasyfork.org/scripts/580613/CSRINRU%20-%20Steam%20Hover%20Preview.user.js"
+    }
+  ]
+}

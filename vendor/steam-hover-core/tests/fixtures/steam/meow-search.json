@@ -1,0 +1,94 @@
+{
+  "checkedAt": "2026-11-03T18:18:04.225Z",
+  "rawTitle": "MeowPower!Yachiyo",
+  "title": "MeowPower!Yachiyo",
+  "normalized": "meowpower yachiyo",
+  "currentQueries": ["MeowPower!Yachiyo"],
+  "searches": [
+    {
+      "term": "MeowPower!Yachiyo",
+      "status": 200,
+      "total": 0,
+      "items": []
+    },
+    {
+      "term": "MeowPower Yachiyo",
+      "status": 200,
+      "total": 1,
+      "items": [
+        {
+          "id": 2885530,
+          "name": "MeowPower!Yachiyo",
+          "type": "app",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "term": "MeowPowerYachiyo",
+      "status": 200,
+      "total": 0,
+      "items": []
+    },
+    {
+      "term": "MeowPower",
+      "status": 200,
+      "total": 1,
+      "items": [
+        {
+          "id": 2885530,
+          "name": "MeowPower!Yachiyo",
+          "type": "app",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "term": "Yachiyo",
+      "status": 200,
+      "total": 2,
+      "items": [
+        {
+          "id": 2922180,
+          "name": "Bonds of Yachiyo",
+          "type": "app",
+          "score": 47
+        },
+        {
+          "id": 2885530,
+          "name": "MeowPower!Yachiyo",
+          "type": "app",
+          "score": 100
+        }
+      ]
+    }
+  ],
+  "web": [
+    {
+      "term": "MeowPower!Yachiyo",
+      "status": 200,
+      "bytes": 601960,
+      "items": [
+        {
+          "href": "https://store.steampowered.com/app/2885530/MeowPowerYachiyo/?snr=1_7_7_151_150_1",
+          "title": "MeowPower!Yachiyo"
+        }
+      ]
+    },
+    {
+      "term": "MeowPower Yachiyo",
+      "status": 200,
+      "bytes": 603675,
+      "items": [
+        {
+          "href": "https://store.steampowered.com/app/2885530/MeowPowerYachiyo/?snr=1_7_7_151_150_1",
+          "title": "MeowPower!Yachiyo"
+        },
+        {
+          "href": "https://store.steampowered.com/app/2885530/MeowPowerYachiyo/?snr=1_7_7_151_150_2",
+          "title": "MeowPower!Yachiyo Demo"
+        }
+      ]
+    }
+  ]
+}

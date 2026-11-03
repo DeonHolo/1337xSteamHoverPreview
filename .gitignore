@@ -12,3 +12,8 @@ Thumbs.db
 
 # Local project notes
 CHAT_NOTES_2026-06-01.md
+
+# Development outputs
+node_modules/
+test-results/
+playwright-report/

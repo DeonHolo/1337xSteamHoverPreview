@@ -1,0 +1,300 @@
+{
+  "meow": {
+    "checkedAt": "2026-11-03T18:18:04.225Z",
+    "rawTitle": "MeowPower!Yachiyo",
+    "title": "MeowPower!Yachiyo",
+    "normalized": "meowpower yachiyo",
+    "currentQueries": [
+      "MeowPower!Yachiyo"
+    ],
+    "searches": [
+      {
+        "term": "MeowPower!Yachiyo",
+        "status": 200,
+        "total": 0,
+        "items": []
+      },
+      {
+        "term": "MeowPower Yachiyo",
+        "status": 200,
+        "total": 1,
+        "items": [
+          {
+            "id": 2885530,
+            "name": "MeowPower!Yachiyo",
+            "type": "app",
+            "score": 100
+          }
+        ]
+      },
+      {
+        "term": "MeowPowerYachiyo",
+        "status": 200,
+        "total": 0,
+        "items": []
+      },
+      {
+        "term": "MeowPower",
+        "status": 200,
+        "total": 1,
+        "items": [
+          {
+            "id": 2885530,
+            "name": "MeowPower!Yachiyo",
+            "type": "app",
+            "score": 100
+          }
+        ]
+      },
+      {
+        "term": "Yachiyo",
+        "status": 200,
+        "total": 2,
+        "items": [
+          {
+            "id": 2922180,
+            "name": "Bonds of Yachiyo",
+            "type": "app",
+            "score": 47
+          },
+          {
+            "id": 2885530,
+            "name": "MeowPower!Yachiyo",
+            "type": "app",
+            "score": 100
+          }
+        ]
+      }
+    ],
+    "web": [
+      {
+        "term": "MeowPower!Yachiyo",
+        "status": 200,
+        "bytes": 601960,
+        "items": [
+          {
+            "href": "https://store.steampowered.com/app/2885530/MeowPowerYachiyo/?snr=1_7_7_151_150_1",
+            "title": "MeowPower!Yachiyo"
+          }
+        ]
+      },
+      {
+        "term": "MeowPower Yachiyo",
+        "status": 200,
+        "bytes": 603675,
+        "items": [
+          {
+            "href": "https://store.steampowered.com/app/2885530/MeowPowerYachiyo/?snr=1_7_7_151_150_1",
+            "title": "MeowPower!Yachiyo"
+          },
+          {
+            "href": "https://store.steampowered.com/app/2885530/MeowPowerYachiyo/?snr=1_7_7_151_150_2",
+            "title": "MeowPower!Yachiyo Demo"
+          }
+        ]
+      }
+    ]
+  },
+  "idleDemonLord": {
+    "checkedAt": "2026-11-03T18:22:31.583Z",
+    "title": "Idle Demon Lord II",
+    "searches": [
+      {
+        "term": "Idle Demon Lord II",
+        "language": "en",
+        "status": 200,
+        "total": 0,
+        "items": []
+      },
+      {
+        "term": "Idle Demon Lord II",
+        "language": "english",
+        "status": 200,
+        "total": 0,
+        "items": []
+      },
+      {
+        "term": "Idle Demon Lord II",
+        "language": "schinese",
+        "status": 200,
+        "total": 0,
+        "items": []
+      },
+      {
+        "term": "Idle Demon Lord 2",
+        "language": "en",
+        "status": 200,
+        "total": 0,
+        "items": []
+      },
+      {
+        "term": "挂机魔王II",
+        "language": "en",
+        "status": 200,
+        "total": 2,
+        "items": [
+          {
+            "id": 5245310,
+            "name": "Idle Demon Lord II",
+            "type": "app",
+            "score": 100
+          },
+          {
+            "id": 5482680,
+            "name": "挂机魔王 II - 魔王契约·支持者包",
+            "type": "app",
+            "score": 25
+          }
+        ]
+      }
+    ],
+    "details": [
+      {
+        "language": "en",
+        "status": 200,
+        "success": true,
+        "appId": 5245310,
+        "name": "Idle Demon Lord II",
+        "type": "game",
+        "score": 100,
+        "short_description": "Idle Demon Lord II combines idle progression with dark fantasy loot hunting. Fight automatically and earn rewards offline. Choose from five classes, each with unique skills and mechanics. Hunt six tiers of gear, customize affixes, gems, runes, and Legendary Powers, and build your endgame character."
+      },
+      {
+        "language": "english",
+        "status": 200,
+        "success": true,
+        "appId": 5245310,
+        "name": "Idle Demon Lord II",
+        "type": "game",
+        "score": 100,
+        "short_description": "Idle Demon Lord II combines idle progression with dark fantasy loot hunting. Fight automatically and earn rewards offline. Choose from five classes, each with unique skills and mechanics. Hunt six tiers of gear, customize affixes, gems, runes, and Legendary Powers, and build your endgame character."
+      },
+      {
+        "language": "schinese",
+        "status": 200,
+        "success": true,
+        "appId": 5245310,
+        "name": "挂机魔王 II",
+        "type": "game",
+        "score": 33,
+        "short_description": "《挂机魔王 II》是一款暗黑刷宝 × 放置增量 ARPG。自动战斗、装备驱动成长。独创一机六开独立挂机，五大深度职业、六档装备稀有度、暗黑4式回火精炼工作台与无尽大秘境。告别体力与卡进度，享受最纯粹的暗金爆率与终局配装乐趣。"
+      }
+    ],
+    "website": {
+      "url": "https://store.steampowered.com/search/results/?term=Idle%20Demon%20Lord%20II&cc=us&l=english&start=0&count=10&infinite=1",
+      "status": 200,
+      "type": "application/json; charset=utf-8",
+      "bytes": 52530,
+      "keys": [
+        "success",
+        "results_html",
+        "total_count",
+        "start"
+      ],
+      "success": 1,
+      "total_count": 644,
+      "rows": [
+        {
+          "href": "https://store.steampowered.com/app/5245310/Idle_Demon_Lord_II/?snr=1_7_7_151_150_1",
+          "name": "Idle Demon Lord II"
+        },
+        {
+          "href": "https://store.steampowered.com/app/1742110/Demon_Lord_Clicker/?snr=1_7_7_151_150_2",
+          "name": "Demon Lord: Clicker"
+        },
+        {
+          "href": "https://store.steampowered.com/app/2395150/Demon_Lord_Reincarnation/?snr=1_7_7_151_150_3",
+          "name": "Demon Lord Reincarnation"
+        },
+        {
+          "href": "https://store.steampowered.com/app/4145190/Kill_the_Demon_Lord/?snr=1_7_7_151_150_4",
+          "name": "Kill the Demon Lord"
+        },
+        {
+          "href": "https://store.steampowered.com/app/3720420/Demon_Lord_Just_a_Block/?snr=1_7_7_151_150_5",
+          "name": "Demon Lord: Just a Block"
+        },
+        {
+          "href": "https://store.steampowered.com/app/2245480/Demon_Lord_Tamer/?snr=1_7_7_151_150_6",
+          "name": "Demon Lord Tamer"
+        },
+        {
+          "href": "https://store.steampowered.com/app/3056660/As_expected_of_the_Demon_Lord/?snr=1_7_7_151_150_7",
+          "name": "As expected of the Demon Lord"
+        },
+        {
+          "href": "https://store.steampowered.com/app/2583330/Zlime_Return_Of_Demon_Lord/?snr=1_7_7_151_150_8",
+          "name": "Zlime: Return Of Demon Lord"
+        },
+        {
+          "href": "https://store.steampowered.com/app/4238220/Idle_Demon_Summoner/?snr=1_7_7_151_150_9",
+          "name": "Idle Demon Summoner"
+        },
+        {
+          "href": "https://store.steampowered.com/app/4614640/Lord_of_Idle/?snr=1_7_7_151_150_10",
+          "name": "Lord of Idle"
+        },
+        {
+          "href": "https://store.steampowered.com/app/3383930/Aritas_The_Demon_Lord/?snr=1_7_7_151_150_11",
+          "name": "Aritas: The Demon Lord"
+        },
+        {
+          "href": "https://store.steampowered.com/app/4419100/Fantasy_Grounds_Demon_Lords_Companion_2/?snr=1_7_7_151_150_12",
+          "name": "Fantasy Grounds - Demon Lord's Companion 2"
+        },
+        {
+          "href": "https://store.steampowered.com/app/2157220/Fantasy_Grounds_Shadow_of_the_Demon_Lord_Adventure_Pack_2/?snr=1_7_7_151_150_13",
+          "name": "Fantasy Grounds - Shadow of the Demon Lord Adventure Pack 2"
+        },
+        {
+          "href": "https://store.steampowered.com/app/3180950/RPG_Maker_MZ_Demon_Lord_Army_Set_2/?snr=1_7_7_151_150_14",
+          "name": "RPG Maker MZ - Demon Lord Army Set 2"
+        },
+        {
+          "href": "https://store.steampowered.com/app/3181070/RPG_Maker_MV_Demon_Lord_Army_Set_2/?snr=1_7_7_151_150_15",
+          "name": "RPG Maker MV - Demon Lord Army Set 2"
+        },
+        {
+          "href": "https://store.steampowered.com/app/4420270/Demon_Lord_Just_a_Block_Supporter_Pack/?snr=1_7_7_151_150_16",
+          "name": "Demon Lord: Just a Block - Supporter Pack"
+        },
+        {
+          "href": "https://store.steampowered.com/app/3845620/My_Days_with_a_Clueless_Demon_Lord/?snr=1_7_7_151_150_17",
+          "name": "My Days with a Clueless Demon Lord"
+        },
+        {
+          "href": "https://store.steampowered.com/app/2352980/Fantasy_Grounds_Shadow_of_the_Demon_Lord_Tales_of_the_Demon_Lord/?snr=1_7_7_151_150_18",
+          "name": "Fantasy Grounds - Shadow of the Demon Lord Tales of the Demon Lord"
+        },
+        {
+          "href": "https://store.steampowered.com/app/4245840/Surviving_Magic_Academy_as_a_Demon_Lord/?snr=1_7_7_151_150_19",
+          "name": "Surviving Magic Academy as a Demon Lord"
+        },
+        {
+          "href": "https://store.steampowered.com/app/2157170/Fantasy_Grounds_Shadow_of_the_Demon_Lord_Demons_Lord_Companion/?snr=1_7_7_151_150_20",
+          "name": "Fantasy Grounds - Shadow of the Demon Lord Demon’s Lord Companion"
+        },
+        {
+          "href": "https://store.steampowered.com/app/4757660/Demon_Ark_Idle_RPG/?snr=1_7_7_151_150_21",
+          "name": "Demon Ark: Idle RPG"
+        },
+        {
+          "href": "https://store.steampowered.com/app/1413980/The_Demon_Lord_is_New_in_Town/?snr=1_7_7_151_150_22",
+          "name": "The Demon Lord is New in Town!"
+        },
+        {
+          "href": "https://store.steampowered.com/app/4282710/The_Rebirth_Tale_of_Broken_Horn_Demon_Lord_Alice/?snr=1_7_7_151_150_23",
+          "name": "The Rebirth Tale of Broken Horn Demon Lord Alice"
+        },
+        {
+          "href": "https://store.steampowered.com/app/4403730/Idle_Demon_Summoner_Demo/?snr=1_7_7_151_150_24",
+          "name": "Idle Demon Summoner Demo"
+        },
+        {
+          "href": "https://store.steampowered.com/app/2157030/Fantasy_Grounds_Shadow_of_the_Demon_Lord/?snr=1_7_7_151_150_25",
+          "name": "Fantasy Grounds - Shadow of the Demon Lord"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "checkedAt": "2026-11-03T17:55:40.677Z",
+  "environment": "Live Steam requests from Node fetch; actual Chromium DOMParser; shared provider engine without UI/network-image loading. One connection; not a representative p95 benchmark.",
+  "results": [
+    {
+      "title": "Asgard's Fall - Viking Survivors (v1.0.0.w)",
+      "appId": 2780710,
+      "name": "Asgard's Fall — Viking Survivors",
+      "match": {
+        "kind": "search",
+        "originalAppId": 2780710,
+        "parentChain": [],
+        "score": 100,
+        "reason": "Validated title match",
+        "candidates": [
+          {
+            "appId": 2780710,
+            "name": "Asgard's Fall — Viking Survivors",
+            "score": 100
+          }
+        ]
+      },
+      "tags": [
+        "Action Roguelike",
+        "Bullet Hell",
+        "Roguelite",
+        "Casual",
+        "Pixel Graphics"
+      ],
+      "reviewInfo": {
+        "desc": "Mostly Positive",
+        "percent": 78,
+        "total": 1565,
+        "positive": 1224,
+        "negative": 341
+      },
+      "tagsReadyMs": 1059,
+      "warmPeekMs": 0.1,
+      "warmTags": [
+        "Action Roguelike",
+        "Bullet Hell",
+        "Roguelite",
+        "Casual",
+        "Pixel Graphics"
+      ]
+    },
+    {
+      "title": "Asgard's Fall - Viking Survivers (v1.0.0.w)",
+      "appId": 2780710,
+      "name": "Asgard's Fall — Viking Survivors",
+      "match": {
+        "kind": "search",
+        "originalAppId": 2780710,
+        "parentChain": [],
+        "score": 94,
+        "reason": "Validated title match",
+        "candidates": [
+          {
+            "appId": 2780710,
+            "name": "Asgard's Fall — Viking Survivors",
+            "score": 94
+          }
+        ]
+      },
+      "tags": [
+        "Action Roguelike",
+        "Bullet Hell",
+        "Roguelite",
+        "Casual",
+        "Pixel Graphics"
+      ],
+      "reviewInfo": {
+        "desc": "Mostly Positive",
+        "percent": 78,
+        "total": 1565,
+        "positive": 1224,
+        "negative": 341
+      },
+      "tagsReadyMs": 654,
+      "warmPeekMs": 0.1,
+      "warmTags": [
+        "Action Roguelike",
+        "Bullet Hell",
+        "Roguelite",
+        "Casual",
+        "Pixel Graphics"
+      ]
+    }
+  ],
+  "diagnostics": {
+    "coreVersion": "1.0.2",
+    "textMatcher": "Fuse.js 7.5.0 basic, local conservative fallback",
+    "schema": 3,
+    "resolver": 4,
+    "provider": 2,
+    "capturedAt": "2026-11-03T17:55:40.668Z",
+    "settings": {
+      "preload": "nearby",
+      "theme": "site",
+      "debug": false,
+      "reviewPurchaseType": 1
+    },
+    "cache": {
+      "details": 1,
+      "tags": 1,
+      "reviews": 1,
+      "mappings": 4,
+      "corrections": 0,
+      "negative": 0
+    },
+    "scheduler": {
+      "started": 7,
+      "shared": 0,
+      "cancelled": 0,
+      "retried": 0,
+      "peakActive": 2,
+      "active": 0,
+      "queued": 0
+    },
+    "measurements": {
+      "requests": 7,
+      "bytes": 251996,
+      "previews": 2,
+      "tagCacheHits": 1,
+      "previewCacheHits": 2,
+      "tagReadyMs": [
+        1058,
+        654
+      ],
+      "errors": []
+    },
+    "matches": [
+      {
+        "appId": 2780710,
+        "kind": "search",
+        "reason": "Validated title match",
+        "score": 94,
+        "parentChain": [],
+        "candidates": [
+          {
+            "appId": 2780710,
+            "name": "Asgard's Fall — Viking Survivors",
+            "score": 94
+          }
+        ]
+      }
+    ],
+    "fieldAges": [
+      {
+        "appId": 2780710,
+        "detailsAgeMs": 1429,
+        "tagsAgeMs": 1015,
+        "reviewsAgeMs": 656
+      }
+    ]
+  },
+  "requests": [
+    {
+      "kind": "search",
+      "status": 200,
+      "ms": 411,
+      "bytes": 438
+    },
+    {
+      "kind": "details",
+      "status": 200,
+      "ms": 213,
+      "bytes": 32119
+    },
+    {
+      "kind": "tags",
+      "status": 200,
+      "ms": 377,
+      "bytes": 212830
+    },
+    {
+      "kind": "reviews",
+      "status": 200,
+      "ms": 657,
+      "bytes": 6300
+    },
+    {
+      "kind": "search",
+      "status": 200,
+      "ms": 208,
+      "bytes": 22
+    },
+    {
+      "kind": "search",
+      "status": 200,
+      "ms": 214,
+      "bytes": 22
+    },
+    {
+      "kind": "search",
+      "status": 200,
+      "ms": 222,
+      "bytes": 438
+    }
+  ]
+}

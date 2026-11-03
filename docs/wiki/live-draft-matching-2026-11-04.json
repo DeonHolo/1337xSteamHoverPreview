@@ -1,0 +1,321 @@
+{
+  "checkedAt": "2026-11-03T18:29:35.281Z",
+  "environment": "Live Steam requests from Node fetch; actual Chromium DOMParser; shared provider engine without UI/network-image loading. One connection; not a representative p95 benchmark.",
+  "results": [
+    {
+      "title": "MeowPower!Yachiyo",
+      "appId": 2885530,
+      "name": "MeowPower!Yachiyo",
+      "match": {
+        "kind": "search",
+        "originalAppId": 2885530,
+        "parentChain": [],
+        "score": 100,
+        "reason": "Validated title match",
+        "candidates": [
+          {
+            "appId": 2885530,
+            "name": "MeowPower!Yachiyo",
+            "score": 100,
+            "nameScore": 100
+          }
+        ]
+      },
+      "tags": [
+        "Action",
+        "Adventure",
+        "Casual",
+        "Action-Adventure",
+        "Arcade"
+      ],
+      "reviewInfo": {
+        "desc": "Positive",
+        "percent": 92,
+        "total": 12,
+        "positive": 11,
+        "negative": 1
+      },
+      "tagsReadyMs": 1090,
+      "warmPeekMs": 0.2,
+      "warmTags": [
+        "Action",
+        "Adventure",
+        "Casual",
+        "Action-Adventure",
+        "Arcade"
+      ]
+    },
+    {
+      "title": "Idle Demon Lord II",
+      "appId": 5245310,
+      "name": "Idle Demon Lord II",
+      "match": {
+        "kind": "search",
+        "originalAppId": 5245310,
+        "parentChain": [],
+        "score": 100,
+        "reason": "Validated title match",
+        "candidates": [
+          {
+            "appId": 5245310,
+            "name": "Idle Demon Lord II",
+            "score": 100,
+            "nameScore": 100
+          },
+          {
+            "appId": 4145190,
+            "name": "Kill the Demon Lord",
+            "score": null,
+            "nameScore": 71
+          },
+          {
+            "appId": 2245480,
+            "name": "Demon Lord Tamer",
+            "score": null,
+            "nameScore": 65
+          },
+          {
+            "appId": 4238220,
+            "name": "Idle Demon Summoner",
+            "score": null,
+            "nameScore": 65
+          },
+          {
+            "appId": 1742110,
+            "name": "Demon Lord: Clicker",
+            "score": null,
+            "nameScore": 61
+          },
+          {
+            "appId": 2583330,
+            "name": "Zlime: Return Of Demon Lord",
+            "score": null,
+            "nameScore": 50
+          },
+          {
+            "appId": 3720420,
+            "name": "Demon Lord: Just a Block",
+            "score": null,
+            "nameScore": 48
+          },
+          {
+            "appId": 2395150,
+            "name": "Demon Lord Reincarnation",
+            "score": null,
+            "nameScore": 46
+          }
+        ]
+      },
+      "tags": [
+        "Idler",
+        "Action RPG",
+        "Loot",
+        "Hack and Slash",
+        "Dark Fantasy"
+      ],
+      "reviewInfo": {
+        "desc": "Very Positive",
+        "percent": 84,
+        "total": 81,
+        "positive": 68,
+        "negative": 13
+      },
+      "tagsReadyMs": 1105,
+      "warmPeekMs": 0.1,
+      "warmTags": [
+        "Idler",
+        "Action RPG",
+        "Loot",
+        "Hack and Slash",
+        "Dark Fantasy"
+      ]
+    }
+  ],
+  "diagnostics": {
+    "coreVersion": "1.0.4",
+    "textMatcher": "Fuse.js 7.5.0 basic, local conservative fallback",
+    "schema": 3,
+    "resolver": 7,
+    "provider": 2,
+    "capturedAt": "2026-11-03T18:29:35.278Z",
+    "settings": {
+      "preload": "nearby",
+      "theme": "site",
+      "debug": false,
+      "reviewPurchaseType": 1
+    },
+    "cache": {
+      "details": 2,
+      "tags": 2,
+      "reviews": 2,
+      "mappings": 4,
+      "corrections": 0,
+      "negative": 0
+    },
+    "scheduler": {
+      "started": 9,
+      "shared": 0,
+      "cancelled": 0,
+      "retried": 0,
+      "peakActive": 2,
+      "active": 0,
+      "queued": 0
+    },
+    "measurements": {
+      "requests": 9,
+      "bytes": 374144,
+      "previews": 2,
+      "tagCacheHits": 0,
+      "previewCacheHits": 2,
+      "tagReadyMs": [
+        1090,
+        1104
+      ],
+      "errors": []
+    },
+    "matches": [
+      {
+        "appId": 2885530,
+        "kind": "search",
+        "reason": "Validated title match",
+        "score": 100,
+        "parentChain": [],
+        "candidates": [
+          {
+            "appId": 2885530,
+            "name": "MeowPower!Yachiyo",
+            "score": 100,
+            "nameScore": 100
+          }
+        ]
+      },
+      {
+        "appId": 5245310,
+        "kind": "search",
+        "reason": "Validated title match",
+        "score": 100,
+        "parentChain": [],
+        "candidates": [
+          {
+            "appId": 5245310,
+            "name": "Idle Demon Lord II",
+            "score": 100,
+            "nameScore": 100
+          },
+          {
+            "appId": 4145190,
+            "name": "Kill the Demon Lord",
+            "score": null,
+            "nameScore": 71
+          },
+          {
+            "appId": 2245480,
+            "name": "Demon Lord Tamer",
+            "score": null,
+            "nameScore": 65
+          },
+          {
+            "appId": 4238220,
+            "name": "Idle Demon Summoner",
+            "score": null,
+            "nameScore": 65
+          },
+          {
+            "appId": 1742110,
+            "name": "Demon Lord: Clicker",
+            "score": null,
+            "nameScore": 61
+          },
+          {
+            "appId": 2583330,
+            "name": "Zlime: Return Of Demon Lord",
+            "score": null,
+            "nameScore": 50
+          },
+          {
+            "appId": 3720420,
+            "name": "Demon Lord: Just a Block",
+            "score": null,
+            "nameScore": 48
+          },
+          {
+            "appId": 2395150,
+            "name": "Demon Lord Reincarnation",
+            "score": null,
+            "nameScore": 46
+          }
+        ]
+      }
+    ],
+    "fieldAges": [
+      {
+        "appId": 2885530,
+        "detailsAgeMs": 1659,
+        "tagsAgeMs": 1329,
+        "reviewsAgeMs": 1193
+      },
+      {
+        "appId": 5245310,
+        "detailsAgeMs": 440,
+        "tagsAgeMs": 88,
+        "reviewsAgeMs": 1
+      }
+    ]
+  },
+  "requests": [
+    {
+      "kind": "search",
+      "status": 200,
+      "ms": 485,
+      "bytes": 423
+    },
+    {
+      "kind": "details",
+      "status": 200,
+      "ms": 254,
+      "bytes": 33074
+    },
+    {
+      "kind": "tags",
+      "status": 200,
+      "ms": 301,
+      "bytes": 133859
+    },
+    {
+      "kind": "reviews",
+      "status": 200,
+      "ms": 355,
+      "bytes": 1200
+    },
+    {
+      "kind": "search",
+      "status": 200,
+      "ms": 223,
+      "bytes": 22
+    },
+    {
+      "kind": "tags",
+      "status": 200,
+      "ms": 265,
+      "bytes": 52918
+    },
+    {
+      "kind": "details",
+      "status": 200,
+      "ms": 242,
+      "bytes": 19534
+    },
+    {
+      "kind": "tags",
+      "status": 200,
+      "ms": 329,
+      "bytes": 132646
+    },
+    {
+      "kind": "reviews",
+      "status": 200,
+      "ms": 320,
+      "bytes": 1045
+    }
+  ]
+}

@@ -10,20 +10,24 @@ A userscript that displays Steam game information when hovering over game torren
 
 The preview screenshot above was taken with the [Dark Reader](https://darkreader.org/) browser extension enabled. The script still fully supports the original 1337x light mode; Dark Reader only changes the page/theme colors.
 
+## Wiki and Code Review
+
+The [project wiki](docs/wiki/Home.md) covers behavior and architecture. The current **unpublished 5.00 draft** includes [title search inside the chooser](docs/wiki/Search-by-Name.md), plus [matching fixes and a plain-language explanation](docs/wiki/Matching-Explained.md). Use the [Markdown release checklist](RELEASE_CHECKLIST.md) and [paste-ready Greasy Fork changelog](GREASYFORK_CHANGELOG.md) to review this release. Older patch labels in dated test reports are internal development snapshots, not public releases.
+
 ## Features
 
 - **Steam Media Carousel** - Steam header image first, with screenshots and click-to-play videos when available
 - **Thumbnail Strip** - Quickly jump between available Steam media without leaving the hover card
 - **Theatre Mode** - Open screenshots and trailers in a larger Steam-style media viewer with navigation, video controls, and fullscreen support
 - **Description** - Short game description from Steam
-- **Steam Ratings** - Visual star rating with review summary and count
-- **User-Defined Tags** - Actual Steam community tags from the Steam store page when available, with genres as fallback
+- **Steam Reviews** - Original plain Rating row with stars, Steam category and actual review count, plus distinct zero/error states
+- **Actual Steam Tags First** - Real Steam tags in the first meaningful preview, with no genre substitution
 - **Release Date** - Game release information
 - **Open on Steam** - Direct Steam store link from the hover card and theatre footer
 - **Magnet Download** - One-click magnet link download from the hover card and theatre footer
 - **Smart Matching** - Prefers the main Steam game page over DLC, upgrades, season passes, and store extras
-- **Smart Caching** - Persistent cache across sessions (24hr TTL), including media metadata
-- **Background Preloading** - Preloads game data when the tab is idle
+- **Field-Level Caching** - Persistent AppID data, independently refreshed tags/reviews, saved match corrections, and safe cross-tab merging
+- **Tags-First Preloading** - Configurable nearby/full-page warming, including bounded background-tab loading
 
 ## Installation
 
@@ -62,11 +66,12 @@ The script works on all 1337x mirror domains:
 
 ## Technical Details
 
-- **API Used**: Steam Store API + Steam Store Page scraping
-- **Cache Duration**: 24 hours for successful Steam data / 15 minutes for failed lookups
-- **Rate Limiting**: 50ms minimum between API requests
-- **Preloading**: Concurrent fetching when tab is hidden
-- **Game Filtering**: Activates for game category pages, game icons, known game uploaders, and common repack markers
+- **Data**: Official keyless Steam review API, single-AppID storefront details/search, and Steam store-page tag parsing. No SteamDB scraping.
+- **Matching**: Confidence-checked base games, verified DLC parents, and persistent per-listing corrections.
+- **Cache**: Details/tags fresh for 24 hours; review freshness is 15 minutes for new/unknown/upcoming releases and 3 hours otherwise. Usable stale tags refresh in the background.
+- **Preload**: Nearby rows by default; Entire page and On hover only available in the userscript menu. Runnable hidden tabs warm serially; sleeping/discarded/closed tabs cannot run it.
+- **Development**: Shared source, reproducible standalone builds, dependency locks, lint/format, unit/browser tests, and CI. See [CONTRIBUTING](CONTRIBUTING.md).
+- **Action icons**: Bundled SVGs; see [third-party notices](THIRD_PARTY_NOTICES.md).
 
 ## License
 

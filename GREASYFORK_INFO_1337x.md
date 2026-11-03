@@ -36,15 +36,14 @@
     </li>
     <li>
         <strong>See Steam Ratings</strong><br>
-        Instantly view the game's review score (like ★★★★☆ "Mostly Positive") and the total number of reviews right in the preview.
-    </li>
+        View the original plain rating row with stars, Steam review category, and actual review count directly in the preview; the review summary is not a link.</li>
     <li>
         <strong>Popular Steam Tags</strong><br>
-        Fetches up to 5 popular tags from Steam (like "RPG", "Open World") and shows them below the Steam Ratings.
+        Prioritizes up to 5 actual Steam tags on the first meaningful preview, without substituting genres (like "RPG", "Open World") and shows them below the Steam Ratings.
     </li>
     <li>
         <strong>Quick Actions</strong><br>
-        Includes direct "🎮 Open on Steam" and "🧲 Magnet Download" actions in both the hover card and theatre footer.
+        Includes direct "Open on Steam" and "Magnet Download" actions in both the hover card and theatre footer.
     </li>
     <li>
         <strong>Smart Steam Matching</strong><br>
@@ -66,3 +65,5 @@
 </ol>
 
 <hr>
+
+<p>Updated source: actual tags first, independently refreshed Steam reviews, verified DLC-parent matching, saved match corrections, configurable preloading, and bundled action icons. Userscript menu settings control background warming.</p>

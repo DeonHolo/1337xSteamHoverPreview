@@ -1,0 +1,22 @@
+{
+  "version": "1.0.6",
+  "sourceRepository": "https://github.com/DeonHolo/csrinruSteamHoverPreview",
+  "files": {
+    "LICENSE": "e248224ea515fe5cb6605d5d25fa6d7114dd51b9dc06e0a733d7112dc06a2131",
+    "src/assets/FUSE-LICENSE.txt": "cc807e3caa26cdee316bab2ff6fdb508a2f619b74959fe59e513ef6e61635ebe",
+    "src/assets/fuse.basic.min.mjs": "d1e25fff4fe857999eb2efe9f4cfcfac4430dca43a028f490e21242fd659fb60",
+    "src/assets/NOTICE.md": "9eced38f63bd43c20ea2c901bcb90472c7591d01f4001b397802765e0f425749",
+    "src/core/preview.mjs": "1072ce5ab394bff302942034d42b1a79a649fa3bf35cf2c6e610dc5c93ebd0cd",
+    "src/core/runtime.mjs": "01d394fd4f9feedecb7836a14fc46dc50dabc8c911ca9d35622057bd3ca1b281",
+    "src/core/site-utils.mjs": "1e73d9df30d6d78f835c4302c3571f62ecae8ee9a6485752527571d6958429ac",
+    "src/core/steam-client.mjs": "77ddd5e8b78ecf3060ab55e114768fc806ba1762baa70f51dd7b1975a62b3df2",
+    "tests/fixtures/steam/asgard-search.json": "0d76e08e7b7afd6b6e3ddd06ee6e73a43ce9aaedcd038458c70e4cf46a98bd43",
+    "tests/fixtures/steam/idle-localization.json": "3b3e254d24937362a93ee7a1701681980f1f44a3dcb796b82b59741440662042",
+    "tests/fixtures/steam/meow-search.json": "60688582af7c417ffd7b21969d45567c9e617c6ba4cb57a9d5b4b2103f30425f",
+    "tests/fixtures/steam/reported-title-search.json": "e4ad84c67e5548e3e2fc87bab2aae03137bd3a0579b4fd0987c9fd8f44f48a5c",
+    "tests/preview.test.mjs": "ef514c7d8b1383b480e58bf1313d5a7cf8ef6b12126d94ea7465d9ae55c26552",
+    "tests/site-utils.test.mjs": "65449f3c4c91a5034e5d538501692e3b32600a1bc94a12131777b23cdfea3a76",
+    "tests/steam-client.test.mjs": "0b980c860e7782598295afb7816af3fe9178ebd95ceec9bef118c861673d6c2b",
+    "tests/title-regressions.test.mjs": "fc085578422e6d23e76b1ec2055a892f51c8df739e8256fbd7edb8ba39f8f8b3"
+  }
+}
