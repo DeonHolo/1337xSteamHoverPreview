@@ -1,0 +1,25 @@
+name: Preview or matching problem
+description: Report missing tags, a wrong game, loading problems, or a broken action.
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Script, userscript manager, and browser versions
+    validations:
+      required: true
+  - type: textarea
+    id: title
+    attributes:
+      label: Exact visible game title and expected Steam URL
+      description: Include the actual Steam match if wrong. Omit private session URLs and magnet links.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: What happened and how to reproduce it
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Redacted diagnostics or screenshot
+      description: Use the userscript menu diagnostics. Never attach cookies or session tokens.

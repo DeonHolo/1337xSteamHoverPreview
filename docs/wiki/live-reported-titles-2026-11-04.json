@@ -1,0 +1,444 @@
+{
+  "checkedAt": "2026-11-03T17:33:10.061Z",
+  "environment": "Live Steam requests from Node fetch; actual Chromium DOMParser; shared provider engine without UI/network-image loading. One connection; not a representative p95 benchmark.",
+  "results": [
+    {
+      "title": "Hunting Simulator 3: Apex Predator Edition (v1.0.0.451.118880 + 2 DLCs, MULTI11) [FitGirl Repack]",
+      "appId": 2482760,
+      "name": "Hunting Simulator 3",
+      "match": {
+        "kind": "search",
+        "originalAppId": 2482760,
+        "parentChain": [],
+        "score": 100,
+        "reason": "Validated title match",
+        "candidates": [
+          {
+            "appId": 2482760,
+            "name": "Hunting Simulator 3",
+            "score": 100
+          },
+          {
+            "appId": 4693970,
+            "name": "Hunting Simulator 3 - Apex Predator Pack",
+            "score": 67
+          },
+          {
+            "appId": 4693960,
+            "name": "Hunting Simulator 3 - Classic American Hunter Pack",
+            "score": 60
+          }
+        ]
+      },
+      "tags": [
+        "Hunting",
+        "Open World",
+        "Simulation",
+        "Realistic",
+        "First-Person"
+      ],
+      "reviewInfo": {
+        "desc": "Mostly Positive",
+        "percent": 76,
+        "total": 227,
+        "positive": 172,
+        "negative": 55
+      },
+      "tagsReadyMs": 1188,
+      "warmPeekMs": 0.1,
+      "warmTags": [
+        "Hunting",
+        "Open World",
+        "Simulation",
+        "Realistic",
+        "First-Person"
+      ]
+    },
+    {
+      "title": "Unbroken The Awakening-TENOKE",
+      "appId": 2377020,
+      "name": "Unbroken: The Awakening",
+      "match": {
+        "kind": "search",
+        "originalAppId": 2377020,
+        "parentChain": [],
+        "score": 100,
+        "reason": "Validated title match",
+        "candidates": [
+          {
+            "appId": 2377020,
+            "name": "Unbroken: The Awakening",
+            "score": 100
+          }
+        ]
+      },
+      "tags": [
+        "Action",
+        "Singleplayer",
+        "RPG",
+        "Gore",
+        "Adventure"
+      ],
+      "reviewInfo": {
+        "desc": "Positive",
+        "percent": 97,
+        "total": 30,
+        "positive": 29,
+        "negative": 1
+      },
+      "tagsReadyMs": 948,
+      "warmPeekMs": 0.1,
+      "warmTags": [
+        "Action",
+        "Singleplayer",
+        "RPG",
+        "Gore",
+        "Adventure"
+      ]
+    },
+    {
+      "title": "House Flipper Remastered Collection Update v1 26303-RUNE",
+      "appId": 3710840,
+      "name": "House Flipper Remastered Collection",
+      "match": {
+        "kind": "search",
+        "originalAppId": 3710840,
+        "parentChain": [],
+        "score": 100,
+        "reason": "Validated title match",
+        "candidates": [
+          {
+            "appId": 3710840,
+            "name": "House Flipper Remastered Collection",
+            "score": 100
+          }
+        ]
+      },
+      "tags": [
+        "Simulation",
+        "Design & Illustration",
+        "Decorating",
+        "Cleaning",
+        "Building"
+      ],
+      "reviewInfo": {
+        "desc": "Mixed",
+        "percent": 70,
+        "total": 971,
+        "positive": 675,
+        "negative": 296
+      },
+      "tagsReadyMs": 856,
+      "warmPeekMs": 0,
+      "warmTags": [
+        "Simulation",
+        "Design & Illustration",
+        "Decorating",
+        "Cleaning",
+        "Building"
+      ]
+    },
+    {
+      "title": "Resonance of Fate (End of Eternity) 4K/HD Edition - ENHANCED REMASTER (Build 259000) [FitGirl Repack]",
+      "appId": 645730,
+      "name": "RESONANCE OF FATE™/END OF ETERNITY™ 4K/HD EDITION",
+      "match": {
+        "kind": "dlc-parent",
+        "originalAppId": 4996080,
+        "parentChain": [
+          {
+            "appId": 4996080,
+            "name": "RESONANCE OF FATE™/END OF ETERNITY™ ENHANCED REMASTER",
+            "parentAppId": 645730
+          }
+        ],
+        "score": 100,
+        "reason": "Verified DLC parent",
+        "candidates": [
+          {
+            "appId": 4996080,
+            "name": "RESONANCE OF FATE™/END OF ETERNITY™ ENHANCED REMASTER",
+            "score": 100
+          }
+        ]
+      },
+      "tags": [
+        "JRPG",
+        "RPG",
+        "Singleplayer",
+        "Turn-Based Combat",
+        "Story Rich"
+      ],
+      "reviewInfo": {
+        "desc": "Mostly Positive",
+        "percent": 80,
+        "total": 1086,
+        "positive": 865,
+        "negative": 221
+      },
+      "tagsReadyMs": 1040,
+      "warmPeekMs": 0,
+      "warmTags": [
+        "JRPG",
+        "RPG",
+        "Singleplayer",
+        "Turn-Based Combat",
+        "Story Rich"
+      ]
+    }
+  ],
+  "diagnostics": {
+    "coreVersion": "1.0.1",
+    "schema": 3,
+    "resolver": 3,
+    "provider": 2,
+    "capturedAt": "2026-11-03T17:33:10.055Z",
+    "settings": {
+      "preload": "nearby",
+      "theme": "site",
+      "debug": false,
+      "reviewPurchaseType": 1
+    },
+    "cache": {
+      "details": 5,
+      "tags": 4,
+      "reviews": 4,
+      "mappings": 8,
+      "corrections": 0,
+      "negative": 0
+    },
+    "scheduler": {
+      "started": 17,
+      "shared": 0,
+      "cancelled": 0,
+      "retried": 0,
+      "peakActive": 2,
+      "active": 0,
+      "queued": 0
+    },
+    "measurements": {
+      "requests": 17,
+      "bytes": 807449,
+      "previews": 4,
+      "tagCacheHits": 0,
+      "previewCacheHits": 4,
+      "tagReadyMs": [
+        1187,
+        948,
+        856,
+        1040
+      ],
+      "errors": []
+    },
+    "matches": [
+      {
+        "appId": 2482760,
+        "kind": "search",
+        "reason": "Validated title match",
+        "score": 100,
+        "parentChain": [],
+        "candidates": [
+          {
+            "appId": 2482760,
+            "name": "Hunting Simulator 3",
+            "score": 100
+          },
+          {
+            "appId": 4693970,
+            "name": "Hunting Simulator 3 - Apex Predator Pack",
+            "score": 67
+          },
+          {
+            "appId": 4693960,
+            "name": "Hunting Simulator 3 - Classic American Hunter Pack",
+            "score": 60
+          }
+        ]
+      },
+      {
+        "appId": 2377020,
+        "kind": "search",
+        "reason": "Validated title match",
+        "score": 100,
+        "parentChain": [],
+        "candidates": [
+          {
+            "appId": 2377020,
+            "name": "Unbroken: The Awakening",
+            "score": 100
+          }
+        ]
+      },
+      {
+        "appId": 3710840,
+        "kind": "search",
+        "reason": "Validated title match",
+        "score": 100,
+        "parentChain": [],
+        "candidates": [
+          {
+            "appId": 3710840,
+            "name": "House Flipper Remastered Collection",
+            "score": 100
+          }
+        ]
+      },
+      {
+        "appId": 645730,
+        "kind": "dlc-parent",
+        "reason": "Verified DLC parent",
+        "score": 100,
+        "parentChain": [
+          {
+            "appId": 4996080,
+            "name": "RESONANCE OF FATE™/END OF ETERNITY™ ENHANCED REMASTER",
+            "parentAppId": 645730
+          }
+        ],
+        "candidates": [
+          {
+            "appId": 4996080,
+            "name": "RESONANCE OF FATE™/END OF ETERNITY™ ENHANCED REMASTER",
+            "score": 100
+          }
+        ]
+      }
+    ],
+    "fieldAges": [
+      {
+        "appId": 2482760,
+        "detailsAgeMs": 3854,
+        "tagsAgeMs": 3480,
+        "reviewsAgeMs": 3074
+      },
+      {
+        "appId": 2377020,
+        "detailsAgeMs": 2587,
+        "tagsAgeMs": 2125,
+        "reviewsAgeMs": 2211
+      },
+      {
+        "appId": 3710840,
+        "detailsAgeMs": 1665,
+        "tagsAgeMs": 1269,
+        "reviewsAgeMs": 1185
+      },
+      {
+        "appId": 4996080,
+        "detailsAgeMs": 713,
+        "tagsAgeMs": null,
+        "reviewsAgeMs": null
+      },
+      {
+        "appId": 645730,
+        "detailsAgeMs": 456,
+        "tagsAgeMs": 145,
+        "reviewsAgeMs": 2
+      }
+    ]
+  },
+  "requests": [
+    {
+      "kind": "search",
+      "status": 200,
+      "ms": 487,
+      "bytes": 1296
+    },
+    {
+      "kind": "details",
+      "status": 200,
+      "ms": 311,
+      "bytes": 19725
+    },
+    {
+      "kind": "tags",
+      "status": 200,
+      "ms": 345,
+      "bytes": 157954
+    },
+    {
+      "kind": "reviews",
+      "status": 200,
+      "ms": 671,
+      "bytes": 4491
+    },
+    {
+      "kind": "search",
+      "status": 200,
+      "ms": 232,
+      "bytes": 429
+    },
+    {
+      "kind": "details",
+      "status": 200,
+      "ms": 246,
+      "bytes": 38180
+    },
+    {
+      "kind": "reviews",
+      "status": 200,
+      "ms": 256,
+      "bytes": 1670
+    },
+    {
+      "kind": "tags",
+      "status": 200,
+      "ms": 427,
+      "bytes": 207101
+    },
+    {
+      "kind": "search",
+      "status": 200,
+      "ms": 225,
+      "bytes": 453
+    },
+    {
+      "kind": "details",
+      "status": 200,
+      "ms": 225,
+      "bytes": 26158
+    },
+    {
+      "kind": "tags",
+      "status": 200,
+      "ms": 364,
+      "bytes": 200822
+    },
+    {
+      "kind": "reviews",
+      "status": 200,
+      "ms": 372,
+      "bytes": 2428
+    },
+    {
+      "kind": "search",
+      "status": 200,
+      "ms": 225,
+      "bytes": 462
+    },
+    {
+      "kind": "details",
+      "status": 200,
+      "ms": 237,
+      "bytes": 11937
+    },
+    {
+      "kind": "details",
+      "status": 200,
+      "ms": 253,
+      "bytes": 15271
+    },
+    {
+      "kind": "tags",
+      "status": 200,
+      "ms": 294,
+      "bytes": 118738
+    },
+    {
+      "kind": "reviews",
+      "status": 200,
+      "ms": 342,
+      "bytes": 1008
+    }
+  ]
+}

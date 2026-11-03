@@ -1,0 +1,330 @@
+{
+  "checkedAt": "2026-11-03T16:38:12.190Z",
+  "environment": "Live Steam requests from Node fetch; actual Chromium DOMParser; shared provider engine without UI/network-image loading. One connection; not a representative p95 benchmark.",
+  "results": [
+    {
+      "title": "Ecstatica",
+      "appId": 4834840,
+      "name": "Ecstatica",
+      "match": {
+        "kind": "search",
+        "originalAppId": 4834840,
+        "parentChain": [],
+        "score": 100,
+        "reason": "Validated title match",
+        "candidates": [
+          {
+            "appId": 4834840,
+            "name": "Ecstatica",
+            "score": 100
+          },
+          {
+            "appId": 4834850,
+            "name": "Ecstatica II",
+            "score": null
+          },
+          {
+            "appId": 5406230,
+            "name": "Ecstatica Soundtrack",
+            "score": 67
+          },
+          {
+            "appId": 5307880,
+            "name": "Ecstatica Demo",
+            "score": 67
+          },
+          {
+            "appId": 5406240,
+            "name": "Ecstatica II Soundtrack",
+            "score": null
+          },
+          {
+            "appId": 5418150,
+            "name": "Ecstatica - DOSBox version",
+            "score": 50
+          },
+          {
+            "appId": 5307890,
+            "name": "Ecstatica II Demo",
+            "score": null
+          },
+          {
+            "appId": 5418170,
+            "name": "Ecstatica II - DOSBOX version",
+            "score": null
+          }
+        ]
+      },
+      "tags": [
+        "Exploration",
+        "Action",
+        "Action-Adventure",
+        "3D",
+        "Stylized"
+      ],
+      "reviewInfo": {
+        "desc": "Positive",
+        "percent": 100,
+        "total": 44,
+        "positive": 44,
+        "negative": 0
+      },
+      "tagsReadyMs": 1354,
+      "warmPeekMs": 0.2,
+      "warmTags": [
+        "Exploration",
+        "Action",
+        "Action-Adventure",
+        "3D",
+        "Stylized"
+      ]
+    },
+    {
+      "title": "ELDEN RING Shadow of the Erdtree",
+      "appId": 1245620,
+      "name": "ELDEN RING",
+      "match": {
+        "kind": "dlc-parent",
+        "originalAppId": 2778580,
+        "parentChain": [
+          {
+            "appId": 2778580,
+            "name": "ELDEN RING Shadow of the Erdtree",
+            "parentAppId": 1245620
+          }
+        ],
+        "score": 100,
+        "reason": "Verified DLC parent",
+        "candidates": [
+          {
+            "appId": 2778580,
+            "name": "ELDEN RING Shadow of the Erdtree",
+            "score": 100
+          },
+          {
+            "appId": 2778590,
+            "name": "ELDEN RING Shadow of the Erdtree Premium Bundle",
+            "score": 82
+          }
+        ]
+      },
+      "tags": [
+        "Souls-like",
+        "Open World",
+        "Dark Fantasy",
+        "RPG",
+        "Difficult"
+      ],
+      "reviewInfo": {
+        "desc": "Very Positive",
+        "percent": 93,
+        "total": 1160993,
+        "positive": 1080337,
+        "negative": 80656
+      },
+      "tagsReadyMs": 1282,
+      "warmPeekMs": 0,
+      "warmTags": [
+        "Souls-like",
+        "Open World",
+        "Dark Fantasy",
+        "RPG",
+        "Difficult"
+      ]
+    }
+  ],
+  "diagnostics": {
+    "coreVersion": "1.0.0",
+    "schema": 3,
+    "resolver": 2,
+    "provider": 2,
+    "capturedAt": "2026-11-03T16:38:12.181Z",
+    "settings": {
+      "preload": "nearby",
+      "theme": "site",
+      "debug": false,
+      "reviewPurchaseType": 1
+    },
+    "cache": {
+      "details": 3,
+      "tags": 2,
+      "reviews": 2,
+      "mappings": 4,
+      "corrections": 0,
+      "negative": 0
+    },
+    "scheduler": {
+      "started": 9,
+      "shared": 0,
+      "cancelled": 0,
+      "retried": 0,
+      "peakActive": 2,
+      "active": 0,
+      "queued": 0
+    },
+    "measurements": {
+      "requests": 9,
+      "bytes": 461581,
+      "previews": 2,
+      "tagCacheHits": 0,
+      "previewCacheHits": 2,
+      "tagReadyMs": [
+        1352,
+        1282
+      ],
+      "errors": []
+    },
+    "matches": [
+      {
+        "appId": 4834840,
+        "kind": "search",
+        "reason": "Validated title match",
+        "score": 100,
+        "parentChain": [],
+        "candidates": [
+          {
+            "appId": 4834840,
+            "name": "Ecstatica",
+            "score": 100
+          },
+          {
+            "appId": 4834850,
+            "name": "Ecstatica II",
+            "score": null
+          },
+          {
+            "appId": 5406230,
+            "name": "Ecstatica Soundtrack",
+            "score": 67
+          },
+          {
+            "appId": 5307880,
+            "name": "Ecstatica Demo",
+            "score": 67
+          },
+          {
+            "appId": 5406240,
+            "name": "Ecstatica II Soundtrack",
+            "score": null
+          },
+          {
+            "appId": 5418150,
+            "name": "Ecstatica - DOSBox version",
+            "score": 50
+          },
+          {
+            "appId": 5307890,
+            "name": "Ecstatica II Demo",
+            "score": null
+          },
+          {
+            "appId": 5418170,
+            "name": "Ecstatica II - DOSBOX version",
+            "score": null
+          }
+        ]
+      },
+      {
+        "appId": 1245620,
+        "kind": "dlc-parent",
+        "reason": "Verified DLC parent",
+        "score": 100,
+        "parentChain": [
+          {
+            "appId": 2778580,
+            "name": "ELDEN RING Shadow of the Erdtree",
+            "parentAppId": 1245620
+          }
+        ],
+        "candidates": [
+          {
+            "appId": 2778580,
+            "name": "ELDEN RING Shadow of the Erdtree",
+            "score": 100
+          },
+          {
+            "appId": 2778590,
+            "name": "ELDEN RING Shadow of the Erdtree Premium Bundle",
+            "score": 82
+          }
+        ]
+      }
+    ],
+    "fieldAges": [
+      {
+        "appId": 4834840,
+        "detailsAgeMs": 2375,
+        "tagsAgeMs": 1864,
+        "reviewsAgeMs": 1624
+      },
+      {
+        "appId": 2778580,
+        "detailsAgeMs": 1150,
+        "tagsAgeMs": null,
+        "reviewsAgeMs": null
+      },
+      {
+        "appId": 1245620,
+        "detailsAgeMs": 877,
+        "tagsAgeMs": 343,
+        "reviewsAgeMs": 6
+      }
+    ]
+  },
+  "requests": [
+    {
+      "kind": "search",
+      "status": 200,
+      "ms": 471,
+      "bytes": 3709
+    },
+    {
+      "kind": "details",
+      "status": 200,
+      "ms": 332,
+      "bytes": 23454
+    },
+    {
+      "kind": "tags",
+      "status": 200,
+      "ms": 443,
+      "bytes": 147575
+    },
+    {
+      "kind": "reviews",
+      "status": 200,
+      "ms": 636,
+      "bytes": 6235
+    },
+    {
+      "kind": "search",
+      "status": 200,
+      "ms": 214,
+      "bytes": 790
+    },
+    {
+      "kind": "details",
+      "status": 200,
+      "ms": 251,
+      "bytes": 19576
+    },
+    {
+      "kind": "details",
+      "status": 200,
+      "ms": 266,
+      "bytes": 32160
+    },
+    {
+      "kind": "tags",
+      "status": 200,
+      "ms": 494,
+      "bytes": 227267
+    },
+    {
+      "kind": "reviews",
+      "status": 200,
+      "ms": 762,
+      "bytes": 1950
+    }
+  ]
+}

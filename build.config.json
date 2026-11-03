@@ -1,0 +1,9 @@
+{
+  "site": "1337x",
+  "output": "1337xSteamHoverPreview.js",
+  "adapter": "src/adapters/1337x.mjs",
+  "factory": "create1337xAdapter",
+  "cleaner": "cleanTorrentTitle",
+  "canonicalCore": false,
+  "corePath": "vendor/steam-hover-core/src/core"
+}

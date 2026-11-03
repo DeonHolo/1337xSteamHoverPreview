@@ -1,0 +1,375 @@
+{
+  "checkedAt": "2026-11-03T17:41:07.273Z",
+  "localDate": "2026-11-04",
+  "timezone": "Asia/Singapore",
+  "coreVersion": "1.0.1",
+  "resolverVersion": 3,
+  "releases": [
+    {
+      "site": "csrinru",
+      "userscript": "csrinruSteamHoverPreview.user.js",
+      "version": "4.0.1",
+      "sha256": "86685614c07e94d55b441032ba1f04eaf9bdcedb2d2a226d0687ff62627e1bc6",
+      "nodeTestsPassed": 51,
+      "requiredChecks": [
+        {
+          "command": "npm run lint",
+          "exitCode": 0
+        },
+        {
+          "command": "npm test",
+          "exitCode": 0
+        },
+        {
+          "command": "npm run check",
+          "exitCode": 0
+        },
+        {
+          "command": "npm run format:check",
+          "exitCode": 0
+        }
+      ]
+    },
+    {
+      "site": "1337x",
+      "userscript": "1337xSteamHoverPreview.js",
+      "version": "5.0.1",
+      "sha256": "3abf670f9f89a4888d29a4ec92b5b003fb3041ef0630f7507768d7c88345c2cd",
+      "nodeTestsPassed": 48,
+      "requiredChecks": [
+        {
+          "command": "npm run lint",
+          "exitCode": 0
+        },
+        {
+          "command": "npm test",
+          "exitCode": 0
+        },
+        {
+          "command": "npm run check",
+          "exitCode": 0
+        },
+        {
+          "command": "npm run format:check",
+          "exitCode": 0
+        }
+      ]
+    }
+  ],
+  "browser": {
+    "checkedAt": "2026-11-03T17:36:41.564Z",
+    "checksPassed": 35,
+    "failures": 0,
+    "checks": [
+      {
+        "name": "1337x: actual tags in first card, reviews independent, no speculative batch",
+        "status": "passed",
+        "durationMs": 1399,
+        "requestCounts": {
+          "search": 1,
+          "details": 1,
+          "tags": 1,
+          "reviews": 1
+        }
+      },
+      {
+        "name": "1337x: saved actual tags survive page reload",
+        "status": "passed",
+        "durationMs": 834
+      },
+      {
+        "name": "1337x: a DLC resolves all fields and links to its verified base",
+        "status": "passed",
+        "durationMs": 753
+      },
+      {
+        "name": "1337x: repeated source listings reuse AppID details and actual tags",
+        "status": "passed",
+        "durationMs": 926
+      },
+      {
+        "name": "1337x: absent tags settle explicitly and retry fills the same card",
+        "status": "passed",
+        "durationMs": 863
+      },
+      {
+        "name": "1337x: rapid pointer changes cannot overwrite the next game",
+        "status": "passed",
+        "durationMs": 1000
+      },
+      {
+        "name": "1337x: zero reviews is a visible state",
+        "status": "passed",
+        "durationMs": 1297
+      },
+      {
+        "name": "1337x: failed reviews can be retried without resetting media",
+        "status": "passed",
+        "durationMs": 2182
+      },
+      {
+        "name": "1337x: keyboard and theatre focus remain contained and restore",
+        "status": "passed",
+        "durationMs": 712
+      },
+      {
+        "name": "1337x: wrong-game correction survives reload",
+        "status": "passed",
+        "durationMs": 1150
+      },
+      {
+        "name": "1337x: dynamic game descriptions cannot inject markup",
+        "status": "passed",
+        "durationMs": 623
+      },
+      {
+        "name": "1337x: preload starts after load and remains bounded when hidden",
+        "status": "passed",
+        "durationMs": 1115,
+        "peakRequests": 1,
+        "requestCounts": {
+          "search": 2,
+          "details": 2,
+          "tags": 2,
+          "reviews": 2
+        }
+      },
+      {
+        "name": "csrinru: actual tags in first card, reviews independent, no speculative batch",
+        "status": "passed",
+        "durationMs": 1326,
+        "requestCounts": {
+          "search": 1,
+          "details": 1,
+          "tags": 1,
+          "reviews": 1
+        }
+      },
+      {
+        "name": "csrinru: saved actual tags survive page reload",
+        "status": "passed",
+        "durationMs": 868
+      },
+      {
+        "name": "csrinru: a DLC resolves all fields and links to its verified base",
+        "status": "passed",
+        "durationMs": 731
+      },
+      {
+        "name": "csrinru: repeated source listings reuse AppID details and actual tags",
+        "status": "passed",
+        "durationMs": 899
+      },
+      {
+        "name": "csrinru: absent tags settle explicitly and retry fills the same card",
+        "status": "passed",
+        "durationMs": 829
+      },
+      {
+        "name": "csrinru: rapid pointer changes cannot overwrite the next game",
+        "status": "passed",
+        "durationMs": 999
+      },
+      {
+        "name": "csrinru: zero reviews is a visible state",
+        "status": "passed",
+        "durationMs": 1281
+      },
+      {
+        "name": "csrinru: failed reviews can be retried without resetting media",
+        "status": "passed",
+        "durationMs": 2244
+      },
+      {
+        "name": "csrinru: keyboard and theatre focus remain contained and restore",
+        "status": "passed",
+        "durationMs": 753
+      },
+      {
+        "name": "csrinru: wrong-game correction survives reload",
+        "status": "passed",
+        "durationMs": 1232
+      },
+      {
+        "name": "csrinru: dynamic game descriptions cannot inject markup",
+        "status": "passed",
+        "durationMs": 630
+      },
+      {
+        "name": "csrinru: preload starts after load and remains bounded when hidden",
+        "status": "passed",
+        "durationMs": 1126,
+        "peakRequests": 1,
+        "requestCounts": {
+          "search": 2,
+          "details": 2,
+          "tags": 2,
+          "reviews": 2
+        }
+      },
+      {
+        "name": "1337x: settings menu persists preload and theme preferences",
+        "status": "passed",
+        "durationMs": 1274
+      },
+      {
+        "name": "csrinru: settings menu persists preload and theme preferences",
+        "status": "passed",
+        "durationMs": 1284
+      },
+      {
+        "name": "1337x: regression failure preview locks so its recovery controls are clickable",
+        "status": "passed",
+        "durationMs": 413
+      },
+      {
+        "name": "1337x: regression original typography and sizing with plain reviews and blue actions",
+        "status": "passed",
+        "durationMs": 2883
+      },
+      {
+        "name": "csrinru: regression failure preview locks so its recovery controls are clickable",
+        "status": "passed",
+        "durationMs": 401
+      },
+      {
+        "name": "csrinru: regression original typography and sizing with plain reviews and blue actions",
+        "status": "passed",
+        "durationMs": 2685
+      },
+      {
+        "name": "1337x: regression Windows icons work on uploader pages without a Games link or uploader column",
+        "status": "passed",
+        "durationMs": 650
+      },
+      {
+        "name": "1337x: protected torrent titles remain eligible",
+        "status": "passed",
+        "durationMs": 1666
+      },
+      {
+        "name": "csrinru: game named Guide, AppID copy, and latest-post URL",
+        "status": "passed",
+        "durationMs": 722
+      },
+      {
+        "name": "1337x: original pipeline controlled comparison",
+        "status": "passed",
+        "durationMs": 1764
+      },
+      {
+        "name": "csrinru: original pipeline controlled comparison",
+        "status": "passed",
+        "durationMs": 1810
+      }
+    ],
+    "benchmarks": [
+      {
+        "site": "1337x",
+        "scenario": "new cold exact match",
+        "timeToRealTagsMs": 501,
+        "counts": {
+          "search": 1,
+          "details": 1,
+          "tags": 1,
+          "reviews": 1
+        }
+      },
+      {
+        "site": "1337x",
+        "scenario": "new warm persisted tags",
+        "timeToRealTagsMs": 48,
+        "counts": {
+          "reviews": 1
+        }
+      },
+      {
+        "site": "csrinru",
+        "scenario": "new cold exact match",
+        "timeToRealTagsMs": 480,
+        "counts": {
+          "search": 1,
+          "details": 1,
+          "tags": 1,
+          "reviews": 1
+        }
+      },
+      {
+        "site": "csrinru",
+        "scenario": "new warm persisted tags",
+        "timeToRealTagsMs": 45,
+        "counts": {
+          "reviews": 1
+        }
+      },
+      {
+        "site": "1337x",
+        "scenario": "original cold exact match; legacy reviews mocked valid",
+        "firstCardMs": 1144,
+        "firstCardHasActualTags": false,
+        "requiresSecondHoverForVisibleTags": true,
+        "timeToTagResponseMs": 1237,
+        "timeToVisibleTagsIncludingSecondHoverMs": 1617,
+        "counts": {
+          "search": 1,
+          "batch": 1,
+          "details": 5,
+          "reviews": 1,
+          "tags": 1
+        }
+      },
+      {
+        "site": "csrinru",
+        "scenario": "original cold exact match; legacy reviews mocked valid",
+        "firstCardMs": 1168,
+        "firstCardHasActualTags": false,
+        "requiresSecondHoverForVisibleTags": true,
+        "timeToTagResponseMs": 1266,
+        "timeToVisibleTagsIncludingSecondHoverMs": 1643,
+        "counts": {
+          "search": 1,
+          "batch": 1,
+          "details": 5,
+          "reviews": 1,
+          "tags": 1
+        }
+      }
+    ],
+    "limitations": [
+      "Hidden-state logic is simulated; browser freezing/discarding is outside this harness.",
+      "Fixtures do not establish current live-site markup, CSP, script-manager, or media-codec compatibility.",
+      "The original baseline receives a valid legacy review response to isolate pipeline work from endpoint retirement."
+    ]
+  },
+  "live": {
+    "checkedAt": "2026-11-03T17:33:10.061Z",
+    "report": "live-reported-titles-2026-11-04.json",
+    "results": [
+      {
+        "title": "Hunting Simulator 3: Apex Predator Edition (v1.0.0.451.118880 + 2 DLCs, MULTI11) [FitGirl Repack]",
+        "appId": 2482760,
+        "name": "Hunting Simulator 3",
+        "tagsReadyMs": 1188
+      },
+      {
+        "title": "Unbroken The Awakening-TENOKE",
+        "appId": 2377020,
+        "name": "Unbroken: The Awakening",
+        "tagsReadyMs": 948
+      },
+      {
+        "title": "House Flipper Remastered Collection Update v1 26303-RUNE",
+        "appId": 3710840,
+        "name": "House Flipper Remastered Collection",
+        "tagsReadyMs": 856
+      },
+      {
+        "title": "Resonance of Fate (End of Eternity) 4K/HD Edition - ENHANCED REMASTER (Build 259000) [FitGirl Repack]",
+        "appId": 645730,
+        "name": "RESONANCE OF FATE™/END OF ETERNITY™ 4K/HD EDITION",
+        "tagsReadyMs": 1040
+      }
+    ]
+  },
+  "note": "Local rebuilt artifacts; no publishing, push, or browser installation. Test totals include shared scenarios run in both repositories. Browser checks use synthetic pages and mocked transport; live engine smoke tests use real Steam responses without UI/media downloads."
+}

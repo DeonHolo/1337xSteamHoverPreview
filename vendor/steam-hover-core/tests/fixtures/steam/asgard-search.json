@@ -1,0 +1,60 @@
+{
+  "checkedAt": "2026-11-03T17:46:23.902Z",
+  "rawTitle": "Asgard's Fall - Viking Survivors (v1.0.0.w)",
+  "title": "Asgard's Fall - Viking Survivors",
+  "normalized": "asgards fall viking survivors",
+  "queries": ["Asgard's Fall - Viking Survivors"],
+  "searches": [
+    {
+      "term": "Asgard's Fall - Viking Survivors",
+      "status": 200,
+      "total": 0,
+      "items": []
+    },
+    {
+      "term": "Asgard's Fall Viking Survivors",
+      "status": 200,
+      "total": 1,
+      "items": [
+        {
+          "id": 2780710,
+          "name": "Asgard's Fall — Viking Survivors",
+          "type": "app",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "term": "asgards fall viking survivors",
+      "status": 200,
+      "total": 1,
+      "items": [
+        {
+          "id": 2780710,
+          "name": "Asgard's Fall — Viking Survivors",
+          "type": "app",
+          "score": 100
+        }
+      ]
+    },
+    {
+      "term": "Asgard's Fall — Viking Survivors",
+      "status": 200,
+      "total": 0,
+      "items": []
+    },
+    {
+      "term": "Asgard's Fall",
+      "status": 200,
+      "total": 1,
+      "items": [
+        {
+          "id": 2780710,
+          "name": "Asgard's Fall — Viking Survivors",
+          "type": "app",
+          "score": 100
+        }
+      ]
+    }
+  ]
+}

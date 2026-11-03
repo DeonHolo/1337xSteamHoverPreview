@@ -1,0 +1,380 @@
+{
+  "checkedAt": "2026-11-03T18:32:55.902Z",
+  "localDate": "2026-11-04",
+  "timezone": "Asia/Singapore",
+  "status": "unpublished draft",
+  "coreVersion": "1.0.4",
+  "resolver": 7,
+  "releases": [
+    {
+      "site": "CS.RIN.RU",
+      "userscriptVersion": "4.00",
+      "packageVersion": "4.0.0",
+      "userscript": "csrinruSteamHoverPreview.user.js",
+      "bytes": 234381,
+      "sha256": "a34e27286a1d0d6b47815af129f7338382548063ea5a53be239659bd4961dea9",
+      "nodeTestsPassed": 64,
+      "checks": [
+        {
+          "command": "npm run lint",
+          "exitCode": 0
+        },
+        {
+          "command": "npm test",
+          "exitCode": 0
+        },
+        {
+          "command": "npm run check",
+          "exitCode": 0
+        },
+        {
+          "command": "npm run format:check",
+          "exitCode": 0
+        }
+      ]
+    },
+    {
+      "site": "1337x",
+      "userscriptVersion": "5.00",
+      "packageVersion": "5.0.0",
+      "userscript": "1337xSteamHoverPreview.js",
+      "bytes": 234028,
+      "sha256": "82ba66e2580992b0f1755623d3806f1523ff40fe926a15cfed38fc4c91eb9d4e",
+      "nodeTestsPassed": 61,
+      "checks": [
+        {
+          "command": "npm run lint",
+          "exitCode": 0
+        },
+        {
+          "command": "npm test",
+          "exitCode": 0
+        },
+        {
+          "command": "npm run check",
+          "exitCode": 0
+        },
+        {
+          "command": "npm run format:check",
+          "exitCode": 0
+        }
+      ]
+    }
+  ],
+  "browser": {
+    "checkedAt": "2026-11-03T18:29:30.671Z",
+    "passed": 49,
+    "failed": 0,
+    "checks": [
+      {
+        "name": "1337x: actual tags in first card, reviews independent, no speculative batch",
+        "status": "passed",
+        "durationMs": 1489,
+        "requestCounts": {
+          "search": 1,
+          "details": 1,
+          "tags": 1,
+          "reviews": 1
+        }
+      },
+      {
+        "name": "1337x: saved actual tags survive page reload",
+        "status": "passed",
+        "durationMs": 919
+      },
+      {
+        "name": "1337x: a DLC resolves all fields and links to its verified base",
+        "status": "passed",
+        "durationMs": 829
+      },
+      {
+        "name": "1337x: repeated source listings reuse AppID details and actual tags",
+        "status": "passed",
+        "durationMs": 958
+      },
+      {
+        "name": "1337x: absent tags settle explicitly and retry fills the same card",
+        "status": "passed",
+        "durationMs": 861
+      },
+      {
+        "name": "1337x: rapid pointer changes cannot overwrite the next game",
+        "status": "passed",
+        "durationMs": 1041
+      },
+      {
+        "name": "1337x: zero reviews is a visible state",
+        "status": "passed",
+        "durationMs": 1291
+      },
+      {
+        "name": "1337x: failed reviews can be retried without resetting media",
+        "status": "passed",
+        "durationMs": 2287
+      },
+      {
+        "name": "1337x: keyboard and theatre focus remain contained and restore",
+        "status": "passed",
+        "durationMs": 783
+      },
+      {
+        "name": "1337x: wrong-game correction survives reload",
+        "status": "passed",
+        "durationMs": 1269
+      },
+      {
+        "name": "1337x: dynamic game descriptions cannot inject markup",
+        "status": "passed",
+        "durationMs": 730
+      },
+      {
+        "name": "1337x: preload starts after load and remains bounded when hidden",
+        "status": "passed",
+        "durationMs": 1167,
+        "peakRequests": 1,
+        "requestCounts": {
+          "search": 2,
+          "details": 2,
+          "tags": 2,
+          "reviews": 2
+        }
+      },
+      {
+        "name": "csrinru: actual tags in first card, reviews independent, no speculative batch",
+        "status": "passed",
+        "durationMs": 1445,
+        "requestCounts": {
+          "search": 1,
+          "details": 1,
+          "tags": 1,
+          "reviews": 1
+        }
+      },
+      {
+        "name": "csrinru: saved actual tags survive page reload",
+        "status": "passed",
+        "durationMs": 1033
+      },
+      {
+        "name": "csrinru: a DLC resolves all fields and links to its verified base",
+        "status": "passed",
+        "durationMs": 780
+      },
+      {
+        "name": "csrinru: repeated source listings reuse AppID details and actual tags",
+        "status": "passed",
+        "durationMs": 953
+      },
+      {
+        "name": "csrinru: absent tags settle explicitly and retry fills the same card",
+        "status": "passed",
+        "durationMs": 887
+      },
+      {
+        "name": "csrinru: rapid pointer changes cannot overwrite the next game",
+        "status": "passed",
+        "durationMs": 1058
+      },
+      {
+        "name": "csrinru: zero reviews is a visible state",
+        "status": "passed",
+        "durationMs": 1338
+      },
+      {
+        "name": "csrinru: failed reviews can be retried without resetting media",
+        "status": "passed",
+        "durationMs": 2251
+      },
+      {
+        "name": "csrinru: keyboard and theatre focus remain contained and restore",
+        "status": "passed",
+        "durationMs": 782
+      },
+      {
+        "name": "csrinru: wrong-game correction survives reload",
+        "status": "passed",
+        "durationMs": 1182
+      },
+      {
+        "name": "csrinru: dynamic game descriptions cannot inject markup",
+        "status": "passed",
+        "durationMs": 649
+      },
+      {
+        "name": "csrinru: preload starts after load and remains bounded when hidden",
+        "status": "passed",
+        "durationMs": 1141,
+        "peakRequests": 1,
+        "requestCounts": {
+          "search": 2,
+          "details": 2,
+          "tags": 2,
+          "reviews": 2
+        }
+      },
+      {
+        "name": "1337x: settings menu persists preload and theme preferences",
+        "status": "passed",
+        "durationMs": 1327
+      },
+      {
+        "name": "csrinru: settings menu persists preload and theme preferences",
+        "status": "passed",
+        "durationMs": 1277
+      },
+      {
+        "name": "1337x: regression failure preview locks so its recovery controls are clickable",
+        "status": "passed",
+        "durationMs": 882
+      },
+      {
+        "name": "1337x: regression original typography and sizing with plain reviews and blue actions",
+        "status": "passed",
+        "durationMs": 2760
+      },
+      {
+        "name": "csrinru: regression failure preview locks so its recovery controls are clickable",
+        "status": "passed",
+        "durationMs": 892
+      },
+      {
+        "name": "csrinru: regression original typography and sizing with plain reviews and blue actions",
+        "status": "passed",
+        "durationMs": 2719
+      },
+      {
+        "name": "1337x: regression Windows icons work on uploader pages without a Games link or uploader column",
+        "status": "passed",
+        "durationMs": 691
+      },
+      {
+        "name": "1337x: localized English alias resolves through Steam website search after API miss",
+        "status": "passed",
+        "durationMs": 832
+      },
+      {
+        "name": "1337x: reported MeowPower exclamation title resolves despite literal-query API miss",
+        "status": "passed",
+        "durationMs": 717
+      },
+      {
+        "name": "1337x: reported Asgard raw title uses punctuation-neutral Steam lookup",
+        "status": "passed",
+        "durationMs": 679
+      },
+      {
+        "name": "1337x: bundled Fuse recovers a misspelled subtitle through a title-prefix candidate",
+        "status": "passed",
+        "durationMs": 873
+      },
+      {
+        "name": "1337x: failed lookup offers returned suggestions and switches to Wrong game after selection",
+        "status": "passed",
+        "durationMs": 885
+      },
+      {
+        "name": "1337x: ambiguous failures show choices directly without a Wrong game toggle",
+        "status": "passed",
+        "durationMs": 1356
+      },
+      {
+        "name": "csrinru: localized English alias resolves through Steam website search after API miss",
+        "status": "passed",
+        "durationMs": 850
+      },
+      {
+        "name": "csrinru: reported MeowPower exclamation title resolves despite literal-query API miss",
+        "status": "passed",
+        "durationMs": 691
+      },
+      {
+        "name": "csrinru: reported Asgard raw title uses punctuation-neutral Steam lookup",
+        "status": "passed",
+        "durationMs": 666
+      },
+      {
+        "name": "csrinru: bundled Fuse recovers a misspelled subtitle through a title-prefix candidate",
+        "status": "passed",
+        "durationMs": 890
+      },
+      {
+        "name": "csrinru: failed lookup offers returned suggestions and switches to Wrong game after selection",
+        "status": "passed",
+        "durationMs": 823
+      },
+      {
+        "name": "csrinru: ambiguous failures show choices directly without a Wrong game toggle",
+        "status": "passed",
+        "durationMs": 1242
+      },
+      {
+        "name": "1337x: manual chooser ranks names even across a rejected sequel identity",
+        "status": "passed",
+        "durationMs": 786
+      },
+      {
+        "name": "csrinru: manual chooser ranks names even across a rejected sequel identity",
+        "status": "passed",
+        "durationMs": 796
+      },
+      {
+        "name": "1337x: protected torrent titles remain eligible",
+        "status": "passed",
+        "durationMs": 1665
+      },
+      {
+        "name": "csrinru: game named Guide, AppID copy, and latest-post URL",
+        "status": "passed",
+        "durationMs": 704
+      },
+      {
+        "name": "1337x: original pipeline controlled comparison",
+        "status": "passed",
+        "durationMs": 1765
+      },
+      {
+        "name": "csrinru: original pipeline controlled comparison",
+        "status": "passed",
+        "durationMs": 3115
+      }
+    ],
+    "limitations": [
+      "Hidden-state logic is simulated; browser freezing/discarding is outside this harness.",
+      "Fixtures do not establish current live-site markup, CSP, script-manager, or media-codec compatibility.",
+      "The original baseline receives a valid legacy review response to isolate pipeline work from endpoint retirement."
+    ]
+  },
+  "live": {
+    "checkedAt": "2026-11-03T18:29:35.281Z",
+    "file": "live-draft-matching-2026-11-04.json",
+    "results": [
+      {
+        "title": "MeowPower!Yachiyo",
+        "appId": 2885530,
+        "score": 100,
+        "tags": [
+          "Action",
+          "Adventure",
+          "Casual",
+          "Action-Adventure",
+          "Arcade"
+        ],
+        "tagsReadyMs": 1090
+      },
+      {
+        "title": "Idle Demon Lord II",
+        "appId": 5245310,
+        "score": 100,
+        "tags": [
+          "Idler",
+          "Action RPG",
+          "Loot",
+          "Hack and Slash",
+          "Dark Fantasy"
+        ],
+        "tagsReadyMs": 1105
+      }
+    ]
+  },
+  "scope": "Synthetic browser checks for both standalone artifacts and public live Steam provider checks. No public posting, push or installation into the user browser. Unit counts repeat shared core scenarios across repositories."
+}

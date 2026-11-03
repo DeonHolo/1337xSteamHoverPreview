@@ -1,0 +1,9 @@
+node_modules/
+vendor/
+test-results/
+playwright-report/
+csrinruSteamHoverPreview.user.js
+1337xSteamHoverPreview.js
+docs/wiki/review-evidence-2026-11-03.json
+
+src/assets/fuse.basic.min.mjs

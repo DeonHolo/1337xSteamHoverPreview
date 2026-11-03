@@ -1,0 +1,129 @@
+[
+  {
+    "query": "Hunting Simulator 3: Apex Predator Edition",
+    "status": 200,
+    "items": []
+  },
+  {
+    "query": "Hunting Simulator 3",
+    "status": 200,
+    "items": [
+      {
+        "id": 2482760,
+        "name": "Hunting Simulator 3",
+        "type": "app"
+      },
+      {
+        "id": 4693970,
+        "name": "Hunting Simulator 3 - Apex Predator Pack",
+        "type": "app"
+      },
+      {
+        "id": 4693960,
+        "name": "Hunting Simulator 3 - Classic American Hunter Pack",
+        "type": "app"
+      }
+    ]
+  },
+  {
+    "query": "Unbroken The Awakening",
+    "status": 200,
+    "items": [
+      {
+        "id": 2377020,
+        "name": "Unbroken: The Awakening",
+        "type": "app"
+      }
+    ]
+  },
+  {
+    "query": "House Flipper Remastered Collection",
+    "status": 200,
+    "items": [
+      {
+        "id": 3710840,
+        "name": "House Flipper Remastered Collection",
+        "type": "app"
+      }
+    ]
+  },
+  {
+    "query": "Gunsmith Simulator Heavy Metal",
+    "status": 200,
+    "items": [
+      {
+        "id": 4213840,
+        "name": "Gunsmith Simulator - Heavy Metal DLC",
+        "type": "app"
+      }
+    ]
+  },
+  {
+    "query": "Maseylia Echoes of the Past",
+    "status": 200,
+    "items": [
+      {
+        "id": 2938870,
+        "name": "Maseylia : Echoes of the Past",
+        "type": "app"
+      },
+      {
+        "id": 3192990,
+        "name": "Maseylia : Echoes of the Past - Demo",
+        "type": "app"
+      }
+    ]
+  },
+  {
+    "query": "Resonance of Fate",
+    "status": 200,
+    "items": [
+      {
+        "id": 645730,
+        "name": "RESONANCE OF FATE™/END OF ETERNITY™ 4K/HD EDITION",
+        "type": "app"
+      },
+      {
+        "id": 4996080,
+        "name": "RESONANCE OF FATE™/END OF ETERNITY™ ENHANCED REMASTER",
+        "type": "app"
+      },
+      {
+        "id": 960720,
+        "name": "RESONANCE OF FATE™/END OF ETERNITY™ 4K/HD EDITION - HIGH RESOLUTION TEXTURE PACK",
+        "type": "app"
+      }
+    ]
+  },
+  {
+    "query": "Crackdown 3",
+    "status": 200,
+    "items": []
+  },
+  {
+    "query": "Legend of Defenders",
+    "status": 200,
+    "items": [
+      {
+        "id": 4740930,
+        "name": "Legend of Defenders",
+        "type": "app"
+      },
+      {
+        "id": 5222770,
+        "name": "Legend of Defenders - Supporter Pack",
+        "type": "app"
+      },
+      {
+        "id": 5471750,
+        "name": "Legend of Defenders - Halloween Castle",
+        "type": "app"
+      },
+      {
+        "id": 2442770,
+        "name": "Defenders of Legends",
+        "type": "app"
+      }
+    ]
+  }
+]

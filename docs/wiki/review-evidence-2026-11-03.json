@@ -1,0 +1,365 @@
+{
+  "checkedAt": "2026-11-03T15:35:24.987Z",
+  "observations": [
+    {
+      "site": "1337x",
+      "lines": 2940,
+      "functions": 92,
+      "cleanResults": [
+        {
+          "input": "Ghost of Tsushima DIRECTORS CUT [FitGirl Repack]",
+          "output": null
+        },
+        {
+          "input": "Lost in Random v1.0-TENOKE",
+          "output": null
+        },
+        {
+          "input": "Demonologist v1.0",
+          "output": null
+        },
+        {
+          "input": "The Walking Dead S1 Complete",
+          "output": "Walking Dead Complete"
+        },
+        {
+          "input": "Command & Conquer - Red Alert 3 [Repack]",
+          "output": "Command & Conquer"
+        },
+        {
+          "input": "[Info] [CRACKED] Ecstatica",
+          "output": null
+        },
+        {
+          "input": "[Info] The Beginner’s Guide",
+          "output": "The Beginner’s Guide"
+        },
+        {
+          "input": "FINAL FANTASY VII REMAKE INTERGRADE",
+          "output": "FINAL FANTASY VII REMAKE INTERGRADE"
+        },
+        {
+          "input": "S.T.A.L.K.E.R. 2: Heart of Chornobyl",
+          "output": "S T A L K E R 2: Heart of Chornobyl"
+        }
+      ],
+      "scores": {
+        "exactDlc": 50,
+        "unrelatedGame": 139
+      },
+      "newReviewEnvelopeAccepted": false,
+      "modernNormalization": "pok mon"
+    },
+    {
+      "site": "csrinru",
+      "lines": 2826,
+      "functions": 108,
+      "cleanResults": [
+        {
+          "input": "Ghost of Tsushima DIRECTORS CUT [FitGirl Repack]",
+          "output": "Ghost of Tsushima DIRECTORS CUT [FitGirl Repack]"
+        },
+        {
+          "input": "Lost in Random v1.0-TENOKE",
+          "output": "Lost in Random"
+        },
+        {
+          "input": "Demonologist v1.0",
+          "output": "Demonologist"
+        },
+        {
+          "input": "The Walking Dead S1 Complete",
+          "output": "The Walking Dead S1 Complete"
+        },
+        {
+          "input": "Command & Conquer - Red Alert 3 [Repack]",
+          "output": "Command & Conquer - Red Alert 3 [Repack]"
+        },
+        {
+          "input": "[Info] [CRACKED] Ecstatica",
+          "output": "Ecstatica"
+        },
+        {
+          "input": "[Info] The Beginner’s Guide",
+          "output": null
+        },
+        {
+          "input": "FINAL FANTASY VII REMAKE INTERGRADE",
+          "output": "FINAL FANTASY VII REMAKE INTERGRADE"
+        },
+        {
+          "input": "S.T.A.L.K.E.R. 2: Heart of Chornobyl",
+          "output": "S T A L K E R 2: Heart of Chornobyl"
+        }
+      ],
+      "scores": {
+        "exactDlc": 50,
+        "unrelatedGame": 139
+      },
+      "newReviewEnvelopeAccepted": false,
+      "modernNormalization": "pok mon"
+    },
+    {
+      "sharedNamedFunctions": 87,
+      "identicalNamedFunctions": 63,
+      "identicalFunctions": [
+        "escapeHtml",
+        "delay",
+        "getFreshCacheEntry",
+        "fetchBatch",
+        "waitForPreloadTurn",
+        "preloadNames",
+        "preloadTagsForNames",
+        "isUsableUrl",
+        "getUsableMediaUrl",
+        "getPreferredVideoUrl",
+        "getVideoQualityValue",
+        "getVideoSourceLabel",
+        "collectVideoSources",
+        "getMovieVideoSources",
+        "getMovieSources",
+        "normalizeSteamMedia",
+        "getMediaSortRank",
+        "orderSteamMediaItems",
+        "stopActiveVideo",
+        "stopTheatreVideo",
+        "getRenderMedia",
+        "renderMediaItem",
+        "getCurrentSteamUrl",
+        "bindVideoPlaybackFallback",
+        "getMediaThumbUrl",
+        "isScreenshotMedia",
+        "isVideoMedia",
+        "canOpenMediaTheatre",
+        "getTheatreCounterText",
+        "renderMediaThumbs",
+        "renderMediaCarousel",
+        "renderTheatreMediaItem",
+        "renderTheatreVideoControls",
+        "renderTheatreFooterControls",
+        "renderTheatre",
+        "setTheatreMedia",
+        "formatVideoTime",
+        "updateTheatreVideoControls",
+        "bindTheatreVideoEvents",
+        "loadTheatreVideoSource",
+        "playTheatreVideo",
+        "isTheatreOpen",
+        "getTheatreSelection",
+        "openTheatre",
+        "closeTheatre",
+        "toggleTheatreFullscreen",
+        "updateTheatreFullscreenButton",
+        "getTheatreVideoElement",
+        "toggleTheatreVideoPlayback",
+        "toggleTheatreVideoMute",
+        "seekTheatreVideo",
+        "toggleTheatreVideoFullscreen",
+        "setActiveMedia",
+        "playActiveVideo",
+        "waitForRequestSlot",
+        "stripEditionSuffixForSearch",
+        "getGenreTags",
+        "getTagSource",
+        "normalizeForMatch",
+        "getBaseMatchName",
+        "hasDlcNameMarker",
+        "getTokenOverlapScore",
+        "cancelHideTip"
+      ]
+    },
+    {
+      "probe": "multi-details",
+      "status": 400,
+      "finalUrl": "https://store.steampowered.com/api/appdetails?appids=620,570&cc=us&l=en",
+      "contentType": "application/json; charset=utf-8",
+      "ms": 560,
+      "bytes": 4,
+      "data": "null"
+    },
+    {
+      "probe": "single-details-dlc",
+      "status": 200,
+      "finalUrl": "https://store.steampowered.com/api/appdetails?appids=2778580&cc=us&l=en",
+      "contentType": "application/json; charset=utf-8",
+      "ms": 221,
+      "bytes": 19576,
+      "data": {
+        "2778580": {
+          "success": true,
+          "name": "ELDEN RING Shadow of the Erdtree",
+          "type": "dlc",
+          "fullgame": {
+            "appid": "1245620",
+            "name": "ELDEN RING"
+          },
+          "appId": 2778580,
+          "release": {
+            "coming_soon": false,
+            "date": "Jun 20, 2024"
+          },
+          "genres": [
+            {
+              "id": "1",
+              "description": "Action"
+            },
+            {
+              "id": "3",
+              "description": "RPG"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "probe": "legacy-reviews",
+      "status": 200,
+      "finalUrl": "https://store.steampowered.com/",
+      "contentType": "text/html; charset=UTF-8",
+      "ms": 914,
+      "bytes": 994444,
+      "data": "<!DOCTYPE html>\n<html class=\" responsive DesktopUI\" lang=\"en\"  >\n<head>\n\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n\t\t\t<meta name=\"view"
+    },
+    {
+      "probe": "new-reviews",
+      "status": 200,
+      "finalUrl": "https://api.steampowered.com/IUserReviewsService/GetAppReviews/v1/?input_json=%7B%22appid%22%3A620%2C%22filter%22%3A0%2C%22languages%22%3A%5B%22all%22%5D%2C%22review_type%22%3A0%2C%22purchase_type%22%3A1%2C%22num_per_page%22%3A1%2C%22cursor%22%3A%22*%22%2C%22day_range%22%3A0%7D",
+      "contentType": "application/json; charset=UTF-8",
+      "ms": 345,
+      "bytes": 2227,
+      "data": {
+        "keys": [
+          "response"
+        ],
+        "responseKeys": [
+          "query_summary",
+          "reviews",
+          "cursor",
+          "day_range_used",
+          "total_matching"
+        ],
+        "summary": {
+          "num_reviews": 1,
+          "review_score": 9,
+          "review_score_desc": "Overwhelmingly Positive",
+          "total_positive": 463202,
+          "total_negative": 6071,
+          "total_reviews": 469273
+        }
+      }
+    },
+    {
+      "probe": "ecstatica-search",
+      "status": 200,
+      "finalUrl": "https://store.steampowered.com/api/storesearch/?cc=us&l=en&term=Ecstatica",
+      "contentType": "application/json; charset=utf-8",
+      "ms": 225,
+      "bytes": 3709,
+      "data": {
+        "total": 10,
+        "items": [
+          {
+            "id": 4834840,
+            "name": "Ecstatica",
+            "type": "app"
+          },
+          {
+            "id": 4834850,
+            "name": "Ecstatica II",
+            "type": "app"
+          },
+          {
+            "id": 5406230,
+            "name": "Ecstatica Soundtrack",
+            "type": "app"
+          },
+          {
+            "id": 5307880,
+            "name": "Ecstatica Demo",
+            "type": "app"
+          },
+          {
+            "id": 5406240,
+            "name": "Ecstatica II Soundtrack",
+            "type": "app"
+          }
+        ]
+      }
+    },
+    {
+      "probe": "ecstatica-reviews",
+      "status": 200,
+      "finalUrl": "https://api.steampowered.com/IUserReviewsService/GetAppReviews/v1/?input_json=%7B%22appid%22%3A4834840%2C%22filter%22%3A0%2C%22languages%22%3A%5B%22all%22%5D%2C%22review_type%22%3A0%2C%22purchase_type%22%3A1%2C%22num_per_page%22%3A1%2C%22cursor%22%3A%22*%22%2C%22day_range%22%3A0%7D",
+      "contentType": "application/json; charset=UTF-8",
+      "ms": 347,
+      "bytes": 6235,
+      "data": {
+        "keys": [
+          "response"
+        ],
+        "responseKeys": [
+          "query_summary",
+          "reviews",
+          "cursor",
+          "day_range_used",
+          "total_matching"
+        ],
+        "summary": {
+          "num_reviews": 1,
+          "review_score": 7,
+          "review_score_desc": "Positive",
+          "total_positive": 44,
+          "total_negative": 0,
+          "total_reviews": 44
+        }
+      }
+    },
+    {
+      "probe": "ecstatica-details",
+      "status": 200,
+      "finalUrl": "https://store.steampowered.com/api/appdetails?appids=4834840&cc=us&l=en",
+      "contentType": "application/json; charset=utf-8",
+      "ms": 277,
+      "bytes": 23454,
+      "data": {
+        "4834840": {
+          "success": true,
+          "name": "Ecstatica",
+          "type": "game",
+          "appId": 4834840,
+          "release": {
+            "coming_soon": false,
+            "date": "Oct 26, 2026"
+          },
+          "genres": [
+            {
+              "id": "1",
+              "description": "Action"
+            },
+            {
+              "id": "25",
+              "description": "Adventure"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "probe": "ecstatica-tags",
+      "status": 200,
+      "finalUrl": "https://store.steampowered.com/app/4834840/?l=english",
+      "contentType": "text/html; charset=UTF-8",
+      "ms": 371,
+      "bytes": 147542,
+      "data": {
+        "tags": [
+          "Exploration",
+          "Action",
+          "Action-Adventure",
+          "3D",
+          "Stylized"
+        ]
+      }
+    }
+  ]
+}
