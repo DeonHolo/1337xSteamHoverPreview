@@ -1,0 +1,167 @@
+{
+  "recordedAt": "2026-11-05T05:41:08.126Z",
+  "release": "5.03",
+  "core": "1.0.9",
+  "resolver": 9,
+  "namingApproach": "General comparison and bounded retrieval, with source-content identity recovery. No per-game title/AppID alias table.",
+  "tests": {
+    "lint": "passed",
+    "node": {
+      "passed": 124,
+      "failed": 0
+    },
+    "build": "passed",
+    "generatedOutput": "passed",
+    "format": "passed",
+    "sharedSnapshot": "passed",
+    "nameCorpus": {
+      "officialSteamApps": 20,
+      "negativePairs": 25,
+      "unseenNamingVariants": 48,
+      "unseenNumberConflictPairs": 48,
+      "appIdIndependence": "All 20 positive name scores are checked again with changed AppIDs."
+    },
+    "browser": {
+      "generatedAt": "2026-11-05T05:37:55.597Z",
+      "passed": 77,
+      "failed": 0,
+      "adapters": [
+        "1337x",
+        "csrinru"
+      ],
+      "environment": "Headless Chromium, local HTML fixtures and deterministic mocked Steam transport; not a live-network benchmark.",
+      "limitations": [
+        "Hidden-state logic is simulated; browser freezing/discarding is outside this harness.",
+        "Fixtures do not establish current live-site markup, CSP, script-manager, or media-codec compatibility.",
+        "The original baseline receives a valid legacy review response to isolate pipeline work from endpoint retirement."
+      ]
+    },
+    "sourceRecovery": [
+      "Single scoped Steam link; unrelated sidebar excluded",
+      "Multiple links require choice",
+      "Validated app type and verified DLC parent",
+      "Timeout, abort and cache-clear late-result guards",
+      "A failed listing does not block another same-named source",
+      "Exact successes make no source-page request"
+    ]
+  },
+  "liveSteam": {
+    "checkedAt": "2026-11-05T05:34:33.444Z",
+    "environment": "Live Steam requests from Node fetch; actual Chromium DOMParser; shared provider engine without UI/network-image loading. One connection; not a representative p95 benchmark.",
+    "results": [
+      {
+        "query": "Disco Elysium",
+        "appId": 632470,
+        "name": "Disco Elysium - The Final Cut",
+        "score": 94,
+        "kind": "search",
+        "parentChain": [],
+        "tags": [
+          "RPG",
+          "Story Rich",
+          "Choices Matter",
+          "Detective",
+          "Isometric"
+        ],
+        "reviewCount": 132563
+      },
+      {
+        "query": "Disoc Elysium",
+        "appId": 632470,
+        "name": "Disco Elysium - The Final Cut",
+        "score": 90,
+        "kind": "search",
+        "parentChain": [],
+        "tags": [
+          "RPG",
+          "Story Rich",
+          "Choices Matter",
+          "Detective",
+          "Isometric"
+        ],
+        "reviewCount": 132563
+      },
+      {
+        "query": "This War of Mine Final Cut",
+        "appId": 282070,
+        "name": "This War of Mine",
+        "score": 94,
+        "kind": "search",
+        "parentChain": [],
+        "tags": [
+          "Survival",
+          "War",
+          "Atmospheric",
+          "Singleplayer",
+          "Strategy"
+        ],
+        "reviewCount": 98110
+      },
+      {
+        "query": "Ghost of Tsuhsima",
+        "appId": 2215430,
+        "name": "Ghost of Tsushima DIRECTOR'S CUT",
+        "score": 90,
+        "kind": "search",
+        "parentChain": [],
+        "tags": [
+          "Open World",
+          "Action",
+          "Story Rich",
+          "Singleplayer",
+          "Adventure"
+        ],
+        "reviewCount": 98596
+      },
+      {
+        "query": "Monster Hutner Wrold",
+        "appId": 582010,
+        "name": "Monster Hunter: World",
+        "score": 90,
+        "kind": "search",
+        "parentChain": [],
+        "tags": [
+          "Co-op",
+          "Multiplayer",
+          "Action",
+          "Open World",
+          "RPG"
+        ],
+        "reviewCount": 520496
+      },
+      {
+        "query": "The Elder Scrolls V Skyrim Special Edition",
+        "appId": 489830,
+        "name": "The Elder Scrolls V: Skyrim Special Edition",
+        "score": 100,
+        "kind": "search",
+        "parentChain": [],
+        "tags": [
+          "Open World",
+          "RPG",
+          "Fantasy",
+          "Adventure",
+          "Singleplayer"
+        ],
+        "reviewCount": 382649
+      }
+    ],
+    "requests": 32,
+    "limitations": [
+      "These six cases are provider-engine checks, not a catalog-wide accuracy or latency benchmark.",
+      "Source-content fallback uses isolated browser fixtures; this does not establish every live page layout or authentication/CSP combination."
+    ]
+  },
+  "limits": [
+    "An unrelated translation/nickname without an identifying source Steam link can still require manual selection.",
+    "Arbitrary franchise subtitles, distinct editions and uncertain AppIDs are not silently collapsed."
+  ],
+  "publication": {
+    "site": "Greasy Fork",
+    "url": "https://greasyfork.org/en/scripts/533774-1337x-steam-hover-preview",
+    "versionUrl": "https://greasyfork.org/en/scripts/533774-1337x-steam-hover-preview?version=1987112",
+    "method": "In-app browser form; generated code, public version and rendered version-only Markdown verified.",
+    "scriptSha256": "9ef28cbe11901a903caf6c52439edcb2d7f842d32f58b08e51367af78b0f2cf6",
+    "notes": "## 5.03\n\n- Improve matching across game titles with cut/edition labels, joined words, punctuation and minor spelling errors.\n- Recover renamed or localized games from a Steam link in the torrent description when name matching fails; offer choices when several games are linked.\n- Reduce false matches with demos, prologues and similarly named games.\n"
+  }
+}

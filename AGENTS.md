@@ -3,8 +3,8 @@
 Read CONTRIBUTING.md and docs/wiki/Home.md before changing behavior. The user's current request takes precedence over historical review notes.
 
 - This checkout owns src/adapters/1337x.mjs. Shared source is pinned under vendor/steam-hover-core; change the canonical CS.RIN source and synchronize it instead of patching the vendor snapshot.
-- This patch follows public 5.01. Keep its public userscript @version at 5.02 during local fixes; package metadata uses SemVer 5.0.2. Internal core/resolver versions may advance when needed.
-- Public changelogs use version-only headings, with no dates. Describe user-visible changes since public 5.01; omit internal iterations and already-public features.
+- This patch follows public 5.02. Keep its public userscript @version at 5.03 during local fixes; package metadata uses SemVer 5.0.3. Internal core/resolver versions may advance when needed.
+- Public changelogs use version-only headings, with no dates. Describe user-visible changes since public 5.02; omit internal iterations and already-public features.
 - The chooser supports a separate title search form with debounce/Enter, permissive ranking, explicit selection and cancellation/late-result guards. Preserve optional AppID/URL entry.
 - The root userscript is generated. Build from src/userscript-header.txt, shared core, and the site adapter. Preserve the public filename/name/namespace/update identity.
 - Actual Steam tags are essential. No genre substitution. A successful first meaningful card includes actual tags; reviews/images may finish independently. No Copy magnet feature.
@@ -19,4 +19,4 @@ Read CONTRIBUTING.md and docs/wiki/Home.md before changing behavior. The user's 
 - Use shared-core version/hash locks and field schema/provider/resolver versions. Change cache versions when provider or matching contracts require invalidation.
 - Update documentation for implemented behavior. Keep dated audit evidence distinct from release verification. Do not publish or push unless the user requests it.
 
-- Treat verified same-AppID renames separately from fuzzy spelling. Preserve Special/Anniversary/Definitive/Enhanced edition identity. Add aliases only with official evidence and validate the returned ID, name and app type.
+- Use general naming rules and source-content Steam links. Do not add per-game title/AppID alias tables. Keep complete identity scoring separate from broader retrieval queries; source evidence and failures remain scoped to their listing.

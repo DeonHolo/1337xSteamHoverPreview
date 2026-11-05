@@ -24,3 +24,7 @@ Genuine ambiguity still opens the choices automatically. Cancel closes the panel
 ## Correction placement
 
 Successful previews place the small Wrong game? button on the right of the game title. Long titles wrap in the remaining space. The release date stays below the title and the Steam action stays at the bottom-left. The correction form still opens beneath the card content; Cancel returns focus to the title-row button. Failed previews retain Choose Steam game… below their actions. CS.RIN and 1337x remain independently installed scripts with separate correction storage.
+
+## Automatic source recovery
+
+When general name matching fails or stays ambiguous, the script checks the source content for a Steam link. A single AppID is validated; multiple linked games require a choice. Normal successful matches do not fetch the source page. Saved corrections remain authoritative. See [general matching](General-Matching.md).

@@ -1,6 +1,6 @@
 # 1337x Steam Hover Preview wiki
 
-Current public version **5.02**, shared core **1.0.8**. Install the standalone [1337xSteamHoverPreview.js](../../1337xSteamHoverPreview.js) with a userscript manager; source modules and Node packages are development-only.
+Current public version **5.03**, shared core **1.0.9**. Install the standalone [1337xSteamHoverPreview.js](../../1337xSteamHoverPreview.js) with a userscript manager; source modules and Node packages are development-only.
 
 - [Search by name inside the chooser](Search-by-Name.md)
 - [Why matching failed and what changed](Matching-Explained.md)
@@ -15,7 +15,7 @@ Current public version **5.02**, shared core **1.0.8**. Install the standalone [
 - [Historical audit](Review-Findings-2026-11-03.md)
 - [Development commands](../../CONTRIBUTING.md)
 
-[Title identity and verified aliases](Title-Identity-and-Aliases.md) explains the Disco Elysium and Skyrim matching fixes.
+[General title matching](General-Matching.md) explains the naming rules, broader retrieval, source-link recovery and remaining limits.
 
 ## What appears on hover
 
@@ -23,7 +23,7 @@ The first meaningful successful card contains actual Steam tags. There is no gen
 
 Use the media arrows/thumbnails, click a trailer to start playback, and expand screenshots/trailers into theatre. Screenshot theatre stays within screenshots; after leaving a launched trailer for screenshots, navigation remains within screenshots. Escape closes theatre and restores its trigger. Alt+ArrowDown enters a keyboard-opened preview.
 
-The card retains Open on Steam and Magnet Download, including theatre actions. Magnet pages are retrieved only when the action is clicked, with retry/source-page recovery if unavailable. The native light palette and dark theme option remain supported.
+The card retains Open on Steam and Magnet Download, including theatre actions. Magnets are extracted and opened only when clicked, with retry/source-page recovery if unavailable. Failed title matching may also read the description page for a Steam link. The native light palette and dark theme option remain supported.
 
 Long titles wrap beside the small correction button. Open on Steam stays at the bottom-left; failed cards keep Choose Steam game… below their actions. The scripts remain separate installations with independent saved corrections.
 
@@ -43,4 +43,4 @@ Use the manager menu for settings, Clear cached Steam data, match correction imp
 
 Eligibility uses explicit Games categories/icons first, with uploader/release hints on mixed pages. A new mirror still needs compatible metadata and markup. A numeric link alone does not establish that a row is a game.
 
-See [current matching verification](title-identity-verification.json) for the published build, tested scope and remaining live-site/browser limitations.
+See [current matching verification](general-matching-verification.json) for the published build, tested scope and remaining live-site/browser limitations.

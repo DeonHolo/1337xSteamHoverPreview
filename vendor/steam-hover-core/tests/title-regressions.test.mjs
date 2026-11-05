@@ -192,7 +192,15 @@ test('Asgard punctuation variants preserve full matching identity and use a neut
     const variants = steamSearchQueries('Game 2: Remastered');
     assert.equal(variants[0], 'Game 2 Remastered');
     assert.ok(variants.every((query) => query.includes('2')));
-    assert.deepEqual(steamSearchQueries('Game 2 Mystery Subtitle'), ['Game 2 Mystery Subtitle']);
+    assert.deepEqual(steamSearchQueries('Game 2 Mystery Subtitle'), [
+        'Game 2 Mystery Subtitle',
+        'Game 2 Mystery',
+        'Game 2'
+    ]);
+    assert.ok(
+        scoreCandidate('Game 2 Mystery Subtitle', 'Game 2') < 85,
+        'Broader retrieval must not discard title words during scoring'
+    );
 });
 
 test('Asgard resolves the reported raw release name using recorded punctuation-sensitive Steam responses', async (t) => {

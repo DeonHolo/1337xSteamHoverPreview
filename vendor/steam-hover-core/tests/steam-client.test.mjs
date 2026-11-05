@@ -178,19 +178,19 @@ test('candidate scoring uses both directions and rejects sequel/remake/VR mismat
 
 const discoSkyrim = JSON.parse(readFileSync(new URL('./fixtures/steam/disco-skyrim.json', import.meta.url), 'utf8'));
 
-test('verified Disco rename is restricted to the returned AppID and the two official names', () => {
+test('cut-label matching is general, independent of AppID, and below exact-match priority', () => {
     const current = { appId: 632470, name: 'Disco Elysium - The Final Cut' };
-    assert.equal(scoreCandidate('Disco Elysium', current), 100);
+    assert.equal(scoreCandidate('Disco Elysium', current), 94);
     assert.equal(
         scoreCandidate('Disco Elysium - The Final Cut', { steam_appid: 632470, name: 'Disco Elysium', type: 'game' }),
-        100
+        94
     );
-    assert.ok(scoreCandidate('Disco Elysium', { ...current, appId: 1233220 }) < 85);
-    assert.ok(scoreCandidate('Disco Elysium', { ...current, type: 'dlc' }) < 85);
+    assert.equal(scoreCandidate('Disco Elysium', { ...current, appId: 1233220 }), 94);
     assert.ok(scoreCandidate('Disco Elysium', { ...current, name: 'Disco Elysium - The Final Cut Soundtrack' }) < 85);
     assert.ok(scoreCandidate('Disco Elysium 2', current) < 85);
-    assert.ok(scoreCandidate('Disco Elysium', 'Disco Elysium - The Final Cut') < 85);
-    assert.ok(scoreCandidate('Another Game', { appId: 10, name: 'Another Game - The Final Cut' }) < 85);
+    assert.equal(scoreCandidate('Disco Elysium', 'Disco Elysium - The Final Cut'), 94);
+    assert.equal(scoreCandidate('Another Game', { appId: 10, name: 'Another Game - The Final Cut' }), 94);
+    assert.equal(scoreCandidate('Another Game - Final Cut', 'Another Game - Extended Cut'), -Infinity);
 });
 
 test('Skyrim punctuation is harmless while Special Edition, original and VR remain separate identities', () => {
@@ -230,7 +230,7 @@ for (const [title, appId] of [
         const data = await f.client.loadPreview(source(title));
         assert.equal(data.appId, appId);
         assert.deepEqual(data.match.parentChain, []);
-        assert.equal(data.match.kind, appId === 632470 ? 'alias' : 'search');
+        assert.equal(data.match.kind, 'search');
         assert.deepEqual(data.tags, ['Exploration', 'Story Rich']);
         const detailIds = f.calls
             .filter((call) => call.url.includes('appdetails'))
@@ -243,7 +243,7 @@ for (const [title, appId] of [
     });
 }
 
-test('a stale or dishonest search name cannot bypass appdetails validation with a known alias ID', async (t) => {
+test('a stale search name cannot bypass appdetails validation with a title variant', async (t) => {
     const f = fixtureClient((url) => {
         if (url.pathname.includes('storesearch'))
             return { body: { items: [{ id: 632470, name: 'Disco Elysium - The Final Cut', type: 'app' }] } };
@@ -257,6 +257,321 @@ test('a stale or dishonest search name cannot bypass appdetails validation with 
         f.calls.some((call) => call.url.includes('/app/632470/')),
         false
     );
+});
+
+const generalMatching = JSON.parse(
+    readFileSync(new URL('./fixtures/steam/general-matching.json', import.meta.url), 'utf8')
+);
+const generalPositivePairs = [
+    [550, 'Left 4 Daed 2'],
+    [620, 'Portal II'],
+    [17470, 'Dead Spcae (2008)'],
+    [200260, 'Batman Arkham City GOTY Edition'],
+    [238010, 'Deus Ex Human Revoluton Directors Cut'],
+    [282070, 'This War of Mine - Final Cut'],
+    [292030, 'The Witcher 3 Wild Hunt Remaster Complete Edition'],
+    [373420, 'Divinity Original Sin Enhanced Edition'],
+    [387290, 'Ori And Blind Forest Definitive Edition'],
+    [480490, 'Prey'],
+    [489830, 'TheElderScrollsV Skyrim Special Edition'],
+    [578650, 'TheOuterWorlds'],
+    [582010, 'Monster Hutner Wrold'],
+    [611670, 'THE ELDER SCROLLS V SKYRIM VR'],
+    [632470, 'Disoc Elysium'],
+    [753640, 'The Outer Wilds'],
+    [1151640, 'Horizon Zero Dawn'],
+    [2215430, 'Ghost of Tsuhsima'],
+    [2780710, 'Asgards Fall - Viking Survivers'],
+    [2885530, 'Meow Power Yachiyo']
+];
+for (const [id, title] of generalPositivePairs)
+    test('general corpus accepts: ' + title, () => {
+        const actual = generalMatching.apps.find((item) => item.steam_appid === id);
+        const score = scoreCandidate(title, actual);
+        assert.ok(score >= 85, `${title} -> ${actual.name}: ${score}`);
+        assert.equal(
+            scoreCandidate(title, { ...actual, steam_appid: id + 100000000 }),
+            score,
+            'The name score must not depend on a memorized AppID'
+        );
+    });
+
+const generalNegativePairs = [
+    ['The Outer Wilds', 'The Outer Worlds'],
+    ['Walking Simulator', 'Talking Simulator'],
+    ['Dark Dawn', 'Dark Down'],
+    ['Star Wars', 'Star Wars 2'],
+    ['Portal2', 'Portal3'],
+    ['The Elder Scrolls V Skyrim', 'The Elder Scrolls V Skyrim Special Edition'],
+    ['Ori and the Blind Forest', 'Ori and the Blind Forest Definitive Edition'],
+    ['Divinity Original Sin', 'Divinity Original Sin Enhanced Edition'],
+    ['The Witcher 3 Wild Hunt', 'The Witcher 3 Wild Hunt Remastered'],
+    ['Life is Strange', 'Life is Strange: True Colors'],
+    ['Horizon Zero Dawn', 'Horizon Forbidden West'],
+    ['Mount and Blade', 'Mount and Blade: Warband'],
+    ['A Long Very Distinctive Game Title', 'A Long Very Distinctive Game Title Extra Stuff'],
+    ['God of War', 'War of God'],
+    ['Borderlands 2', 'Borderlands 3'],
+    ['Resident Evil 4', 'Resident Evil 4 Remake'],
+    ['Skyrim VR', 'Skyrim'],
+    ['The Walking Dead S1', 'The Walking Dead S2'],
+    ...['Demo', 'Prologue', 'Playtest', 'Soundtrack', 'Artbook', 'Benchmark', 'Dedicated Server'].map((suffix) => [
+        'A Long Very Distinctive Game Title',
+        'A Long Very Distinctive Game Title ' + suffix
+    ])
+];
+for (const [query, candidate] of generalNegativePairs)
+    test('general corpus rejects: ' + query + ' -> ' + candidate, () => {
+        assert.ok(scoreCandidate(query, candidate) < 85);
+    });
+
+test('unseen title stems follow the same naming grammar with no title/AppID table', () => {
+    for (const name of [
+        'Amber Harbor',
+        'Copper Orchard',
+        'Silver Lantern',
+        'Midnight Aviary',
+        'Crimson Atlas',
+        'Velvet Comet',
+        'Juniper Valley',
+        'Obsidian Garden'
+    ]) {
+        for (const suffix of [
+            'The Final Cut',
+            "Director's Cut",
+            'Extended Cut',
+            'Complete Edition',
+            'Digital Deluxe Edition',
+            'GOTY Edition'
+        ]) {
+            assert.ok(scoreCandidate(name, name + ' - ' + suffix) >= 85, name + ' / ' + suffix);
+            assert.equal(scoreCandidate(name + ' 2', name + ' 3 - ' + suffix), -Infinity);
+        }
+    }
+});
+
+test('a generic cut variant never outranks the exact base game or resolves tied apps arbitrarily', async (t) => {
+    for (const exact of [true, false]) {
+        const f = fixtureClient((url) => {
+            if (url.pathname.includes('storesearch'))
+                return {
+                    body: {
+                        items: [
+                            { id: 31, name: 'Amber Harbor - Final Cut', type: 'app' },
+                            { id: 32, name: exact ? 'Amber Harbor' : 'Amber Harbor - Extended Cut', type: 'app' }
+                        ]
+                    }
+                };
+            if (url.pathname.includes('appdetails')) {
+                const id = Number(url.searchParams.get('appids'));
+                return {
+                    body: {
+                        [id]: {
+                            success: true,
+                            data: app(
+                                id,
+                                id === 31
+                                    ? 'Amber Harbor - Final Cut'
+                                    : exact
+                                      ? 'Amber Harbor'
+                                      : 'Amber Harbor - Extended Cut'
+                            )
+                        }
+                    }
+                };
+            }
+            return normalHandler(url);
+        });
+        t.after(() => f.client.dispose());
+        if (exact) assert.equal((await f.client.loadPreview(source('Amber Harbor'))).appId, 32);
+        else await assert.rejects(f.client.loadPreview(source('Amber Harbor')), { code: 'AMBIGUOUS_MATCH' });
+    }
+});
+
+test('bounded prefix retrieval recovers a typo without dropping the complete title identity', async (t) => {
+    const f = fixtureClient((url) => {
+        if (url.pathname.includes('storesearch'))
+            return {
+                body: {
+                    items:
+                        url.searchParams.get('term') === 'Monster Hutner'
+                            ? [{ id: 582010, name: 'Monster Hunter: World', type: 'app' }]
+                            : []
+                }
+            };
+        if (url.pathname.includes('appdetails'))
+            return { body: { 582010: { success: true, data: app(582010, 'Monster Hunter: World') } } };
+        return normalHandler(url);
+    });
+    t.after(() => f.client.dispose());
+    assert.equal((await f.client.loadPreview(source('Monster Hutner Wrold'))).appId, 582010);
+    assert.ok(f.calls.filter((call) => call.url.includes('storesearch')).length <= 6);
+});
+
+test('an exact successful match never fetches its source page', async (t) => {
+    let reads = 0;
+    const f = fixtureClient(normalHandler, {
+        env: {
+            findSourceAppIds: () => {
+                reads++;
+                return [];
+            }
+        }
+    });
+    t.after(() => f.client.dispose());
+    await f.client.loadPreview(source());
+    assert.equal(reads, 0);
+});
+
+test('source evidence recovers unrelated/localized names and protected same-AppID renames generally', async (t) => {
+    for (const [title, actual] of [
+        ['The Witcher 3 Wild Hunt', generalMatching.apps.find((item) => item.steam_appid === 292030)],
+        ['English Listing Name', { steam_appid: 900001, name: '另一個遊戲名稱', type: 'game' }]
+    ]) {
+        let reads = 0;
+        const f = fixtureClient(
+            (url) => {
+                if (url.pathname.includes('storesearch'))
+                    return { body: { items: [{ id: actual.steam_appid, name: actual.name, type: 'app' }] } };
+                if (url.pathname.includes('appdetails'))
+                    return {
+                        body: {
+                            [actual.steam_appid]: { success: true, data: { ...app(actual.steam_appid), ...actual } }
+                        }
+                    };
+                return normalHandler(url);
+            },
+            {
+                env: {
+                    findSourceAppIds: () => {
+                        reads++;
+                        return [{ appId: actual.steam_appid }];
+                    }
+                }
+            }
+        );
+        t.after(() => f.client.dispose());
+        const data = await f.client.loadPreview(source(title));
+        assert.equal(data.appId, actual.steam_appid);
+        assert.equal(data.match.kind, 'source-link');
+        assert.equal(reads, 1);
+        assert.deepEqual(data.tags, ['Exploration', 'Story Rich']);
+        assert.equal(
+            f.client.peekPreview(source(title, 'another:source')),
+            null,
+            'A source link is not a global name alias'
+        );
+    }
+});
+
+test('source fallback validates the selected app type and verified DLC parent', async (t) => {
+    for (const type of ['dlc', 'music']) {
+        const f = fixtureClient(
+            (url) => {
+                if (url.pathname.includes('storesearch')) return { body: { items: [] } };
+                if (url.pathname.includes('appdetails')) {
+                    const id = url.searchParams.get('appids');
+                    return {
+                        body: {
+                            [id]: {
+                                success: true,
+                                data:
+                                    id === '20'
+                                        ? app(20, 'Linked Product', type, { appid: 10 })
+                                        : app(10, 'Verified Parent')
+                            }
+                        }
+                    };
+                }
+                return normalHandler(url);
+            },
+            { env: { findSourceAppIds: () => [{ appId: 20 }] } }
+        );
+        t.after(() => f.client.dispose());
+        if (type === 'music')
+            await assert.rejects(f.client.loadPreview(source('Unknown Listing')), { code: 'NO_MATCH' });
+        else {
+            const data = await f.client.loadPreview(source('Unknown Listing'));
+            assert.equal(data.appId, 10);
+            assert.equal(data.match.kind, 'dlc-parent');
+            assert.equal(data.storeUrl, 'https://store.steampowered.com/app/10/');
+        }
+    }
+});
+
+test('multiple source AppIDs require selection instead of choosing the first', async (t) => {
+    const f = fixtureClient(
+        (url) => (url.pathname.includes('storesearch') ? { body: { items: [] } } : normalHandler(url)),
+        {
+            env: {
+                findSourceAppIds: () => [
+                    { appId: 11, name: 'One Product' },
+                    { appId: 12, name: 'Another Product' }
+                ]
+            }
+        }
+    );
+    t.after(() => f.client.dispose());
+    await assert.rejects(
+        f.client.loadPreview(source('Unknown Listing')),
+        (error) => error.code === 'AMBIGUOUS_MATCH' && error.candidates.length === 2
+    );
+    assert.equal(
+        f.calls.some((call) => call.url.includes('appdetails')),
+        false
+    );
+});
+
+test('a failed source does not block another listing with the same name and a valid Steam link', async (t) => {
+    const f = fixtureClient(
+        (url) => (url.pathname.includes('storesearch') ? { body: { items: [] } } : normalHandler(url)),
+        { env: { findSourceAppIds: (item) => (item.key === 'source:with-link' ? [{ appId: 10 }] : []) } }
+    );
+    t.after(() => f.client.dispose());
+    await assert.rejects(f.client.loadPreview(source('Unknown Listing', 'source:without-link')), { code: 'NO_MATCH' });
+    assert.equal((await f.client.loadPreview(source('Unknown Listing', 'source:with-link'))).appId, 10);
+    assert.equal(f.client.peekPreview(source('Unknown Listing', 'source:without-link')), null);
+});
+
+test('source timeouts, cancellation and cache clear cannot install a late mapping', async (t) => {
+    for (const mode of ['timeout', 'abort', 'clear']) {
+        let release, started;
+        const began = new Promise((resolve) => {
+            started = resolve;
+        });
+        const f = fixtureClient(
+            (url) => (url.pathname.includes('storesearch') ? { body: { items: [] } } : normalHandler(url)),
+            {
+                env: {
+                    sourceLookupTimeout: mode === 'timeout' ? 5 : 1000,
+                    findSourceAppIds: () => {
+                        started();
+                        return new Promise((resolve) => {
+                            release = resolve;
+                        });
+                    }
+                }
+            }
+        );
+        t.after(() => f.client.dispose());
+        const controller = new AbortController();
+        const result = f.client.loadPreview(source('Unknown Listing'), { signal: controller.signal });
+        const expected = assert.rejects(result, { code: mode === 'timeout' ? 'NO_MATCH' : 'ABORTED' });
+        await began;
+        if (mode === 'abort') controller.abort();
+        if (mode === 'clear') {
+            await f.client.clear();
+            release([{ appId: 10 }]);
+        }
+        await expected;
+        release([{ appId: 10 }]);
+        await tick();
+        assert.equal(f.client.peekPreview(source('Unknown Listing')), null);
+        assert.equal(
+            f.calls.some((call) => call.url.includes('appdetails')),
+            false
+        );
+    }
 });
 
 test('new review envelope distinguishes zero, a small valid count and malformed data', () => {

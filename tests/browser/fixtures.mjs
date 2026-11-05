@@ -5,6 +5,11 @@ const escape = (value) =>
     );
 
 export const GAMES = {
+    900001: { name: 'Amber Harbor - Final Cut', tags: ['Story Rich', 'Exploration'] },
+    900002: { name: 'Copper Orchard - Extended Cut', tags: ['Story Rich', 'Exploration'] },
+    900003: { name: 'Juniper Valley Complete Edition', tags: ['Story Rich', 'Exploration'] },
+    900004: { name: '另一個遊戲名稱', tags: ['Story Rich', 'Exploration'] },
+    582010: { name: 'Monster Hunter: World', tags: ['Action', 'Exploration'] },
     632470: { name: 'Disco Elysium - The Final Cut', tags: ['RPG', 'Story Rich', 'Detective'] },
     1173140: { name: 'Disco Elysium - Soundtrack and Artbooklet', type: 'dlc', parent: 632470, tags: ['Music'] },
     1233220: { name: 'Disco Elysium - The Final Cut Soundtrack', type: 'music', tags: ['Music'] },

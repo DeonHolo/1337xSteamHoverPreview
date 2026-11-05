@@ -1,4 +1,5 @@
-## 5.02
+## 5.03
 
-- Recognize Disco Elysium as Disco Elysium – The Final Cut using its verified Steam identity.
-- Improve edition matching so Skyrim Special Edition matches directly while original Skyrim, Special Edition and VR stay separate.
+- Improve matching across game titles with cut/edition labels, joined words, punctuation and minor spelling errors.
+- Recover renamed or localized games from a Steam link in the torrent description when name matching fails; offer choices when several games are linked.
+- Reduce false matches with demos, prologues and similarly named games.

@@ -1,0 +1,126 @@
+{
+  "description": "Official Steam app names for a general matching regression corpus. Queries in tests are spelling/format/edition variations; no production AppID or title aliases.",
+  "capturedAt": "2026-11-05T05:24:35.345Z",
+  "apps": [
+    {
+      "steam_appid": 550,
+      "name": "Left 4 Dead 2",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=550&cc=us&l=english"
+    },
+    {
+      "steam_appid": 620,
+      "name": "Portal 2",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=620&cc=us&l=english"
+    },
+    {
+      "steam_appid": 17470,
+      "name": "Dead Space (2008)",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=17470&cc=us&l=english"
+    },
+    {
+      "steam_appid": 200260,
+      "name": "Batman: Arkham City - Game of the Year Edition",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=200260&cc=us&l=english"
+    },
+    {
+      "steam_appid": 238010,
+      "name": "Deus Ex: Human Revolution - Director's Cut",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=238010&cc=us&l=english"
+    },
+    {
+      "steam_appid": 282070,
+      "name": "This War of Mine",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=282070&cc=us&l=english"
+    },
+    {
+      "steam_appid": 292030,
+      "name": "The Witcher 3: Wild Hunt — Remastered",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=292030&cc=us&l=english"
+    },
+    {
+      "steam_appid": 373420,
+      "name": "Divinity: Original Sin - Enhanced Edition",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=373420&cc=us&l=english"
+    },
+    {
+      "steam_appid": 387290,
+      "name": "Ori and the Blind Forest: Definitive Edition",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=387290&cc=us&l=english"
+    },
+    {
+      "steam_appid": 480490,
+      "name": "Prey",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=480490&cc=us&l=english"
+    },
+    {
+      "steam_appid": 489830,
+      "name": "The Elder Scrolls V: Skyrim Special Edition",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=489830&cc=us&l=english"
+    },
+    {
+      "steam_appid": 578650,
+      "name": "The Outer Worlds",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=578650&cc=us&l=english"
+    },
+    {
+      "steam_appid": 582010,
+      "name": "Monster Hunter: World",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=582010&cc=us&l=english"
+    },
+    {
+      "steam_appid": 611670,
+      "name": "The Elder Scrolls V: Skyrim VR",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=611670&cc=us&l=english"
+    },
+    {
+      "steam_appid": 632470,
+      "name": "Disco Elysium - The Final Cut",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=632470&cc=us&l=english"
+    },
+    {
+      "steam_appid": 753640,
+      "name": "Outer Wilds",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=753640&cc=us&l=english"
+    },
+    {
+      "steam_appid": 1151640,
+      "name": "Horizon Zero Dawn™ Complete Edition",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=1151640&cc=us&l=english"
+    },
+    {
+      "steam_appid": 2215430,
+      "name": "Ghost of Tsushima DIRECTOR'S CUT",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=2215430&cc=us&l=english"
+    },
+    {
+      "steam_appid": 2780710,
+      "name": "Asgard's Fall — Viking Survivors",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=2780710&cc=us&l=english"
+    },
+    {
+      "steam_appid": 2885530,
+      "name": "MeowPower!Yachiyo",
+      "type": "game",
+      "source": "https://store.steampowered.com/api/appdetails?appids=2885530&cc=us&l=english"
+    }
+  ]
+}

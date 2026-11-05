@@ -12,7 +12,7 @@ The preview screenshot above was taken with the [Dark Reader](https://darkreader
 
 ## Wiki and Code Review
 
-The [project wiki](docs/wiki/Home.md) covers behavior and architecture. Version **5.02** recognizes Disco Elysium's verified rename and repairs Skyrim Special Edition matching while preserving distinct editions. See [title identity and aliases](docs/wiki/Title-Identity-and-Aliases.md) for the explanation, [match recovery](docs/wiki/Match-Recovery.md) for manual corrections, and the [release checklist](RELEASE_CHECKLIST.md) and [Greasy Fork Markdown notes](GREASYFORK_CHANGELOG.md) for this release. Dated verification reports record the specific builds tested.
+The [project wiki](docs/wiki/Home.md) covers behavior and architecture. Version **5.03** improves matching across naming formats and spelling errors, and recovers failed names from source-content Steam links. See [general matching](docs/wiki/General-Matching.md) for the rules, scope and verification, [match recovery](docs/wiki/Match-Recovery.md) for manual choices, and the [release checklist](RELEASE_CHECKLIST.md) and [Greasy Fork Markdown notes](GREASYFORK_CHANGELOG.md).
 
 ## Features
 
@@ -67,7 +67,7 @@ The script works on all 1337x mirror domains:
 ## Technical Details
 
 - **Data**: Official keyless Steam review API, single-AppID storefront details/search, and Steam store-page tag parsing. No SteamDB scraping.
-- **Matching**: Confidence-checked base games, verified DLC parents, and persistent per-listing corrections.
+- **Matching**: General title/format/typo comparison, validated app types and DLC parents, source-content Steam-link recovery, and persistent per-listing corrections.
 - **Cache**: Details/tags fresh for 24 hours; review freshness is 15 minutes for new/unknown/upcoming releases and 3 hours otherwise. Usable stale tags refresh in the background.
 - **Preload**: Nearby rows by default; Entire page and On hover only available in the userscript menu. Runnable hidden tabs warm serially; sleeping/discarded/closed tabs cannot run it.
 - **Development**: Shared source, reproducible standalone builds, dependency locks, lint/format, unit/browser tests, and CI. See [CONTRIBUTING](CONTRIBUTING.md).

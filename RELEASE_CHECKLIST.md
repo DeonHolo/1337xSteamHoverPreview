@@ -1,13 +1,14 @@
-# 1337x 5.02 — release checklist
+# 1337x 5.03 release checklist
 
-Changes since public 5.01. [Greasy Fork Markdown notes](GREASYFORK_CHANGELOG.md). Public headings use only version numbers.
+Changes since public 5.02. [Greasy Fork Markdown notes](GREASYFORK_CHANGELOG.md). Version-only public headings.
 
-- [x] Correct Disco Elysium's verified same-AppID rename and preserve Skyrim edition identity.
-- [x] Validate appdetails ID/name/type; keep soundtrack, sequel, VR and DLC safeguards.
-- [x] Invalidate old automatic mappings/failures with resolver 8; preserve intentional corrections and AppID metadata.
-- [x] Run lint, Node tests, build/generated-output, format checks and both browser adapters.
-- [x] Verify the reported titles through the real Steam endpoints.
-- [x] Update the successful preview image on Greasy Fork and the repository README.
-- [x] Publish the rebuilt script and version-only Markdown notes; verify the public version and images.
+- [x] Replace the per-game alias with general naming/typo/format rules in the canonical shared core.
+- [x] Add bounded source-content recovery and preserve ambiguity, app-type, DLC-parent and late-response guards.
+- [x] Cover unrelated Steam titles, unseen name stems, negative pairs and source-specific failures.
+- [x] Run lint, Node tests, build, generated-output and formatting checks for both products.
+- [x] Pass both browser adapters and real Steam endpoint probes.
+- [x] Publish rebuilt userscripts and Markdown notes; verify public versions.
 
-[Matching explanation](docs/wiki/Title-Identity-and-Aliases.md) · [Verification](docs/wiki/title-identity-verification.json).
+[Matching guide](docs/wiki/General-Matching.md) · [Verification](docs/wiki/general-matching-verification.json).
+
+GitHub CI verifies each pushed build on the default branch.

@@ -90,6 +90,7 @@ async function setup(
         baseline = false,
         pagePath = null,
         html = null,
+        sourceHtml = null,
         viewport = { width: 1280, height: 820 }
     } = {}
 ) {
@@ -110,7 +111,14 @@ async function setup(
             return route.fulfill({ status: 404, body: 'Media intentionally unavailable in fixture' });
         const parsed = new URL(url);
         if (parsed.origin === new URL(product.url).origin)
-            return route.fulfill({ status: 200, contentType: 'text/html', body: html ?? listingHtml(site, rows) });
+            return route.fulfill({
+                status: 200,
+                contentType: 'text/html',
+                body:
+                    sourceHtml !== null && route.request().resourceType() === 'fetch'
+                        ? sourceHtml
+                        : (html ?? listingHtml(site, rows))
+            });
         return route.abort('blockedbyclient');
     });
     let source;
@@ -727,7 +735,95 @@ try {
                 await t.close();
             }
         });
-        await run(site + ': Disco Elysium automatically matches its verified Final Cut rename', async () => {
+        await run(site + ': generic naming rules work for unseen titles and AppIDs', async () => {
+            const t = await setup(site, {
+                rows: [
+                    { id: 930, title: 'Amber Harbor' },
+                    { id: 931, title: 'Copper Orchard' },
+                    { id: 932, title: 'Juniper Valley' }
+                ],
+                config: { search: { 'amber harbor': [900001], 'copper orchard': [900002], 'juniper valley': [900003] } }
+            });
+            try {
+                for (const [row, id] of [
+                    [930, 900001],
+                    [931, 900002],
+                    [932, 900003]
+                ]) {
+                    await t.hover(row);
+                    await t.ready(id);
+                    assert.match(await t.card.locator('.steamTags').innerText(), /Story Rich/);
+                    assert.equal(
+                        await t.card.getByRole('link', { name: 'Open on Steam', exact: true }).getAttribute('href'),
+                        `https://store.steampowered.com/app/${id}/`
+                    );
+                }
+                assert.equal(t.resources.filter((resource) => resource.type === 'fetch').length, 0);
+                assert.equal((await t.fixture()).requests.filter((request) => request.kind === 'search').length, 3);
+                t.noErrors();
+            } finally {
+                await t.close();
+            }
+        });
+        await run(site + ': unpunctuated typo retrieval preserves the complete matching identity', async () => {
+            const t = await setup(site, {
+                rows: [{ id: 933, title: 'Monster Hutner Wrold' }],
+                config: { search: { 'monster hutner': [582010] } }
+            });
+            try {
+                await t.hover(933);
+                await t.ready(582010);
+                assert.equal((await t.fixture()).firstReady.hasTags, true);
+                t.noErrors();
+            } finally {
+                await t.close();
+            }
+        });
+        await run(site + ': failed names recover from one source-content Steam link and ignore sidebars', async () => {
+            const t = await setup(site, {
+                rows: [{ id: 934, title: 'Unlisted Forum Title' }],
+                sourceHtml:
+                    '<aside><a href="https://store.steampowered.com/app/620/">Unrelated sidebar</a></aside><div id="description" data-post-content><a href="https://store.steampowered.com/app/900004/">Official Steam page</a></div>',
+                config: { search: {} }
+            });
+            try {
+                await t.hover(934);
+                await t.ready(900004);
+                assert.match(await t.card.locator('.steamGameTitle').innerText(), /另一個遊戲名稱/);
+                assert.equal((await t.fixture()).firstReady.hasTags, true);
+                assert.equal(t.resources.filter((resource) => resource.type === 'fetch').length, 1);
+                assert.equal(
+                    (await t.fixture()).requests.some(
+                        (request) => request.kind === 'details' && request.appIds.includes(620)
+                    ),
+                    false
+                );
+                t.noErrors();
+            } finally {
+                await t.close();
+            }
+        });
+        await run(site + ': multiple source-content Steam links require an explicit choice', async () => {
+            const t = await setup(site, {
+                rows: [{ id: 935, title: 'Unlisted Forum Title' }],
+                sourceHtml:
+                    '<div id="description" data-post-content><a href="https://store.steampowered.com/app/900004/">First product</a><a href="https://store.steampowered.com/app/620/">Second product</a></div>',
+                config: { search: {} }
+            });
+            try {
+                await t.hover(935);
+                await t.card.locator('.steamCandidateList button').first().waitFor({ state: 'visible' });
+                assert.equal(await t.card.locator('.steamCandidateList button').count(), 2);
+                assert.equal(
+                    (await t.fixture()).requests.some((request) => request.kind === 'details'),
+                    false
+                );
+                t.noErrors();
+            } finally {
+                await t.close();
+            }
+        });
+        await run(site + ': Disco Elysium matches through general cut-label comparison', async () => {
             const t = await setup(site, {
                 rows: [{ id: 921, title: 'Disco Elysium' }],
                 config: { search: { 'disco elysium': [632470, 1173140, 1233220] } }

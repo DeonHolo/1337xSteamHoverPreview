@@ -1,4 +1,4 @@
-/** Same-origin source pages are fetched lazily, only by an explicit source action. */
+/** Same-origin source pages are fetched by site actions or bounded recovery after failed name matching. */
 export function createSourcePageTools({ window: win, document: doc, timeout = 8000 }) {
     const pending = new Map();
     const completed = new Map();
@@ -34,6 +34,8 @@ export function createSourcePageTools({ window: win, document: doc, timeout = 80
                 if (topic && finalUrl.searchParams.get('t') && finalUrl.searchParams.get('t') !== topic)
                     throw new Error('Source page redirected to a different topic.');
                 const html = await response.text();
+                if (html.length > 2000000)
+                    throw new Error('Source page is too large to inspect safely. Open it to check the Steam link.');
                 const parsed = new win.DOMParser().parseFromString(html, 'text/html');
                 completed.set(url, parsed);
                 while (completed.size > 20) completed.delete(completed.keys().next().value);

@@ -1,10 +1,10 @@
 import SteamTextFuse from '../assets/fuse.basic.min.mjs';
 
 /** Shared Steam providers, matching, request scheduling and field-level cache. No runtime dependencies. */
-export const CORE_VERSION = '1.0.8';
+export const CORE_VERSION = '1.0.9';
 
 const STEAM_SCHEMA = 3;
-const STEAM_RESOLVER = 8;
+const STEAM_RESOLVER = 9;
 const STEAM_PROVIDER = 2;
 const STEAM_DAY = 86400000;
 const STEAM_LANGUAGE = 'english';
@@ -56,7 +56,7 @@ function steamStripCommercialEdition(value) {
     const title = String(value).trim();
     const standard = title
         .replace(
-            /\s*[:\-–—]?\s+(?:(?:digital\s+)?deluxe|ultimate|gold|premium|collector['’]?s|game\s+of\s+the\s+year|goty)\s+edition(?:\s*[:\-].*)?$/i,
+            /\s*[:\-–—]?\s+(?:(?:digital\s+)?deluxe|ultimate|gold|premium|complete|collector['’]?s|game\s+of\s+the\s+year|goty)\s+edition(?:\s*[:\-].*)?$/i,
             ''
         )
         .trim();
@@ -83,12 +83,15 @@ export function steamTitleQueries(value) {
         );
     }
     variants.push(primary, title);
+    const presentation = steamPresentationTitle(primary);
+    if (presentation.kind) variants.push(presentation.title);
     return [...new Set(variants.filter(Boolean))];
 }
 
 /** Search syntax is separate from game identity: compare the complete title even after a broader lookup. */
 export function steamSearchQueries(value) {
     const queries = [];
+    const broader = [];
     for (const title of steamTitleQueries(value)) {
         const neutral = title
             .replace(/[®™©℠]/g, '')
@@ -99,13 +102,34 @@ export function steamSearchQueries(value) {
             .replace(/[^\p{L}\p{N}\s'+#]/gu, ' ')
             .replace(/\s+/g, ' ')
             .trim();
+        const spaced = steamComparisonText(neutral);
         queries.push(neutral, title);
+        if (spaced !== neutral) broader.push(spaced);
         // Only an explicit subtitle boundary supplies a fallback. Never remove arbitrary trailing words.
         const prefix = title.split(/\s+[-‐‑‒–—―]\s+|\s*[:–—]\s*/)[0].trim();
         const words = normalizeForMatch(prefix).split(' ');
         if (prefix !== title && (words.length >= 2 || words[0].length >= 6)) queries.push(prefix);
+        // Broaden retrieval only, after full queries. Complete identity is still scored below.
+        // Keep every protected number/edition marker in each fallback search.
+        const terms = spaced.split(/\s+/);
+        const protectedWords = steamIdentity(title).important;
+        if (terms.length >= 3 && prefix === title) {
+            for (const count of [terms.length - 1, 2]) {
+                const fallback = terms.slice(0, count).join(' ');
+                const identity = steamIdentity(fallback);
+                const substantial = identity.tokens.filter((word) => !STEAM_STOP_WORDS.has(word));
+                if (substantial.length >= 2 && [...protectedWords].every((word) => identity.important.has(word)))
+                    broader.push(fallback);
+            }
+        }
+        const meaningful = terms.filter((word) => !STEAM_STOP_WORDS.has(word.toLowerCase()));
+        if (prefix === title && !protectedWords.size && meaningful.length >= 2) {
+            for (const word of [meaningful[0], meaningful.at(-1)]) {
+                if (word.length >= 5 && !STEAM_GENERIC_WORDS.has(word.toLowerCase())) broader.push(word);
+            }
+        }
     }
-    return [...new Set(queries.filter(Boolean))].slice(0, 6);
+    return [...new Set([...queries, ...broader].filter(Boolean))].slice(0, 6);
 }
 
 function steamCleanCommonTitle(value) {
@@ -198,34 +222,73 @@ const STEAM_EDITION_WORDS = new Set([
     'anniversary'
 ]);
 
-// Verified renames of the SAME Steam app, not a title -> AppID search shortcut.
-// Both search and appdetails must still return the expected ID/name and a valid game.
-// Add aliases only with publisher/Steam evidence; never strip arbitrary subtitles globally.
-// https://store.steampowered.com/news/posts/?appids=632470&enddate=1616694036&feed=steam_community_announcements
-const STEAM_VERIFIED_TITLE_ALIASES = Object.freeze({
-    632470: Object.freeze(['disco elysium', 'disco elysium the final cut'])
-});
+// Product roles are identity-bearing even when Steam declares a prologue as a "game".
+const STEAM_PRODUCT_WORDS = new Set([
+    'demo',
+    'prologue',
+    'playtest',
+    'soundtrack',
+    'artbook',
+    'artbooklet',
+    'benchmark',
+    'sdk',
+    'dedicated',
+    'server'
+]);
+const STEAM_GENERIC_WORDS = new Set([
+    'game',
+    'games',
+    'simulator',
+    'simulation',
+    'adventure',
+    'adventures',
+    'quest',
+    'story',
+    'stories',
+    'edition',
+    'online'
+]);
 
-function steamVerifiedTitleAlias(query, candidate) {
-    if (!candidate || typeof candidate !== 'object') return false;
-    if (candidate.type && !['game', 'app'].includes(candidate.type)) return false;
-    const id = steamAppId(candidate.steam_appid ?? candidate.appId);
-    const names = STEAM_VERIFIED_TITLE_ALIASES[id];
-    return Boolean(
-        names && names.includes(normalizeForMatch(query)) && names.includes(normalizeForMatch(candidate.name))
-    );
+// Comparison formatting never changes source fingerprints or saved correction keys.
+function steamComparisonText(value) {
+    return String(value)
+        .replace(/\b(?:[a-z][. ]+){2,}[a-z]\b/gi, (word) => word.replace(/[. ]+/g, ''))
+        .replace(/([\p{Ll}\d])(\p{Lu})/gu, '$1 $2');
+}
+
+// A naming grammar used for every title, without an AppID/title exception table.
+// Cut labels are weaker than an exact full title; conflicting cuts remain distinct.
+function steamPresentationTitle(value) {
+    const text = String(value).trim();
+    const match = text.match(/^(.*?)\s+(?:[-:–—]\s*)?(?:the\s+)?(director['’]?s?|final|extended|uncut)\s+cut$/i);
+    if (!match || normalizeForMatch(match[1]).length < 4) return { title: text, kind: null };
+    return {
+        title: match[1].replace(/\s*[-:–—]\s*$/, '').trim(),
+        kind: /^director/i.test(match[2]) ? 'directors' : match[2].toLowerCase()
+    };
 }
 
 function steamIdentity(value) {
-    const normalized = normalizeForMatch(steamStripCommercialEdition(value)).replace(/\s+dlc$/i, '');
+    const title = steamComparisonText(steamStripCommercialEdition(value));
+    const normalized = normalizeForMatch(title).replace(/\s+dlc$/i, '');
     const tokens = normalized
         .split(' ')
         .filter(Boolean)
-        .map((token) => STEAM_ROMAN[token] || token);
+        .map((token) => STEAM_ROMAN[token] || (token === 'remastered' ? 'remaster' : token));
     const important = new Set(
-        tokens.filter((token) => /^\d+$/.test(token) || /^s\d+(?:e\d+)?$/.test(token) || STEAM_EDITION_WORDS.has(token))
+        tokens.flatMap((token) => [
+            ...(token.match(/\d+/g) || []),
+            ...(/^s\d+(?:e\d+)?$/.test(token) || STEAM_EDITION_WORDS.has(token) || STEAM_PRODUCT_WORDS.has(token)
+                ? [token]
+                : [])
+        ])
     );
-    return { normalized, tokens, important };
+    const presentation = steamPresentationTitle(title);
+    const coreTokens = normalizeForMatch(presentation.title)
+        .split(' ')
+        .filter(Boolean)
+        .map((token) => STEAM_ROMAN[token] || (token === 'remastered' ? 'remaster' : token));
+    return { normalized, tokens, important, presentation: presentation.kind, coreTokens };
 }
 
 function steamFuseDistance(pattern, text, threshold = 0.25) {
@@ -240,28 +303,68 @@ function steamFuseDistance(pattern, text, threshold = 0.25) {
     return result?.score ?? 1;
 }
 
+function steamWordDistance(a, b, limit) {
+    const left = Array.from(a),
+        right = Array.from(b);
+    if (Math.abs(left.length - right.length) > limit || Math.max(left.length, right.length) > 64) return Infinity;
+    let before = null,
+        previous = Array.from({ length: right.length + 1 }, (_, index) => index);
+    for (let i = 1; i <= left.length; i++) {
+        const row = [i];
+        for (let j = 1; j <= right.length; j++) {
+            row[j] = Math.min(
+                previous[j] + 1,
+                row[j - 1] + 1,
+                previous[j - 1] + (left[i - 1] === right[j - 1] ? 0 : 1)
+            );
+            if (i > 1 && j > 1 && left[i - 1] === right[j - 2] && left[i - 2] === right[j - 1])
+                row[j] = Math.min(row[j], before[j - 2] + 1);
+        }
+        if (Math.min(...row) > limit) return Infinity;
+        before = previous;
+        previous = row;
+    }
+    return previous[right.length];
+}
+
 function steamFuzzyTitleScore(left, right) {
-    const l = [...new Set(left.tokens.filter((token) => !STEAM_STOP_WORDS.has(token)))];
-    const r = [...new Set(right.tokens.filter((token) => !STEAM_STOP_WORDS.has(token)))];
+    const l = left.tokens.filter((token) => !STEAM_STOP_WORDS.has(token));
+    const r = right.tokens.filter((token) => !STEAM_STOP_WORDS.has(token));
     if (l.length !== r.length) return 0;
-    const missingLeft = l.filter((token) => !r.includes(token));
-    const missingRight = r.filter((token) => !l.includes(token));
-    // One minor misspelling in a substantial word. Short word substitutions and missing title words stay rejected.
-    if (missingLeft.length !== 1 || missingRight.length !== 1) return 0;
-    const a = missingLeft[0],
-        b = missingRight[0];
-    if (Math.min(a.length, b.length) < 6 || a[0] !== b[0] || Math.abs(a.length - b.length) > 2) return 0;
-    if (Math.max(steamFuseDistance(a, b), steamFuseDistance(b, a)) > 0.25) return 0;
+    const changed = l.map((word, index) => (word === r[index] ? null : [word, r[index]])).filter(Boolean);
+    if (!changed.length || changed.length > 2) return 0;
+    const anchorChars = l.reduce(
+        (sum, word, index) => sum + (word === r[index] && !STEAM_GENERIC_WORDS.has(word) ? word.length : 0),
+        0
+    );
+    if (l.length > 1 && anchorChars < 4) return 0;
+    if (changed.length > 1 && (l.length < 3 || anchorChars < 7)) return 0;
+    let edits = 0;
+    for (const [a, b] of changed) {
+        const length = Math.min(a.length, b.length);
+        if (length < 4) return 0;
+        if (l.length === 1 && (length < 7 || (a[0] !== b[0] && length < 10))) return 0;
+        // Four-letter words need a transposition or substantial unchanged context.
+        // This accepts "Wras" -> "Wars" without treating "Dawn" -> "Down" as a typo.
+        if (
+            length < 5 &&
+            anchorChars < 10 &&
+            (a.length !== b.length || [...a].sort().join('') !== [...b].sort().join(''))
+        )
+            return 0;
+        edits += steamWordDistance(a, b, length >= 9 ? 2 : 1);
+        if (edits > 2) return 0;
+    }
     const aTitle = left.tokens.join(' '),
         bTitle = right.tokens.join(' ');
     const distance = Math.max(steamFuseDistance(aTitle, bTitle), steamFuseDistance(bTitle, aTitle));
-    // Fuzzy matches never receive an exact-match score. The resolver still applies confidence/margin/type checks.
-    return Math.min(94, Math.round(100 * (1 - distance)));
+    const editScore = 100 * (1 - edits / Math.max(aTitle.length, bTitle.length));
+    // Bounded edit checks handle transpositions; Fuse supplies an additional whole-title ranking signal.
+    return Math.min(94, Math.round(Math.max(editScore, 100 * (1 - distance))));
 }
 
 /** A ranking heuristic, not a probability. Protected sequel/edition mismatches are rejected. */
 export function scoreCandidate(query, candidate) {
-    if (steamVerifiedTitleAlias(query, candidate)) return 100;
     const left = steamIdentity(query);
     const right = steamIdentity(typeof candidate === 'string' ? candidate : candidate?.name);
     if (!left.tokens.length || !right.tokens.length) return 0;
@@ -273,6 +376,15 @@ export function scoreCandidate(query, candidate) {
     const leftCanonical = left.tokens.join(' ');
     const rightCanonical = right.tokens.join(' ');
     if (leftCanonical === rightCanonical) return 100;
+    if (leftCanonical.replace(/ /g, '') === rightCanonical.replace(/ /g, '')) return 98;
+    const meaningful = (tokens) => tokens.filter((word) => !STEAM_STOP_WORDS.has(word)).join(' ');
+    if (meaningful(left.tokens) === meaningful(right.tokens)) return 98;
+    if (left.presentation && right.presentation && left.presentation !== right.presentation) return -Infinity;
+    if (left.presentation || right.presentation) {
+        if (meaningful(left.coreTokens) === meaningful(right.coreTokens)) return 94;
+        const fuzzy = steamFuzzyTitleScore({ tokens: left.coreTokens }, { tokens: right.coreTokens });
+        if (fuzzy >= 85) return Math.min(90, fuzzy);
+    }
     const l = new Set(left.tokens);
     const r = new Set(right.tokens);
     const weight = (token) => (STEAM_STOP_WORDS.has(token) ? 0.25 : 1);
@@ -282,7 +394,8 @@ export function scoreCandidate(query, candidate) {
     const precision = intersection / rWeight;
     const recall = intersection / lWeight;
     const tokenScore = precision + recall ? Math.round((100 * (2 * precision * recall)) / (precision + recall)) : 0;
-    return tokenScore >= 85 ? tokenScore : Math.max(tokenScore, steamFuzzyTitleScore(left, right));
+    // Overlap alone cannot authorize dropping meaningful subtitle words or reordering a title.
+    return Math.max(Math.min(tokenScore, 84), steamFuzzyTitleScore(left, right));
 }
 
 /** Steam's website search can find localized aliases missing from the small storesearch API index. */
@@ -1149,7 +1262,7 @@ export function createSteamClient(env = {}) {
         };
         setRecord('mappings', identity.key, mapping);
         if (queryAlias) setRecord('mappings', identity.queryKey, mapping);
-        tables.negative.delete(identity.fingerprint);
+        tables.negative.delete(identity.key);
         matches.set(mapping.appId, resolution.match);
     }
 
@@ -1265,13 +1378,71 @@ export function createSteamClient(env = {}) {
             mapIdentity(identity, resolved);
             return resolved;
         }
-        const negative = touch('negative', identity.fingerprint);
-        if (!force && negative && now() - negative.ts < 5 * 60000)
+        const negative = touch('negative', identity.key);
+        if (!force && negative?.fingerprint === identity.fingerprint && now() - negative.ts < 5 * 60000)
             throw steamError(negative.code, negative.message, { candidates: negative.candidates || [] });
         const primary = steamTitleQueries(identity.title)[0];
         const queries = steamSearchQueries(identity.title);
         const considered = new Map();
         let lastFailure = null;
+        let sourceChecked = false;
+        const sourceEvidence = async () => {
+            checkGeneration(context.token, context.signal);
+            if (sourceChecked || typeof env.findSourceAppIds !== 'function') return null;
+            sourceChecked = true;
+            let timer, aborted;
+            let found;
+            try {
+                // A slow/inaccessible source must not hold a failed preview indefinitely.
+                // Its existing shared fetch can finish in the background, but late results cannot map a title.
+                found = await Promise.race([
+                    Promise.resolve().then(() => env.findSourceAppIds(source)),
+                    new Promise((resolve, reject) => {
+                        timer = setTimeout(() => resolve([]), env.sourceLookupTimeout ?? 1500);
+                        aborted = () => reject(steamAbortError());
+                        context.signal?.addEventListener('abort', aborted, { once: true });
+                    })
+                ]);
+            } catch (error) {
+                if (error?.code === 'ABORTED') throw error;
+                return null;
+            } finally {
+                clearTimeout(timer);
+                context.signal?.removeEventListener('abort', aborted);
+            }
+            checkGeneration(context.token, context.signal);
+            if (!Array.isArray(found)) return null;
+            const ids = [
+                ...new Map(
+                    found.filter((item) => steamAppId(item?.appId)).map((item) => [steamAppId(item.appId), item])
+                ).values()
+            ];
+            if (!ids.length) return null;
+            if (ids.length > 1)
+                throw steamError(
+                    'AMBIGUOUS_MATCH',
+                    'The source contains multiple Steam games. Choose the correct game.',
+                    {
+                        candidates: rankSteamSuggestions(
+                            identity.title,
+                            ids.map((item) => considered.get(Number(item.appId)) || item)
+                        )
+                    }
+                );
+            try {
+                const resolved = await baseGame(ids[0].appId, context);
+                resolved.match = {
+                    ...resolved.match,
+                    kind: resolved.match.parentChain.length ? 'dlc-parent' : 'source-link',
+                    reason: 'Steam link from the source content'
+                };
+                mapIdentity(identity, resolved, false);
+                return resolved;
+            } catch (error) {
+                if (error?.code !== 'NO_MATCH') throw error;
+                return null;
+            }
+        };
         const lookups = queries.map((query) => ({ query, storefront: false }));
         // One compact website fallback after API variants fail; do not add a request to successful API matches.
         lookups.push({ query: queries[0], storefront: true });
@@ -1318,21 +1489,20 @@ export function createSteamClient(env = {}) {
                 const winner = valid[0];
                 winner.match = {
                     ...winner.match,
-                    ...(steamVerifiedTitleAlias(primary, winner.app) && !winner.match.parentChain.length
-                        ? { kind: 'alias' }
-                        : {}),
                     score: winner.score,
                     reason: winner.match.parentChain.length
                         ? 'Verified DLC parent'
-                        : steamVerifiedTitleAlias(primary, winner.app)
-                          ? 'Verified Steam title alias'
-                          : 'Validated title match',
+                        : winner.score === 100
+                          ? 'Validated full title'
+                          : 'Validated title variant',
                     candidates: rankSteamSuggestions(identity.title, [...considered.values()])
                 };
                 mapIdentity(identity, winner);
                 return winner;
             }
             if (valid.length > 1) {
+                const linked = await sourceEvidence();
+                if (linked) return linked;
                 const error = steamError(
                     'AMBIGUOUS_MATCH',
                     'More than one Steam game matches this title. Choose the correct game.',
@@ -1347,7 +1517,8 @@ export function createSteamClient(env = {}) {
                         )
                     }
                 );
-                setRecord('negative', identity.fingerprint, {
+                setRecord('negative', identity.key, {
+                    fingerprint: identity.fingerprint,
                     code: error.code,
                     message: error.message,
                     candidates: error.candidates,
@@ -1356,13 +1527,16 @@ export function createSteamClient(env = {}) {
                 throw error;
             }
         }
+        const linked = await sourceEvidence();
+        if (linked) return linked;
         const candidates = rankSteamSuggestions(identity.title, [...considered.values()]);
         const error = steamError(
             'NO_MATCH',
             lastFailure?.message || 'A confident base-game match was not found. Choose a Steam game or try its AppID.',
             { candidates }
         );
-        setRecord('negative', identity.fingerprint, {
+        setRecord('negative', identity.key, {
+            fingerprint: identity.fingerprint,
             code: error.code,
             message: error.message,
             candidates,
@@ -1630,7 +1804,7 @@ export function createSteamClient(env = {}) {
         });
         tables.mappings.delete(identity.key);
         tables.mappings.delete(identity.queryKey);
-        tables.negative.delete(identity.fingerprint);
+        tables.negative.delete(identity.key);
         saveSoon();
     }
 

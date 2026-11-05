@@ -38,19 +38,21 @@ export function startSteamHover({
         return { abort: () => request?.abort?.() };
     };
     if (!storage.getValue || !storage.setValue) throw new Error('Userscript storage is unavailable.');
+    let adapter;
     const client = createClient({
         ...storage,
         gmRequest,
         DOMParser: win.DOMParser,
         isHidden: () => doc.hidden,
         storageKey: `${id}SteamHoverData_v3`,
-        settingsKey: `${id}SteamHoverSettings_v1`
+        settingsKey: `${id}SteamHoverSettings_v1`,
+        findSourceAppIds: (source) => adapter?.findAppIds?.(source)
     });
     const theme = () => {
         const chosen = client.getSettings().theme;
         return chosen === 'light' || chosen === 'dark' ? chosen : id === '1337x' ? 'light' : 'dark';
     };
-    const adapter = createAdapter({ window: win, document: doc, cleanTitle, sourceTools, colorTag, getTheme: theme });
+    adapter = createAdapter({ window: win, document: doc, cleanTitle, sourceTools, colorTag, getTheme: theme });
     const view = mountPreview({
         client,
         adapter,
