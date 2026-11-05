@@ -1,6 +1,6 @@
 # 1337x Steam Hover Preview wiki
 
-Current public version **5.03**, shared core **1.0.9**. Install the standalone [1337xSteamHoverPreview.js](../../1337xSteamHoverPreview.js) with a userscript manager; source modules and Node packages are development-only.
+Version **5.04** uses shared core **1.0.10**. Install the standalone userscript with a userscript manager. [1337xSteamHoverPreview.js](../../1337xSteamHoverPreview.js)
 
 - [Search by name inside the chooser](Search-by-Name.md)
 - [Why matching failed and what changed](Matching-Explained.md)
@@ -43,4 +43,4 @@ Use the manager menu for settings, Clear cached Steam data, match correction imp
 
 Eligibility uses explicit Games categories/icons first, with uploader/release hints on mixed pages. A new mirror still needs compatible metadata and markup. A numeric link alone does not establish that a row is a game.
 
-See [current matching verification](general-matching-verification.json) for the published build, tested scope and remaining live-site/browser limitations.
+The release checklist records the checks for 5.04. The earlier matching verification covers 5.03. [Release checklist](../../RELEASE_CHECKLIST.md) · [5.03 matching verification](general-matching-verification.json)

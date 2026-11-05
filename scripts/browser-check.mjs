@@ -10,6 +10,7 @@ import {
     makeMockConfig,
     installMockUserscriptEnvironment,
     defaultRows,
+    game,
     imageSvg
 } from '../tests/browser/fixtures.mjs';
 
@@ -1186,6 +1187,50 @@ try {
             }
         });
     }
+
+    await run('1337x: clipped release tag still previews the base game with tags on the first card', async () => {
+        const fixtureRoot = localSite === 'csrinru' ? root : path.join(root, 'vendor/steam-hover-core');
+        const { rawTitle, expectedAppId, query, searchResults, apps } = JSON.parse(
+            await readFile(path.join(fixtureRoot, 'tests/fixtures/steam/cairn-clipped-release.json'), 'utf8')
+        );
+        const t = await setup('1337x', {
+            rows: [{ id: 940, rawTitle }],
+            config: {
+                search: { [query.toLowerCase()]: searchResults.map((item) => item.id) },
+                games: Object.fromEntries(
+                    searchResults.map(({ id, name }) => [id, { ...game(id), name, ...apps[id] }])
+                ),
+                tags: { [expectedAppId]: ['Exploration', 'Adventure'] }
+            }
+        });
+        try {
+            await t.hover(940);
+            await t.ready(expectedAppId);
+            const { firstReady, requests } = await t.fixture();
+            assert.equal(firstReady.hasTags, true);
+            assert.match(await t.card.locator('.steamTags').innerText(), /Exploration/);
+            assert.equal(
+                await t.card.getByRole('link', { name: 'Open on Steam', exact: true }).getAttribute('href'),
+                `https://store.steampowered.com/app/${expectedAppId}/`
+            );
+            assert.deepEqual(
+                requests.filter((item) => item.kind === 'search').map((item) => item.term),
+                [query]
+            );
+            assert.deepEqual(
+                requests.filter((item) => item.kind === 'details').flatMap((item) => item.appIds),
+                [expectedAppId]
+            );
+            assert.equal(
+                t.resources.some((resource) => resource.type === 'fetch'),
+                false
+            );
+            t.noErrors();
+            return { requestCounts: counts(requests) };
+        } finally {
+            await t.close();
+        }
+    });
 
     await run('1337x: protected torrent titles remain eligible', async () => {
         const rows = [

@@ -1,5 +1,11 @@
 # Changelog
 
+## 5.04
+
+Changes since public version 5.03.
+
+- Fix hover previews for listings whose repack tags or version notes are cut off.
+
 ## 5.03
 
 Changes since public version 5.02.

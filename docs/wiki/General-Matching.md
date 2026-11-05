@@ -24,6 +24,10 @@ Ordinary successful matches make no source-page request. Recovery waits at most 
 
 This improves naming patterns across games; it cannot infer every unrelated translation, nickname or franchise subtitle. Without sufficient name evidence or an explicit source link, the card asks for a choice. Saved user corrections remain authoritative. Failed-lookup caching stays scoped to each listing, so one failure does not block another same-named source with a Steam link.
 
-Resolver 9 invalidates old automatic mappings and failed matches while preserving saved corrections and per-AppID fields. Shared core is 1.0.9. Tests include 20 captured official Steam names, 25 negative title pairs, 48 unseen naming variants with number-conflict checks, candidate ambiguity, metadata/type validation and source-recovery races. Both browser adapters are checked. These cases demonstrate the covered patterns, not a catalog-wide accuracy percentage.
+Resolver 9 invalidates old automatic mappings and failed matches while preserving saved corrections and per-AppID fields. The published core 1.0.9 verification covers 20 captured official Steam names, 25 negative title pairs, 48 unseen naming variants with number-conflict checks, candidate ambiguity, metadata and app type validation, and source recovery races. Both browser adapters are checked.
 
 [Verification evidence](general-matching-verification.json) · [Match recovery](Match-Recovery.md)
+
+## Clipped 1337x release annotations
+
+1337x 5.04 uses shared core 1.0.10 to remove recognized release annotations at the end of a listing even if the closing bracket or parenthesis was clipped. The reported Cairn listing left `[FitGirl` in the cleaned title. With the tag removed, the edition rule searches for `Cairn` and resolves the base game. The same cleanup handles other repack tags and build notes while preserving sequel numbers, edition labels and unrelated bracketed title text. A changed cleaned title bypasses a failed lookup cached for the old text. [Cairn Deluxe Edition on Steam](https://store.steampowered.com/bundle/63198/Cairn_Deluxe_Edition/)

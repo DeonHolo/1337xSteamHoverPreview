@@ -12,7 +12,7 @@ The preview screenshot above was taken with the [Dark Reader](https://darkreader
 
 ## Wiki and Code Review
 
-The [project wiki](docs/wiki/Home.md) covers behavior and architecture. Version **5.03** improves matching across naming formats and spelling errors, and recovers failed names from source-content Steam links. See [general matching](docs/wiki/General-Matching.md) for the rules, scope and verification, [match recovery](docs/wiki/Match-Recovery.md) for manual choices, and the [release checklist](RELEASE_CHECKLIST.md) and [Greasy Fork Markdown notes](GREASYFORK_CHANGELOG.md).
+Version **5.04** fixes previews when a listing cuts off a repack tag or version note. The project wiki describes the matching rules and manual choices. [Project wiki](docs/wiki/Home.md) · [Release checklist](RELEASE_CHECKLIST.md) · [Greasy Fork notes](GREASYFORK_CHANGELOG.md)
 
 ## Features
 

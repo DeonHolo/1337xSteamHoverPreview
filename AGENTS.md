@@ -3,8 +3,8 @@
 Read CONTRIBUTING.md and docs/wiki/Home.md before changing behavior. The user's current request takes precedence over historical review notes.
 
 - This checkout owns src/adapters/1337x.mjs. Shared source is pinned under vendor/steam-hover-core; change the canonical CS.RIN source and synchronize it instead of patching the vendor snapshot.
-- This patch follows public 5.02. Keep its public userscript @version at 5.03 during local fixes; package metadata uses SemVer 5.0.3. Internal core/resolver versions may advance when needed.
-- Public changelogs use version-only headings, with no dates. Describe user-visible changes since public 5.02; omit internal iterations and already-public features.
+- The 5.04 patch follows public 5.03. The userscript uses @version 5.04 and package metadata uses SemVer 5.0.4. Internal core and resolver versions may advance during local fixes.
+- Public changelogs use version-only headings with no dates. Describe user-visible changes since the previous public release and omit internal iterations and already-public features.
 - The chooser supports a separate title search form with debounce/Enter, permissive ranking, explicit selection and cancellation/late-result guards. Preserve optional AppID/URL entry.
 - The root userscript is generated. Build from src/userscript-header.txt, shared core, and the site adapter. Preserve the public filename/name/namespace/update identity.
 - Actual Steam tags are essential. No genre substitution. A successful first meaningful card includes actual tags; reviews/images may finish independently. No Copy magnet feature.

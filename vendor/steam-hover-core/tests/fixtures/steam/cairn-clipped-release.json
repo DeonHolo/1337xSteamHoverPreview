@@ -1,0 +1,23 @@
+{
+  "rawTitle": "Cairn: Deluxe Edition (v1.1.593s 2337 + 4 DLCs/Bonuses, MULTi11) [FitGirl Repack...",
+  "expectedAppId": 1588550,
+  "query": "Cairn",
+  "searchResults": [
+    { "id": 1588550, "name": "Cairn", "type": "app" },
+    { "id": 4487450, "name": "Cairn - On the Trail: Deep Water", "type": "app" },
+    { "id": 4031100, "name": "Cairn - Deluxe Upgrade Pack", "type": "app" },
+    { "id": 1302530, "name": "Cairn: Mathair's Curse", "type": "app" },
+    { "id": 3844980, "name": "Castle Cairn", "type": "app" },
+    { "id": 1598960, "name": "Cairn. Stone Towers", "type": "app" },
+    { "id": 3937220, "name": "Only the Mountain from Cairn Soundtrack", "type": "app" },
+    { "id": 5353330, "name": "Cairn & Carat", "type": "app" },
+    { "id": 2375640, "name": "A Cairn Tale", "type": "app" },
+    { "id": 4207340, "name": "Cairn - Original Soundtrack", "type": "app" }
+  ],
+  "apps": {
+    "1588550": { "type": "game" },
+    "4031100": { "type": "dlc", "fullgame": { "appid": "1588550", "name": "Cairn" } },
+    "4207340": { "type": "music" }
+  },
+  "source": "https://store.steampowered.com/api/storesearch/?term=Cairn&l=english&cc=us"
+}

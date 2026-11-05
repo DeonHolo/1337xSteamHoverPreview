@@ -13,6 +13,26 @@ import {
 const searches = JSON.parse(
     readFileSync(new URL('./fixtures/steam/reported-title-search.json', import.meta.url), 'utf8')
 );
+const clippedRelease = JSON.parse(
+    readFileSync(new URL('./fixtures/steam/cairn-clipped-release.json', import.meta.url), 'utf8')
+);
+
+test('clipped release annotations leave the game title and its edition intact', () => {
+    const title = cleanTorrentTitle(clippedRelease.rawTitle);
+    assert.equal(title, 'Cairn: Deluxe Edition');
+    assert.equal(steamSearchQueries(title)[0], clippedRelease.query);
+    assert.equal(scoreCandidate(title, clippedRelease.searchResults[0]), 100);
+    for (const [raw, expected] of [
+        ['Portal 2 [DODI Repa…', 'Portal 2'],
+        ['The Elder Scrolls V: Skyrim Special Edition [GOG', 'The Elder Scrolls V: Skyrim Special Edition'],
+        ['[PROTOTYPE] [ElAmigos…', '[PROTOTYPE]'],
+        ['The Witcher 3: Wild Hunt [MULTi11...', 'The Witcher 3: Wild Hunt'],
+        ['Borderlands 3 (v1.0.2 + 4 DLCs...', 'Borderlands 3'],
+        ['The [Lost Chapters...', 'The [Lost Chapters'],
+        ['The [Lost Chapters] Returns', 'The [Lost Chapters] Returns']
+    ])
+        assert.equal(cleanTorrentTitle(raw), expected, raw);
+});
 
 test('reported Apex Predator commercial edition retains the sequel and searches its base title', () => {
     const title = cleanTorrentTitle(

@@ -1,7 +1,7 @@
 import SteamTextFuse from '../assets/fuse.basic.min.mjs';
 
 /** Shared Steam providers, matching, request scheduling and field-level cache. No runtime dependencies. */
-export const CORE_VERSION = '1.0.9';
+export const CORE_VERSION = '1.0.10';
 
 const STEAM_SCHEMA = 3;
 const STEAM_RESOLVER = 9;
@@ -156,6 +156,10 @@ export function cleanTorrentTitle(raw) {
         /\[[^\]]*\b(?:repack|fitgirl|dodi|elamigos|gog|multi\d*|p2p|iso|linux|windows|x64|x86)\b[^\]]*\]/gi,
         ' '
     );
+    // Listings can end midway through a release tag. Strip only recognized trailing metadata.
+    title = title
+        .replace(/\[\s*(?:fitgirl|dodi|elamigos|repack|bober\s*bros|gog|p2p|multi\d+|x64|x86)\b[^[\]]*$/i, ' ')
+        .replace(/\(\s*(?:v\d+(?=[.\s+…-]|$)|build\s*[#:]?\s*\d+|multi\d+)[^()]*$/i, ' ');
     title = steamCleanCommonTitle(title);
     title = title.replace(
         /\s*[- ]\s*(?:codex|cpy|skidrow|plaza|hoodlum|flt|doge|darksiders|empress|rune|tenoke|tinyiso|elamigos|fitgirl|dodi|razor1911|reloaded|prophet|fairlight|gog|p2p|steam|steamworks|3dm|ali213|anomaly|kaos|revolt|simplex|iso|bober\s*bros)\s*$/i,

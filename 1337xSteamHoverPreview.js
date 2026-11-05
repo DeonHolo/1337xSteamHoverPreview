@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         1337x - Steam Hover Preview 
 // @namespace    https://greasyfork.org/en/users/1340389-deonholo
-// @version      5.03
+// @version      5.04
 // @description  Actual Steam tags first, validated base-game matching, reviews, screenshots, trailers, and quick site actions
 // @icon         https://greasyfork.s3.us-east-2.amazonaws.com/x432yc9hx5t6o2gbe9ccr7k5l6u8
 // @author       DeonHolo
@@ -35,8 +35,8 @@
 // @run-at       document-idle
 // ==/UserScript==
 
-// Generated from source; edit src/ and rebuild. Shared core 1.0.9.
-// Build SHA-256: 75d425a59da72148dfec561fd42e282eb02750d316d3f9cfdf0169983ca2ba30
+// Generated from source; edit src/ and rebuild. Shared core 1.0.10.
+// Build SHA-256: 65051108353e9ea5d27b4c2b189298a978de75d214739375b901bb9bb06c6f1d
 (() => {
 'use strict';
 
@@ -261,7 +261,7 @@ return re;
 
 // Source: vendor/steam-hover-core/src/core/steam-client.mjs
 /** Shared Steam providers, matching, request scheduling and field-level cache. No runtime dependencies. */
-const CORE_VERSION = '1.0.9';
+const CORE_VERSION = '1.0.10';
 
 const STEAM_SCHEMA = 3;
 const STEAM_RESOLVER = 9;
@@ -416,6 +416,10 @@ function cleanTorrentTitle(raw) {
         /\[[^\]]*\b(?:repack|fitgirl|dodi|elamigos|gog|multi\d*|p2p|iso|linux|windows|x64|x86)\b[^\]]*\]/gi,
         ' '
     );
+    // Listings can end midway through a release tag. Strip only recognized trailing metadata.
+    title = title
+        .replace(/\[\s*(?:fitgirl|dodi|elamigos|repack|bober\s*bros|gog|p2p|multi\d+|x64|x86)\b[^[\]]*$/i, ' ')
+        .replace(/\(\s*(?:v\d+(?=[.\s+…-]|$)|build\s*[#:]?\s*\d+|multi\d+)[^()]*$/i, ' ');
     title = steamCleanCommonTitle(title);
     title = title.replace(
         /\s*[- ]\s*(?:codex|cpy|skidrow|plaza|hoodlum|flt|doge|darksiders|empress|rune|tenoke|tinyiso|elamigos|fitgirl|dodi|razor1911|reloaded|prophet|fairlight|gog|p2p|steam|steamworks|3dm|ali213|anomaly|kaos|revolt|simplex|iso|bober\s*bros)\s*$/i,
