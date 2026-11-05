@@ -5,6 +5,18 @@ const escape = (value) =>
     );
 
 export const GAMES = {
+    632470: { name: 'Disco Elysium - The Final Cut', tags: ['RPG', 'Story Rich', 'Detective'] },
+    1173140: { name: 'Disco Elysium - Soundtrack and Artbooklet', type: 'dlc', parent: 632470, tags: ['Music'] },
+    1233220: { name: 'Disco Elysium - The Final Cut Soundtrack', type: 'music', tags: ['Music'] },
+    489830: { name: 'The Elder Scrolls V: Skyrim Special Edition', tags: ['Open World', 'RPG', 'Fantasy'] },
+    598120: {
+        name: 'The Elder Scrolls V: Skyrim Special Edition - Creations',
+        type: 'dlc',
+        parent: 489830,
+        tags: ['RPG']
+    },
+    72850: { name: 'The Elder Scrolls V: Skyrim', tags: ['Open World', 'RPG'] },
+    611670: { name: 'The Elder Scrolls V: Skyrim VR', tags: ['VR', 'RPG'] },
     5245310: { name: 'Idle Demon Lord II', tags: ['Idler', 'Action RPG', 'Loot'] },
     2885530: { name: 'MeowPower!Yachiyo', tags: ['Beat em up', 'Action', 'Cute'] },
     2780710: { name: "Asgard's Fall — Viking Survivors", tags: ['Action Roguelike', 'Bullet Hell', 'Roguelite'] },

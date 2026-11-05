@@ -16,7 +16,7 @@
     "sharedSnapshot": "passed",
     "browser": {
       "passed": 69,
-      "generatedAt": "2026-11-05T04:37:16.758Z",
+      "generatedAt": "2026-11-05T05:08:45.250Z",
       "environment": "Headless Chromium, local HTML fixtures and deterministic mocked Steam transport; not a live-network benchmark.",
       "adapters": [
         "csrinru",
@@ -106,5 +106,24 @@
     },
     "notes": "## 5.02\n\n- Recognize Disco Elysium as Disco Elysium – The Final Cut using its verified Steam identity.\n- Improve edition matching so Skyrim Special Edition matches directly while original Skyrim, Special Edition and VR stay separate.\n",
     "historicalChangelogLimit": "New release headings use versions only. Greasy Fork exposes no author edit control for already-posted version changelogs; historical entries were not deleted."
+  },
+  "ciCheckoutRegression": {
+    "checkedAt": "2026-11-05T05:08:45.547Z",
+    "problem": "The 1337x runner assumed a sibling folder named 1337x, so GitHub checkout names caused ENOENT before loading the userscript.",
+    "fix": "Both runners locate their own product through build.config.json and support explicit roots for the other product.",
+    "standalone": {
+      "environment": "Isolated fixture checkout named standalone-checkout-arbitrary-name, with no sibling userscript artifact.",
+      "passed": 32,
+      "failed": 0
+    },
+    "shared": {
+      "passed": 69,
+      "failed": 0,
+      "adapters": [
+        "csrinru",
+        "1337x"
+      ]
+    },
+    "publishedArtifactsUnchanged": true
   }
 }

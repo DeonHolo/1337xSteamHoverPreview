@@ -14,7 +14,7 @@ Useful options:
 - `--baseline-only`: run the historical pipeline comparison only.
 - `--site=csrinru` or `--site=1337x`: run one product, including in a single-repository CI checkout.
 
-The 1337x checkout defaults to the sibling `../1337x`. Set `STEAM_HOVER_1337X_ROOT` when it lives elsewhere. Install the pinned Playwright dependency and its Chromium browser through the package's normal setup before running.
+The runner reads `build.config.json` to find the local product, so a single-repository checkout works regardless of its folder name. From CS.RIN, the other product defaults to `../1337x`; from 1337x, it defaults to `../csrinruSteamHoverPreview`. Set `STEAM_HOVER_1337X_ROOT` or `STEAM_HOVER_CSRINRU_ROOT` to override the corresponding location. Install the pinned Playwright dependency and its Chromium browser through the package's normal setup before running.
 
 The historical sources come from ignored snapshots in `test-results/baseline`, or pinned repository revisions `a93528e` (1337x) and `a0340f8` (CS.RIN). A shallow checkout without those revisions can use `--no-baseline`.
 

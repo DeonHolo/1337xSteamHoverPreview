@@ -14,18 +14,24 @@ import {
 } from '../tests/browser/fixtures.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const localSite = JSON.parse(await readFile(path.join(root, 'build.config.json'), 'utf8')).site;
 const output = path.join(root, 'test-results', 'browser');
 await mkdir(output, { recursive: true });
 const products = {
     '1337x': {
-        root: path.resolve(process.env.STEAM_HOVER_1337X_ROOT || path.join(root, '../1337x')),
+        root: path.resolve(
+            process.env.STEAM_HOVER_1337X_ROOT || (localSite === '1337x' ? root : path.join(root, '../1337x'))
+        ),
         file: '1337xSteamHoverPreview.js',
         url: 'https://1337x.to/Games/1/',
         baseline: '1337x.original.js',
         baselineRevision: 'a93528e'
     },
     csrinru: {
-        root,
+        root: path.resolve(
+            process.env.STEAM_HOVER_CSRINRU_ROOT ||
+                (localSite === 'csrinru' ? root : path.join(root, '../csrinruSteamHoverPreview'))
+        ),
         file: 'csrinruSteamHoverPreview.user.js',
         url: 'https://cs.rin.ru/forum/viewforum.php?f=10',
         baseline: 'csrinru.original.js',
@@ -78,7 +84,14 @@ async function run(name, body) {
 
 async function setup(
     site,
-    { rows = defaultRows, config = {}, baseline = false, pagePath = null, viewport = { width: 1280, height: 820 } } = {}
+    {
+        rows = defaultRows,
+        config = {},
+        baseline = false,
+        pagePath = null,
+        html = null,
+        viewport = { width: 1280, height: 820 }
+    } = {}
 ) {
     const product = products[site],
         mock = makeMockConfig(config);
@@ -97,7 +110,7 @@ async function setup(
             return route.fulfill({ status: 404, body: 'Media intentionally unavailable in fixture' });
         const parsed = new URL(url);
         if (parsed.origin === new URL(product.url).origin)
-            return route.fulfill({ status: 200, contentType: 'text/html', body: listingHtml(site, rows) });
+            return route.fulfill({ status: 200, contentType: 'text/html', body: html ?? listingHtml(site, rows) });
         return route.abort('blockedbyclient');
     });
     let source;
@@ -714,6 +727,80 @@ try {
                 await t.close();
             }
         });
+        await run(site + ': Disco Elysium automatically matches its verified Final Cut rename', async () => {
+            const t = await setup(site, {
+                rows: [{ id: 921, title: 'Disco Elysium' }],
+                config: { search: { 'disco elysium': [632470, 1173140, 1233220] } }
+            });
+            try {
+                await t.hover(921);
+                await t.ready(632470);
+                assert.match(await t.card.locator('.steamGameTitle').innerText(), /Disco Elysium - The Final Cut/);
+                assert.equal(
+                    await t.card.getByRole('link', { name: 'Open on Steam', exact: true }).getAttribute('href'),
+                    'https://store.steampowered.com/app/632470/'
+                );
+                assert.equal((await t.fixture()).firstReady.hasTags, true);
+                const requests = (await t.fixture()).requests;
+                assert.equal(requests.filter((r) => r.kind === 'search').length, 1);
+                assert.equal(requests.filter((r) => r.kind === 'details').length, 1);
+                assert.equal(
+                    requests.some((r) => r.kind === 'searchFallback'),
+                    false
+                );
+                assert.equal(await t.card.locator('.steamMatchNote').count(), 0);
+                t.noErrors();
+            } finally {
+                await t.close();
+            }
+        });
+        await run(site + ': Skyrim Special Edition resolves its exact base before optional DLC', async () => {
+            const title =
+                site === '1337x'
+                    ? 'The Elder Scrolls V Skyrim Special Edition-CODEX'
+                    : 'The Elder Scrolls V: Skyrim Special Edition';
+            const t = await setup(site, {
+                rows: [{ id: 922, title }],
+                config: { search: { 'the elder scrolls v skyrim special edition': [489830, 598120] } }
+            });
+            try {
+                await t.hover(922);
+                await t.ready(489830);
+                assert.equal(
+                    await t.card.getByRole('link', { name: 'Open on Steam', exact: true }).getAttribute('href'),
+                    'https://store.steampowered.com/app/489830/'
+                );
+                assert.equal(await t.card.locator('.steamMatchNote').count(), 0);
+                assert.equal((await t.fixture()).firstReady.hasTags, true);
+                await t.card.getByRole('button', { name: 'Wrong game?', exact: true }).click();
+                assert.equal(await t.card.locator('.steamCorrection').isVisible(), true);
+                t.noErrors();
+            } finally {
+                await t.close();
+            }
+        });
+        await run(site + ': original Skyrim is not silently replaced by Special Edition', async () => {
+            const t = await setup(site, {
+                rows: [{ id: 923, title: 'The Elder Scrolls V Skyrim' }],
+                config: {
+                    search: { 'the elder scrolls v skyrim': [489830], 'the elder scrolls v': [489830] },
+                    storefrontSearch: { 'the elder scrolls v skyrim': [489830] }
+                }
+            });
+            try {
+                await t.hover(923);
+                await t.page.waitForFunction(
+                    () => document.querySelector('.steamHoverPreview')?.dataset.previewState === 'error'
+                );
+                assert.equal(await t.card.getByRole('link', { name: 'Open on Steam', exact: true }).count(), 0);
+                await t.card.getByRole('button', { name: 'Choose Steam game…', exact: true }).click();
+                assert.match(await t.card.locator('.steamCandidateList').innerText(), /Skyrim Special Edition/);
+                t.noErrors();
+            } finally {
+                await t.close();
+            }
+        });
+
         await run(site + ': reported MeowPower exclamation title resolves despite literal-query API miss', async () => {
             const t = await setup(site, {
                 rows: [{ id: 915, appId: 2885530, title: 'MeowPower!Yachiyo' }],
@@ -1023,6 +1110,214 @@ try {
         }
     });
 
+    await run('csrinru: topic search tablebg rows preview highlighted titles and latest-page actions', async () => {
+        const html = await readFile(path.join(root, 'tests/fixtures/csrinru/search-topics.html'), 'utf8');
+        const t = await setup('csrinru', { html, pagePath: '/forum/search.php?keywords=Portal&sr=topics' });
+        try {
+            await t.hover(701);
+            await t.ready(620);
+            assert.equal((await t.fixture()).firstReady.hasTags, true);
+            assert.match(await t.card.locator('.steamGameTitle').innerText(), /Portal 2/);
+            const latest = await t.card
+                .getByRole('link', { name: 'Open Latest Page', exact: true })
+                .getAttribute('href');
+            assert.ok(latest.includes('p=900701'));
+            await t.card.getByRole('button', { name: 'Wrong game?', exact: true }).click();
+            assert.equal(await t.card.locator('.steamCorrection').isVisible(), true);
+            await t.card.getByRole('button', { name: 'Cancel', exact: true }).click();
+            await t.card.screenshot({ path: path.join(output, 'csrinru-search-result-preview.png') });
+            await t.hover(702);
+            await t.ready(4834840);
+            t.noErrors();
+        } finally {
+            await t.close();
+        }
+    });
+
+    await run('csrinru: only Topics section previews; all pinned sections and global icons stay excluded', async () => {
+        const row = (id, icon = '') =>
+            '<tr><td>' +
+            icon +
+            '</td><td><a class="topictitle" data-fixture-id="' +
+            id +
+            '" href="./viewtopic.php?t=' +
+            id +
+            '">Portal 2</a></td></tr>';
+        // No row classes or special icons: the section heading alone must protect these rows.
+        const html =
+            '<html><body><table class="tablebg"><tbody>' +
+            '<tr><th>Topics</th><th>Author</th></tr>' +
+            '<tr><td colspan="2">Global Announcements</td></tr>' +
+            row(711) +
+            '<tr><td colspan="2">:Announcements</td></tr>' +
+            row(712) +
+            '<tr><td colspan="2">Stickies</td></tr>' +
+            row(713) +
+            '<tr><td colspan="2">Topics</td></tr>' +
+            row(714) +
+            row(715, '<img src="./styles/rinDark/imageset/global_read.png">') +
+            row(716, '<img src="./styles/rinDark/imageset/global_read_locked.png">') +
+            '</tbody></table></body></html>';
+        const t = await setup('csrinru', { html });
+        try {
+            for (const id of [711, 712, 713, 715, 716]) {
+                await t.hover(id);
+                await t.page.waitForTimeout(350);
+                assert.equal(await t.card.isVisible(), false, 'Excluded row ' + id);
+            }
+            assert.equal((await t.fixture()).requests.length, 0, 'Excluded rows must not start Steam lookups');
+            await t.hover(714);
+            await t.ready(620);
+            t.noErrors();
+        } finally {
+            await t.close();
+        }
+    });
+
+    await run('csrinru: topic search still ignores sticky, pagination and post-reference links', async () => {
+        const html = await readFile(path.join(root, 'tests/fixtures/csrinru/search-topics.html'), 'utf8');
+        const t = await setup('csrinru', { html, pagePath: '/forum/search.php?keywords=Portal&sr=topics' });
+        try {
+            for (const id of [703, 704, 705]) {
+                await t.hover(id);
+                await t.page.waitForTimeout(350);
+                assert.equal(await t.card.isVisible(), false);
+            }
+            assert.equal((await t.fixture()).requests.length, 0);
+            t.noErrors();
+        } finally {
+            await t.close();
+        }
+    });
+
+    await run('csrinru: Enhanced tag colours follow source background, not card theme', async () => {
+        for (const [background, expected] of [
+            ['rgb(28, 28, 28)', ['rgb(225, 69, 100)', 'rgb(183, 186, 109)']],
+            ['rgb(240, 240, 240)', ['rgb(225, 69, 100)', 'rgb(89, 81, 101)']]
+        ]) {
+            const t = await setup('csrinru', { rows: [{ id: 601, title: 'Portal 2 [Early Access]' }] });
+            try {
+                await t.page.evaluate((color) => {
+                    document.body.style.backgroundColor = color;
+                }, background);
+                await t.hover(601);
+                await t.ready(620);
+                const tags = await t.card
+                    .locator('.threadTag')
+                    .evaluateAll((nodes) => nodes.map((node) => ({ text: node.textContent, color: node.style.color })));
+                assert.deepEqual(tags, [
+                    { text: '[CRACKED]', color: expected[0] },
+                    { text: '[Early Access]', color: expected[1] }
+                ]);
+                assert.equal(await t.card.getAttribute('data-theme'), 'dark');
+                t.noErrors();
+            } finally {
+                await t.close();
+            }
+        }
+    });
+
+    await run('csrinru: copy Enhanced inline colours and refresh same-title cached rows', async () => {
+        const t = await setup('csrinru', { rows: [{ id: 602, title: 'Portal 2 [Early Access]' }] });
+        try {
+            await t.page.locator('[data-fixture-id="602"]').evaluate((link) => {
+                link.innerHTML =
+                    '[Info] <span style="color:#e14564">[</span><span style="color:#e14564;font-size:0.9em">CRACKED</span><span style="color:#e14564">]</span> Portal 2 <span style="color:#b7ba6d">[Early Access]</span>';
+            });
+            await t.hover(602);
+            await t.ready(620);
+            assert.equal(
+                await t.card
+                    .locator('.threadTag')
+                    .first()
+                    .evaluate((node) => node.style.color),
+                'rgb(225, 69, 100)'
+            );
+            const sourceColour = await t.page
+                .locator('[data-fixture-id="602"] span')
+                .nth(1)
+                .evaluate((span) => getComputedStyle(span).color);
+            assert.equal(sourceColour, 'rgb(225, 69, 100)');
+            assert.equal(
+                await t.card
+                    .locator('.threadTag')
+                    .first()
+                    .evaluate((tag) => getComputedStyle(tag).color),
+                sourceColour
+            );
+            await t.card.screenshot({ path: path.join(output, 'csrinru-enhanced-colours-steamdb.png') });
+            const sourceBox = await t.page.locator('[data-fixture-id="602"]').boundingBox();
+            const cardBox = await t.card.boundingBox();
+            const left = Math.max(0, Math.min(sourceBox.x, cardBox.x) - 12);
+            const top = Math.max(0, Math.min(sourceBox.y, cardBox.y) - 12);
+            await t.page.screenshot({
+                path: path.join(output, 'csrinru-enhanced-source-and-preview.png'),
+                clip: {
+                    x: left,
+                    y: top,
+                    width: Math.max(sourceBox.x + sourceBox.width, cardBox.x + cardBox.width) - left + 12,
+                    height: Math.max(sourceBox.y + sourceBox.height, cardBox.y + cardBox.height) - top + 12
+                }
+            });
+            // Blue is deliberately injected only below to exercise same-title cache refresh.
+            await t.page.mouse.move(1200, 760);
+            await t.page.waitForFunction(
+                () => getComputedStyle(document.querySelector('.steamHoverPreview')).display === 'none'
+            );
+            await t.page
+                .locator('[data-fixture-id="602"] span')
+                .nth(1)
+                .evaluate((span) => {
+                    span.style.color = '#123456';
+                });
+            await t.hover(602);
+            await t.ready(620);
+            assert.equal(
+                await t.card
+                    .locator('.threadTag')
+                    .first()
+                    .evaluate((node) => node.style.color),
+                'rgb(18, 52, 86)'
+            );
+            assert.equal(
+                await t.page
+                    .locator('[data-fixture-id="602"] span')
+                    .nth(1)
+                    .evaluate((span) => span.style.color),
+                'rgb(18, 52, 86)'
+            );
+            await t.card.screenshot({ path: path.join(output, 'csrinru-enhanced-inline-cache-test.png') });
+            t.noErrors();
+        } finally {
+            await t.close();
+        }
+    });
+
+    await run('csrinru: failed previews retain Enhanced VR tag colours and clickable chooser', async () => {
+        const t = await setup('csrinru', {
+            rows: [{ id: 603, title: 'Unknown Fixture Game [VR Optional]' }],
+            config: { search: {} }
+        });
+        try {
+            await t.hover(603);
+            await t.page.waitForFunction(
+                () => document.querySelector('.steamHoverPreview')?.dataset.previewState === 'error'
+            );
+            const tags = await t.card
+                .locator('.threadTag')
+                .evaluateAll((nodes) => nodes.map((node) => [node.textContent, node.style.color]));
+            assert.deepEqual(tags, [
+                ['[CRACKED]', 'rgb(225, 69, 100)'],
+                ['[VR Optional]', 'rgb(79, 242, 166)']
+            ]);
+            await t.card.getByRole('button', { name: 'Choose Steam game…', exact: true }).click();
+            assert.equal(await t.card.locator('.steamCorrection').isVisible(), true);
+            t.noErrors();
+        } finally {
+            await t.close();
+        }
+    });
+
     await run('csrinru: game named Guide, AppID copy, and latest-post URL', async () => {
         const t = await setup('csrinru', { rows: [{ id: 501, appId: 303210, title: 'The Beginner’s Guide' }] });
         try {
@@ -1037,12 +1332,60 @@ try {
                 latest.includes('p=900501') || latest.includes('start=120'),
                 `Latest action must select latest post or greatest offset: ${latest}`
             );
-            assert.equal(await t.card.getByRole('link', { name: /Open SteamDB/ }).count(), 1);
+            const steamDb = t.card.getByRole('link', { name: 'Open SteamDB', exact: true });
+            assert.equal(await steamDb.getAttribute('href'), 'https://steamdb.info/app/303210/');
+            assert.equal(await steamDb.locator('svg.steamDbIcon').count(), 1);
+            assert.equal(await steamDb.locator('svg').getAttribute('viewBox'), '0 0 24 24');
+            assert.match(await steamDb.locator('path').getAttribute('d'), /^M11\.981 0C5\.72/);
+            assert.equal(await steamDb.locator('svg').evaluate((node) => getComputedStyle(node).width), '15px');
+            assert.equal(
+                t.resources.some(({ url }) => /steamdb|simpleicons|simple-icons/.test(url)),
+                false
+            );
             t.noErrors();
         } finally {
             await t.close();
         }
     });
+
+    for (const site of Object.keys(products)) {
+        await run(site + ': title-row correction keeps footer actions at bottom for long titles', async () => {
+            for (const width of [1280, 360]) {
+                const t = await setup(site, { rows: [defaultRows[0]], viewport: { width, height: 900 } });
+                try {
+                    await t.hover(100);
+                    await t.ready(620);
+                    const button = t.card.getByRole('button', { name: 'Wrong game?', exact: true });
+                    assert.equal(await t.card.locator('.steamGameTitle .steamCorrectToggle').count(), 1);
+                    assert.equal(await t.card.locator('.steamCardUtility').isVisible(), false);
+                    // Exercise the supplied long-title example without changing game matching.
+                    await t.card.locator('.steamGameTitle strong').evaluate((node) => {
+                        node.textContent = 'Probably Stolen - Cyberpunk Shopkeeper Sim';
+                    });
+                    const title = await t.card.locator('.steamGameTitle strong').boundingBox();
+                    const control = await button.boundingBox();
+                    const actions = await t.card.locator('.tipActions').boundingBox();
+                    const release = await t.card.locator('.steamReleaseDate').boundingBox();
+                    assert.ok(title.x + title.width <= control.x - 5, 'Title must wrap before correction control');
+                    assert.ok(control.y < release.y, 'Correction belongs to title, not release date');
+                    assert.ok(actions.y > title.y + title.height, 'Footer actions stay below content');
+                    assert.equal(await t.card.evaluate((card) => card.scrollWidth <= card.clientWidth), true);
+                    assert.equal(await button.evaluate((node) => getComputedStyle(node).whiteSpace), 'nowrap');
+                    await button.click();
+                    assert.equal(await button.getAttribute('aria-expanded'), 'true');
+                    assert.equal(await t.card.locator('.steamCorrection').isVisible(), true);
+                    await t.card.getByRole('button', { name: 'Cancel', exact: true }).click();
+                    assert.equal(await button.getAttribute('aria-expanded'), 'false');
+                    assert.equal(await button.evaluate((node) => document.activeElement === node), true);
+                    if (width === 1280)
+                        await t.card.screenshot({ path: path.join(output, site + '-title-row-correction.png') });
+                    t.noErrors();
+                } finally {
+                    await t.close();
+                }
+            }
+        });
+    }
 
     for (const site of Object.keys(products)) {
         await run(`${site}: original pipeline controlled comparison`, async () => {

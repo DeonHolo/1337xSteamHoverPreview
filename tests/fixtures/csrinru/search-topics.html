@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>CS.RIN topic search fixture</title>
+        <style>
+            body {
+                font: 12px Verdana;
+                margin: 24px;
+                min-height: 1000px;
+                background: #1c1c1c;
+                color: #c1cccc;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            td,
+            th {
+                padding: 10px;
+                border-bottom: 1px solid #555;
+            }
+            a {
+                color: #99d2f7;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Minimal structural reproduction of the observed search results, 5 November 2026.
+     No session identifiers, accounts, usernames or authenticated content retained. -->
+        <h2>Search found matches</h2>
+        <table class="tablebg">
+            <tbody>
+                <tr>
+                    <th colspan="3">Topics</th>
+                    <th>Author</th>
+                    <th>Replies</th>
+                    <th>Views</th>
+                    <th>Last post</th>
+                </tr>
+                <tr>
+                    <td class="row1">Icon</td>
+                    <td class="row1"></td>
+                    <td class="row1">
+                        <a
+                            class="topictitle"
+                            data-fixture-id="701"
+                            href="./viewtopic.php?f=10&amp;t=701&amp;hilit=Portal"
+                            >[Info] <span class="posthilit">Portal</span> 2</a
+                        >
+                        <div>
+                            [ Go to page:
+                            <a
+                                data-fixture-id="704"
+                                href="./viewtopic.php?f=10&amp;t=701&amp;start=120&amp;hilit=Portal"
+                                >5</a
+                            >
+                            ]
+                        </div>
+                        <div>in <a href="viewforum.php?f=10">Main Forum</a></div>
+                    </td>
+                    <td class="row2"></td>
+                    <td class="row1">1</td>
+                    <td class="row2">20</td>
+                    <td class="row1">
+                        <a title="View the latest post" href="./viewtopic.php?f=10&amp;t=701&amp;p=900701#p900701"
+                            >Latest</a
+                        >
+                    </td>
+                </tr>
+                <tr>
+                    <td class="row1">Icon</td>
+                    <td class="row1"></td>
+                    <td class="row1">
+                        <a
+                            class="topictitle"
+                            data-fixture-id="702"
+                            href="./viewtopic.php?f=10&amp;t=702&amp;hilit=Ecstatica"
+                            >[Info] Ecstatica</a
+                        >
+                    </td>
+                    <td class="row2"></td>
+                    <td class="row1">1</td>
+                    <td class="row2">20</td>
+                    <td class="row1"></td>
+                </tr>
+                <tr class="sticky">
+                    <td class="row1">Pinned</td>
+                    <td></td>
+                    <td>
+                        <a class="topictitle" data-fixture-id="703" href="./viewtopic.php?f=10&amp;t=703"
+                            >Forum rules</a
+                        >
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td>
+                        <a data-fixture-id="705" href="./viewtopic.php?f=10&amp;t=701&amp;p=900701#p900701"
+                            >Post body reference to Portal 2</a
+                        >
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+        <button id="outside-focus">Outside control</button>
+    </body>
+</html>
