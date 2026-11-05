@@ -6,13 +6,13 @@
 
 A userscript that displays Steam game information when hovering over game torrent titles on 1337x. Get Steam details, screenshots, trailers, store links, and magnet actions without leaving the torrent list.
 
-![Preview](https://i.imgur.com/ggAFfuB.png)
+![Skyrim Special Edition preview on 1337x](docs/images/steam-hover-preview.png)
 
 The preview screenshot above was taken with the [Dark Reader](https://darkreader.org/) browser extension enabled. The script still fully supports the original 1337x light mode; Dark Reader only changes the page/theme colors.
 
 ## Wiki and Code Review
 
-The [project wiki](docs/wiki/Home.md) covers behavior and architecture. The current **unpublished 5.00 draft** includes [title search inside the chooser](docs/wiki/Search-by-Name.md), plus [matching fixes and a plain-language explanation](docs/wiki/Matching-Explained.md). Use the [Markdown release checklist](RELEASE_CHECKLIST.md) and [paste-ready Greasy Fork changelog](GREASYFORK_CHANGELOG.md) to review this release. Older patch labels in dated test reports are internal development snapshots, not public releases.
+The [project wiki](docs/wiki/Home.md) covers behavior and architecture. Version **5.02** recognizes Disco Elysium's verified rename and repairs Skyrim Special Edition matching while preserving distinct editions. See [title identity and aliases](docs/wiki/Title-Identity-and-Aliases.md) for the explanation, [match recovery](docs/wiki/Match-Recovery.md) for manual corrections, and the [release checklist](RELEASE_CHECKLIST.md) and [Greasy Fork Markdown notes](GREASYFORK_CHANGELOG.md) for this release. Dated verification reports record the specific builds tested.
 
 ## Features
 

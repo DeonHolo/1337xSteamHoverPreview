@@ -1,0 +1,113 @@
+{
+  "description": "Steam candidates and app identities captured to diagnose reported Disco rename / Skyrim edition regressions.",
+  "searches": [
+    {
+      "query": "Disco Elysium",
+      "url": "https://store.steampowered.com/api/storesearch/?cc=us&l=en&term=Disco%20Elysium",
+      "items": [
+        {
+          "id": 632470,
+          "name": "Disco Elysium - The Final Cut",
+          "type": "app"
+        },
+        {
+          "id": 1173140,
+          "name": "Disco Elysium - Soundtrack and Artbooklet",
+          "type": "app"
+        },
+        {
+          "id": 1233220,
+          "name": "Disco Elysium - The Final Cut Soundtrack",
+          "type": "app"
+        }
+      ]
+    },
+    {
+      "query": "The Elder Scrolls V Skyrim Special Edition",
+      "url": "https://store.steampowered.com/api/storesearch/?cc=us&l=en&term=The%20Elder%20Scrolls%20V%20Skyrim%20Special%20Edition",
+      "items": [
+        {
+          "id": 489830,
+          "name": "The Elder Scrolls V: Skyrim Special Edition",
+          "type": "app"
+        },
+        {
+          "id": 598120,
+          "name": "The Elder Scrolls V: Skyrim Special Edition - Creations",
+          "type": "app"
+        }
+      ]
+    }
+  ],
+  "apps": [
+    {
+      "steam_appid": 632470,
+      "name": "Disco Elysium - The Final Cut",
+      "type": "game"
+    },
+    {
+      "steam_appid": 489830,
+      "name": "The Elder Scrolls V: Skyrim Special Edition",
+      "type": "game"
+    },
+    {
+      "steam_appid": 72850,
+      "name": "The Elder Scrolls V: Skyrim",
+      "type": "game"
+    },
+    {
+      "steam_appid": 611670,
+      "name": "The Elder Scrolls V: Skyrim VR",
+      "type": "game"
+    },
+    {
+      "steam_appid": 1746860,
+      "name": "The Elder Scrolls V: Skyrim Anniversary Upgrade",
+      "type": "dlc",
+      "fullgame": {
+        "appid": "489830",
+        "name": "The Elder Scrolls V: Skyrim Special Edition"
+      }
+    },
+    {
+      "steam_appid": 598120,
+      "name": "The Elder Scrolls V: Skyrim Special Edition - Creations",
+      "type": "dlc",
+      "fullgame": {
+        "appid": "489830",
+        "name": "The Elder Scrolls V: Skyrim Special Edition"
+      }
+    }
+  ],
+  "verifiedAlias": {
+    "appId": 632470,
+    "names": ["Disco Elysium", "Disco Elysium - The Final Cut"],
+    "source": "https://store.steampowered.com/news/posts/?appids=632470&enddate=1616694036&feed=steam_community_announcements"
+  },
+  "before": [
+    {
+      "query": "Disco Elysium",
+      "candidate": {
+        "appId": 632470,
+        "name": "Disco Elysium - The Final Cut"
+      },
+      "score": 64
+    },
+    {
+      "query": "The Elder Scrolls V Skyrim Special Edition",
+      "candidate": {
+        "appId": 489830,
+        "name": "The Elder Scrolls V: Skyrim Special Edition"
+      },
+      "score": 68
+    },
+    {
+      "query": "The Elder Scrolls V Skyrim",
+      "candidate": {
+        "appId": 489830,
+        "name": "The Elder Scrolls V: Skyrim Special Edition"
+      },
+      "score": 87
+    }
+  ]
+}

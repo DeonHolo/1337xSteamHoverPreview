@@ -1,0 +1,297 @@
+{
+  "checkedAt": "2026-11-04T21:55:03.764Z",
+  "clientDate": "2026-11-05",
+  "core": "1.0.7",
+  "change": "Successful previews place Wrong game? at the right of the title; long titles wrap and Steam actions remain at the bottom. Failed previews retain Choose Steam game….",
+  "packaging": {
+    "csrinru": "4.01",
+    "1337x": "5.00",
+    "installations": "Two independent userscripts; no cross-script correction sharing added."
+  },
+  "nodeTests": {
+    "csrinru": {
+      "passed": 71,
+      "failed": 0
+    },
+    "1337x": {
+      "passed": 65,
+      "failed": 0
+    }
+  },
+  "browser": {
+    "passed": 60,
+    "failed": 0,
+    "baselineComparison": false,
+    "environment": "Headless Chromium, local HTML fixtures and deterministic mocked Steam transport; not a live-network benchmark.",
+    "limitations": [
+      "Hidden-state logic is simulated; browser freezing/discarding is outside this harness.",
+      "Fixtures do not establish current live-site markup, CSP, script-manager, or media-codec compatibility.",
+      "The original baseline receives a valid legacy review response to isolate pipeline work from endpoint retirement."
+    ],
+    "checks": [
+      {
+        "name": "1337x: actual tags in first card, reviews independent, no speculative batch",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: saved actual tags survive page reload",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: a DLC resolves all fields and links to its verified base",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: repeated source listings reuse AppID details and actual tags",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: absent tags settle explicitly and retry fills the same card",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: rapid pointer changes cannot overwrite the next game",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: zero reviews is a visible state",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: failed reviews can be retried without resetting media",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: keyboard and theatre focus remain contained and restore",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: wrong-game correction survives reload",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: dynamic game descriptions cannot inject markup",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: preload starts after load and remains bounded when hidden",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: actual tags in first card, reviews independent, no speculative batch",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: saved actual tags survive page reload",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: a DLC resolves all fields and links to its verified base",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: repeated source listings reuse AppID details and actual tags",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: absent tags settle explicitly and retry fills the same card",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: rapid pointer changes cannot overwrite the next game",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: zero reviews is a visible state",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: failed reviews can be retried without resetting media",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: keyboard and theatre focus remain contained and restore",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: wrong-game correction survives reload",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: dynamic game descriptions cannot inject markup",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: preload starts after load and remains bounded when hidden",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: settings menu persists preload and theme preferences",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: settings menu persists preload and theme preferences",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: regression failure preview locks so its recovery controls are clickable",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: regression original typography and sizing with plain reviews and blue actions",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: regression failure preview locks so its recovery controls are clickable",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: regression original typography and sizing with plain reviews and blue actions",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: regression Windows icons work on uploader pages without a Games link or uploader column",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: localized English alias resolves through Steam website search after API miss",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: reported MeowPower exclamation title resolves despite literal-query API miss",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: reported Asgard raw title uses punctuation-neutral Steam lookup",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: bundled Fuse recovers a misspelled subtitle through a title-prefix candidate",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: failed lookup offers returned suggestions and switches to Wrong game after selection",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: ambiguous failures show choices directly without a Wrong game toggle",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: localized English alias resolves through Steam website search after API miss",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: reported MeowPower exclamation title resolves despite literal-query API miss",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: reported Asgard raw title uses punctuation-neutral Steam lookup",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: bundled Fuse recovers a misspelled subtitle through a title-prefix candidate",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: failed lookup offers returned suggestions and switches to Wrong game after selection",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: ambiguous failures show choices directly without a Wrong game toggle",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: manual chooser ranks names even across a rejected sequel identity",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: manual chooser ranks names even across a rejected sequel identity",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: typed chooser search suggests titles and waits for explicit selection",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: Enter searches a successful card without submitting the empty AppID form",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: new chooser text and closing the panel cancel obsolete searches",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: chooser search distinguishes empty results, provider failure and retry",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: typed chooser search suggests titles and waits for explicit selection",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: Enter searches a successful card without submitting the empty AppID form",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: new chooser text and closing the panel cancel obsolete searches",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: chooser search distinguishes empty results, provider failure and retry",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: protected torrent titles remain eligible",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: Enhanced tag colours follow source background, not card theme",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: copy Enhanced inline colours and refresh same-title cached rows",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: failed previews retain Enhanced VR tag colours and clickable chooser",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: game named Guide, AppID copy, and latest-post URL",
+        "status": "passed"
+      },
+      {
+        "name": "1337x: title-row correction keeps footer actions at bottom for long titles",
+        "status": "passed"
+      },
+      {
+        "name": "csrinru: title-row correction keeps footer actions at bottom for long titles",
+        "status": "passed"
+      }
+    ]
+  },
+  "layout": {
+    "viewports": [
+      1280,
+      360
+    ],
+    "title": "Probably Stolen - Cyberpunk Shopkeeper Sim",
+    "verified": [
+      "No title/button overlap or horizontal card overflow",
+      "Correction button precedes release date",
+      "Empty utility status consumes no footer row",
+      "Chooser opens; Cancel restores title-button focus",
+      "Existing failure recovery, metadata updates and keyboard/theatre checks pass"
+    ]
+  },
+  "checks": [
+    "Both builds, lint, Node tests, generated output/syntax and formatting passed",
+    "Shared source/hash lock verified",
+    "Tracked whitespace checks passed"
+  ],
+  "artifacts": {
+    "csrinruSteamHoverPreview": "92f480b86ac4acc855922394000d9a907df8ee1162289f3ca5ce825a4c48757f",
+    "1337x": "650e5260a0caef113f76ea097bc3c17a120bae731151191984394d5c37bbf6e4"
+  }
+}

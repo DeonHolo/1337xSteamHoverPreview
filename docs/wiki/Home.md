@@ -1,6 +1,6 @@
 # 1337x Steam Hover Preview wiki
 
-Current **unpublished draft: 5.00**, shared core **1.0.6**, checked 4 November 2026. Install the standalone [1337xSteamHoverPreview.js](../../1337xSteamHoverPreview.js) with a userscript manager; source modules and Node packages are development-only.
+Current public version **5.02**, shared core **1.0.8**. Install the standalone [1337xSteamHoverPreview.js](../../1337xSteamHoverPreview.js) with a userscript manager; source modules and Node packages are development-only.
 
 - [Search by name inside the chooser](Search-by-Name.md)
 - [Why matching failed and what changed](Matching-Explained.md)
@@ -15,6 +15,8 @@ Current **unpublished draft: 5.00**, shared core **1.0.6**, checked 4 November 2
 - [Historical audit](Review-Findings-2026-11-03.md)
 - [Development commands](../../CONTRIBUTING.md)
 
+[Title identity and verified aliases](Title-Identity-and-Aliases.md) explains the Disco Elysium and Skyrim matching fixes.
+
 ## What appears on hover
 
 The first meaningful successful card contains actual Steam tags. There is no genre fallback. A truly cold game shows a compact loading state; unavailable tags settle explicitly with Retry tags. Reviews update independently, in the original plain Rating row (stars, Steam category and count) or a clear zero/error state; the review summary is not a link. Images and trailers do not hold back tags.
@@ -22,6 +24,8 @@ The first meaningful successful card contains actual Steam tags. There is no gen
 Use the media arrows/thumbnails, click a trailer to start playback, and expand screenshots/trailers into theatre. Screenshot theatre stays within screenshots; after leaving a launched trailer for screenshots, navigation remains within screenshots. Escape closes theatre and restores its trigger. Alt+ArrowDown enters a keyboard-opened preview.
 
 The card retains Open on Steam and Magnet Download, including theatre actions. Magnet pages are retrieved only when the action is clicked, with retry/source-page recovery if unavailable. The native light palette and dark theme option remain supported.
+
+Long titles wrap beside the small correction button. Open on Steam stays at the bottom-left; failed cards keep Choose Steam game… below their actions. The scripts remain separate installations with independent saved corrections.
 
 ## Background loading and cache
 
@@ -31,7 +35,7 @@ Real tags are fresh for 24 hours and can be shown stale for up to 7 days while r
 
 ## Correct a match or diagnose a problem
 
-On a successfully matched card, use Wrong game? to choose a candidate or enter the correct Steam AppID/store URL. Corrections are validated, source-specific, persistent, resettable, and exportable/importable through the manager menu. Verified DLC parents lead to the main game consistently.
+On a successfully matched card, use Wrong game? at the right of the title to choose a candidate or enter the correct Steam AppID/store URL. Corrections are validated, source-specific, persistent, resettable, and exportable/importable through the manager menu. Verified DLC parents lead to the main game consistently.
 
 Failed finds replace Retry lookup with Choose Steam game…. It opens available suggestions or manual Steam AppID/URL entry, with explicit guidance when no suggestions exist. Successful matches retain Wrong game?. Ambiguous results open candidate choices directly.
 
@@ -39,4 +43,4 @@ Use the manager menu for settings, Clear cached Steam data, match correction imp
 
 Eligibility uses explicit Games categories/icons first, with uploader/release hints on mixed pages. A new mirror still needs compatible metadata and markup. A numeric link alone does not establish that a row is a game.
 
-The changes are local and unpublished. See the verification page for tested scope and remaining live-site/browser limitations.
+See [current matching verification](title-identity-verification.json) for the published build, tested scope and remaining live-site/browser limitations.

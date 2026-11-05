@@ -936,6 +936,10 @@ export function mountSteamHoverPreview({
         .steamHoverPreview .steamCandidateList { display:grid; gap:3px; margin:5px 0; max-height:150px; overflow:auto; }
         .steamHoverPreview .steamCandidateList button { text-align:left; }
         .steamHoverPreview .steamCardUtility { display:flex; align-items:center; gap:10px; margin-top:7px; font-size:11px; }
+        .steamHoverPreview .steamCardUtility:empty { display:none; }
+        .steamHoverPreview .steamGameTitle { display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+        .steamHoverPreview .steamGameTitle strong { flex:1 1 auto; min-width:0; overflow-wrap:anywhere; }
+        .steamHoverPreview .steamGameTitle .steamCorrectToggle { flex:0 0 auto; font-size:11px; white-space:nowrap; }
         .steamHoverPreview .steamMatchNote { font-size:11px; margin-top:3px; }
         .steamHoverPreview .threadTagList { flex-wrap:wrap; }
         .steamHoverPreview .threadTag { overflow-wrap:anywhere; }
@@ -1094,12 +1098,12 @@ export function mountSteamHoverPreview({
         tip.setAttribute('aria-busy', 'false');
         tip.setAttribute('aria-labelledby', `${idPrefix}-title`);
         tip.dataset.previewAppId = String(data.appId || data.steam_appid || '');
-        tip.innerHTML = `${renderMediaCarousel(currentMedia, currentMediaTitle)}<p class="steamGameTitle" id="${idPrefix}-title"><strong>${escapeHtml(currentMediaTitle)}</strong></p>${release ? `<p class="steamReleaseDate">${releaseHtml}</p>` : ''}<div data-meta-host>${renderMeta(data)}</div>${parent}<p>${escapeHtml(data.short_description || 'No description available.')}</p><p class="steamRating" aria-live="polite">${previewReviewsMarkup(data)}</p><p class="steamTags" aria-live="polite">${previewTagsMarkup(data)}</p><div class="tipActions">${renderActions(data)}</div>${utilityMarkup()}`;
+        tip.innerHTML = `${renderMediaCarousel(currentMedia, currentMediaTitle)}<p class="steamGameTitle"><strong id="${idPrefix}-title">${escapeHtml(currentMediaTitle)}</strong><button type="button" class="steamCorrectToggle" aria-expanded="false">Wrong game?</button></p>${release ? `<p class="steamReleaseDate">${releaseHtml}</p>` : ''}<div data-meta-host>${renderMeta(data)}</div>${parent}<p>${escapeHtml(data.short_description || 'No description available.')}</p><p class="steamRating" aria-live="polite">${previewReviewsMarkup(data)}</p><p class="steamTags" aria-live="polite">${previewTagsMarkup(data)}</p><div class="tipActions">${renderActions(data)}</div>${utilityMarkup()}`;
         makeVisible();
     }
 
     function utilityMarkup() {
-        return '<div class="steamCardUtility"><button type="button" class="steamCorrectToggle" aria-expanded="false">Wrong game?</button><span class="steamInlineStatus" role="status"></span></div><div class="steamCorrection" hidden></div>';
+        return '<div class="steamCardUtility steamInlineStatus" role="status"></div><div class="steamCorrection" hidden></div>';
     }
 
     function renderFailure(error) {

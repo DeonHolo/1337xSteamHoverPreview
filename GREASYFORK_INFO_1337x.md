@@ -6,8 +6,8 @@
 
 <center>
   <img
-    src="https://i.imgur.com/ggAFfuB.png"
-    alt="Hover preview demo"
+    src="https://i.imgur.com/60gznUV.png?fb"
+    alt="Skyrim Special Edition preview on 1337x"
     style="max-width:100%; margin:8px 0;"
   />
 </center>

@@ -1,10 +1,10 @@
 import SteamTextFuse from '../assets/fuse.basic.min.mjs';
 
 /** Shared Steam providers, matching, request scheduling and field-level cache. No runtime dependencies. */
-export const CORE_VERSION = '1.0.6';
+export const CORE_VERSION = '1.0.8';
 
 const STEAM_SCHEMA = 3;
-const STEAM_RESOLVER = 7;
+const STEAM_RESOLVER = 8;
 const STEAM_PROVIDER = 2;
 const STEAM_DAY = 86400000;
 const STEAM_LANGUAGE = 'english';
@@ -64,7 +64,8 @@ function steamStripCommercialEdition(value) {
     // Named commercial editions, e.g. ": Apex Predator Edition", still belong to the base game.
     // Preserve standalone remakes/remasters/definitive editions rather than dropping their identity.
     const named = title.match(/^(.+?)\s*[:–—]\s*([^:]{1,80})\s+edition$/i);
-    return named && !/\b(?:remake|remaster(?:ed)?|redux|vr|intergrade|definitive|enhanced)\b/i.test(named[2])
+    return named &&
+        !/\b(?:remake|remaster(?:ed)?|redux|vr|intergrade|definitive|enhanced|special|anniversary)\b/i.test(named[2])
         ? named[1].trim()
         : title;
 }
@@ -184,7 +185,36 @@ const STEAM_ROMAN = Object.freeze({
     xvi: '16'
 });
 const STEAM_STOP_WORDS = new Set(['the', 'a', 'an', 'and', 'of', 'for', 'to', 'in', 'on', 'with', 'by']);
-const STEAM_EDITION_WORDS = new Set(['remake', 'remastered', 'remaster', 'redux', 'vr', 'intergrade']);
+const STEAM_EDITION_WORDS = new Set([
+    'remake',
+    'remastered',
+    'remaster',
+    'redux',
+    'vr',
+    'intergrade',
+    'definitive',
+    'enhanced',
+    'special',
+    'anniversary'
+]);
+
+// Verified renames of the SAME Steam app, not a title -> AppID search shortcut.
+// Both search and appdetails must still return the expected ID/name and a valid game.
+// Add aliases only with publisher/Steam evidence; never strip arbitrary subtitles globally.
+// https://store.steampowered.com/news/posts/?appids=632470&enddate=1616694036&feed=steam_community_announcements
+const STEAM_VERIFIED_TITLE_ALIASES = Object.freeze({
+    632470: Object.freeze(['disco elysium', 'disco elysium the final cut'])
+});
+
+function steamVerifiedTitleAlias(query, candidate) {
+    if (!candidate || typeof candidate !== 'object') return false;
+    if (candidate.type && !['game', 'app'].includes(candidate.type)) return false;
+    const id = steamAppId(candidate.steam_appid ?? candidate.appId);
+    const names = STEAM_VERIFIED_TITLE_ALIASES[id];
+    return Boolean(
+        names && names.includes(normalizeForMatch(query)) && names.includes(normalizeForMatch(candidate.name))
+    );
+}
 
 function steamIdentity(value) {
     const normalized = normalizeForMatch(steamStripCommercialEdition(value)).replace(/\s+dlc$/i, '');
@@ -231,6 +261,7 @@ function steamFuzzyTitleScore(left, right) {
 
 /** A ranking heuristic, not a probability. Protected sequel/edition mismatches are rejected. */
 export function scoreCandidate(query, candidate) {
+    if (steamVerifiedTitleAlias(query, candidate)) return 100;
     const left = steamIdentity(query);
     const right = steamIdentity(typeof candidate === 'string' ? candidate : candidate?.name);
     if (!left.tokens.length || !right.tokens.length) return 0;
@@ -1287,8 +1318,15 @@ export function createSteamClient(env = {}) {
                 const winner = valid[0];
                 winner.match = {
                     ...winner.match,
+                    ...(steamVerifiedTitleAlias(primary, winner.app) && !winner.match.parentChain.length
+                        ? { kind: 'alias' }
+                        : {}),
                     score: winner.score,
-                    reason: winner.match.parentChain.length ? 'Verified DLC parent' : 'Validated title match',
+                    reason: winner.match.parentChain.length
+                        ? 'Verified DLC parent'
+                        : steamVerifiedTitleAlias(primary, winner.app)
+                          ? 'Verified Steam title alias'
+                          : 'Validated title match',
                     candidates: rankSteamSuggestions(identity.title, [...considered.values()])
                 };
                 mapIdentity(identity, winner);

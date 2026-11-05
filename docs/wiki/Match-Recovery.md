@@ -20,3 +20,7 @@ Genuine ambiguity still opens the choices automatically. Cancel closes the panel
 **68 CS.RIN Node tests, 65 1337x Node tests and 57 browser checks passed**, including both adapters. The browser cases exercise no-candidate manual URL entry, candidate suggestions after a low-confidence failure, correct labels before/after selection, ambiguity cancellation/reopening, no Retry lookup control, no extra search when opening the panel, and the existing presentation/media/tag/review behavior. Independent CI mode omits two original-pipeline comparison cases.
 
 [Current checks and artifact hashes](name-search-verification-2026-11-04.json). These checks use isolated synthetic pages, not the user's installed browser session. The current search revision uses resolver 7, invalidating earlier match failures while retaining valid per-AppID fields and saved corrections. Automatic confidence/identity thresholds remain unchanged; the manual recommendation rank is separate.
+
+## Correction placement
+
+Successful previews place the small Wrong game? button on the right of the game title. Long titles wrap in the remaining space. The release date stays below the title and the Steam action stays at the bottom-left. The correction form still opens beneath the card content; Cancel returns focus to the title-row button. Failed previews retain Choose Steam game… below their actions. CS.RIN and 1337x remain independently installed scripts with separate correction storage.

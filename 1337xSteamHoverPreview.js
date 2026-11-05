@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         1337x - Steam Hover Preview 
 // @namespace    https://greasyfork.org/en/users/1340389-deonholo
-// @version      5.00
+// @version      5.02
 // @description  Actual Steam tags first, validated base-game matching, reviews, screenshots, trailers, and quick site actions
 // @icon         https://greasyfork.s3.us-east-2.amazonaws.com/x432yc9hx5t6o2gbe9ccr7k5l6u8
 // @author       DeonHolo
@@ -35,8 +35,8 @@
 // @run-at       document-idle
 // ==/UserScript==
 
-// Generated from source; edit src/ and rebuild. Shared core 1.0.6.
-// Build SHA-256: 9944f52adf4c8f88205d7cda946aab5fb3cd89e84a5594adea5f88f5abbff2df
+// Generated from source; edit src/ and rebuild. Shared core 1.0.8.
+// Build SHA-256: 14ba493f41172f986c24b980990468184663965aeb54175af0566f32dd42c62e
 (() => {
 'use strict';
 
@@ -261,10 +261,10 @@ return re;
 
 // Source: vendor/steam-hover-core/src/core/steam-client.mjs
 /** Shared Steam providers, matching, request scheduling and field-level cache. No runtime dependencies. */
-const CORE_VERSION = '1.0.6';
+const CORE_VERSION = '1.0.8';
 
 const STEAM_SCHEMA = 3;
-const STEAM_RESOLVER = 7;
+const STEAM_RESOLVER = 8;
 const STEAM_PROVIDER = 2;
 const STEAM_DAY = 86400000;
 const STEAM_LANGUAGE = 'english';
@@ -324,7 +324,8 @@ function steamStripCommercialEdition(value) {
     // Named commercial editions, e.g. ": Apex Predator Edition", still belong to the base game.
     // Preserve standalone remakes/remasters/definitive editions rather than dropping their identity.
     const named = title.match(/^(.+?)\s*[:–—]\s*([^:]{1,80})\s+edition$/i);
-    return named && !/\b(?:remake|remaster(?:ed)?|redux|vr|intergrade|definitive|enhanced)\b/i.test(named[2])
+    return named &&
+        !/\b(?:remake|remaster(?:ed)?|redux|vr|intergrade|definitive|enhanced|special|anniversary)\b/i.test(named[2])
         ? named[1].trim()
         : title;
 }
@@ -444,7 +445,36 @@ const STEAM_ROMAN = Object.freeze({
     xvi: '16'
 });
 const STEAM_STOP_WORDS = new Set(['the', 'a', 'an', 'and', 'of', 'for', 'to', 'in', 'on', 'with', 'by']);
-const STEAM_EDITION_WORDS = new Set(['remake', 'remastered', 'remaster', 'redux', 'vr', 'intergrade']);
+const STEAM_EDITION_WORDS = new Set([
+    'remake',
+    'remastered',
+    'remaster',
+    'redux',
+    'vr',
+    'intergrade',
+    'definitive',
+    'enhanced',
+    'special',
+    'anniversary'
+]);
+
+// Verified renames of the SAME Steam app, not a title -> AppID search shortcut.
+// Both search and appdetails must still return the expected ID/name and a valid game.
+// Add aliases only with publisher/Steam evidence; never strip arbitrary subtitles globally.
+// https://store.steampowered.com/news/posts/?appids=632470&enddate=1616694036&feed=steam_community_announcements
+const STEAM_VERIFIED_TITLE_ALIASES = Object.freeze({
+    632470: Object.freeze(['disco elysium', 'disco elysium the final cut'])
+});
+
+function steamVerifiedTitleAlias(query, candidate) {
+    if (!candidate || typeof candidate !== 'object') return false;
+    if (candidate.type && !['game', 'app'].includes(candidate.type)) return false;
+    const id = steamAppId(candidate.steam_appid ?? candidate.appId);
+    const names = STEAM_VERIFIED_TITLE_ALIASES[id];
+    return Boolean(
+        names && names.includes(normalizeForMatch(query)) && names.includes(normalizeForMatch(candidate.name))
+    );
+}
 
 function steamIdentity(value) {
     const normalized = normalizeForMatch(steamStripCommercialEdition(value)).replace(/\s+dlc$/i, '');
@@ -491,6 +521,7 @@ function steamFuzzyTitleScore(left, right) {
 
 /** A ranking heuristic, not a probability. Protected sequel/edition mismatches are rejected. */
 function scoreCandidate(query, candidate) {
+    if (steamVerifiedTitleAlias(query, candidate)) return 100;
     const left = steamIdentity(query);
     const right = steamIdentity(typeof candidate === 'string' ? candidate : candidate?.name);
     if (!left.tokens.length || !right.tokens.length) return 0;
@@ -1547,8 +1578,15 @@ function createSteamClient(env = {}) {
                 const winner = valid[0];
                 winner.match = {
                     ...winner.match,
+                    ...(steamVerifiedTitleAlias(primary, winner.app) && !winner.match.parentChain.length
+                        ? { kind: 'alias' }
+                        : {}),
                     score: winner.score,
-                    reason: winner.match.parentChain.length ? 'Verified DLC parent' : 'Validated title match',
+                    reason: winner.match.parentChain.length
+                        ? 'Verified DLC parent'
+                        : steamVerifiedTitleAlias(primary, winner.app)
+                          ? 'Verified Steam title alias'
+                          : 'Validated title match',
                     candidates: rankSteamSuggestions(identity.title, [...considered.values()])
                 };
                 mapIdentity(identity, winner);
@@ -3079,6 +3117,10 @@ function mountSteamHoverPreview({
         .steamHoverPreview .steamCandidateList { display:grid; gap:3px; margin:5px 0; max-height:150px; overflow:auto; }
         .steamHoverPreview .steamCandidateList button { text-align:left; }
         .steamHoverPreview .steamCardUtility { display:flex; align-items:center; gap:10px; margin-top:7px; font-size:11px; }
+        .steamHoverPreview .steamCardUtility:empty { display:none; }
+        .steamHoverPreview .steamGameTitle { display:flex; align-items:baseline; justify-content:space-between; gap:12px; }
+        .steamHoverPreview .steamGameTitle strong { flex:1 1 auto; min-width:0; overflow-wrap:anywhere; }
+        .steamHoverPreview .steamGameTitle .steamCorrectToggle { flex:0 0 auto; font-size:11px; white-space:nowrap; }
         .steamHoverPreview .steamMatchNote { font-size:11px; margin-top:3px; }
         .steamHoverPreview .threadTagList { flex-wrap:wrap; }
         .steamHoverPreview .threadTag { overflow-wrap:anywhere; }
@@ -3237,12 +3279,12 @@ function mountSteamHoverPreview({
         tip.setAttribute('aria-busy', 'false');
         tip.setAttribute('aria-labelledby', `${idPrefix}-title`);
         tip.dataset.previewAppId = String(data.appId || data.steam_appid || '');
-        tip.innerHTML = `${renderMediaCarousel(currentMedia, currentMediaTitle)}<p class="steamGameTitle" id="${idPrefix}-title"><strong>${escapeHtml(currentMediaTitle)}</strong></p>${release ? `<p class="steamReleaseDate">${releaseHtml}</p>` : ''}<div data-meta-host>${renderMeta(data)}</div>${parent}<p>${escapeHtml(data.short_description || 'No description available.')}</p><p class="steamRating" aria-live="polite">${previewReviewsMarkup(data)}</p><p class="steamTags" aria-live="polite">${previewTagsMarkup(data)}</p><div class="tipActions">${renderActions(data)}</div>${utilityMarkup()}`;
+        tip.innerHTML = `${renderMediaCarousel(currentMedia, currentMediaTitle)}<p class="steamGameTitle"><strong id="${idPrefix}-title">${escapeHtml(currentMediaTitle)}</strong><button type="button" class="steamCorrectToggle" aria-expanded="false">Wrong game?</button></p>${release ? `<p class="steamReleaseDate">${releaseHtml}</p>` : ''}<div data-meta-host>${renderMeta(data)}</div>${parent}<p>${escapeHtml(data.short_description || 'No description available.')}</p><p class="steamRating" aria-live="polite">${previewReviewsMarkup(data)}</p><p class="steamTags" aria-live="polite">${previewTagsMarkup(data)}</p><div class="tipActions">${renderActions(data)}</div>${utilityMarkup()}`;
         makeVisible();
     }
 
     function utilityMarkup() {
-        return '<div class="steamCardUtility"><button type="button" class="steamCorrectToggle" aria-expanded="false">Wrong game?</button><span class="steamInlineStatus" role="status"></span></div><div class="steamCorrection" hidden></div>';
+        return '<div class="steamCardUtility steamInlineStatus" role="status"></div><div class="steamCorrection" hidden></div>';
     }
 
     function renderFailure(error) {

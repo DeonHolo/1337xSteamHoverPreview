@@ -1,0 +1,110 @@
+{
+  "recordedAt": "2026-11-05T04:47:08.130Z",
+  "release": "5.02",
+  "packageVersion": "5.0.2",
+  "core": "1.0.8",
+  "resolver": 8,
+  "checks": {
+    "lint": "passed",
+    "nodeTests": {
+      "passed": 70,
+      "failed": 0
+    },
+    "build": "passed",
+    "generatedOutput": "passed",
+    "format": "passed",
+    "sharedSnapshot": "passed",
+    "browser": {
+      "passed": 69,
+      "generatedAt": "2026-11-05T04:37:16.758Z",
+      "environment": "Headless Chromium, local HTML fixtures and deterministic mocked Steam transport; not a live-network benchmark.",
+      "adapters": [
+        "csrinru",
+        "1337x"
+      ],
+      "limitations": [
+        "Hidden-state logic is simulated; browser freezing/discarding is outside this harness.",
+        "Fixtures do not establish current live-site markup, CSP, script-manager, or media-codec compatibility.",
+        "The original baseline receives a valid legacy review response to isolate pipeline work from endpoint retirement."
+      ]
+    }
+  },
+  "liveSteam": {
+    "checkedAt": "2026-11-05T04:38:09.518Z",
+    "environment": "Live Steam requests from Node fetch; actual Chromium DOMParser; shared provider engine without UI/network-image loading. One connection; not a representative p95 benchmark.",
+    "manualCorrections": 0,
+    "results": [
+      {
+        "query": "Disco Elysium",
+        "appId": 632470,
+        "name": "Disco Elysium - The Final Cut",
+        "match": {
+          "kind": "alias",
+          "score": 100,
+          "reason": "Verified Steam title alias",
+          "parentChain": []
+        },
+        "tags": [
+          "RPG",
+          "Story Rich",
+          "Choices Matter",
+          "Detective",
+          "Isometric"
+        ],
+        "reviewCount": 132563,
+        "tagsReadyMs": 1318,
+        "warmPeekMs": 0
+      },
+      {
+        "query": "The Elder Scrolls V Skyrim Special Edition",
+        "appId": 489830,
+        "name": "The Elder Scrolls V: Skyrim Special Edition",
+        "match": {
+          "kind": "search",
+          "score": 100,
+          "reason": "Validated title match",
+          "parentChain": []
+        },
+        "tags": [
+          "Open World",
+          "RPG",
+          "Fantasy",
+          "Adventure",
+          "Singleplayer"
+        ],
+        "reviewCount": 382649,
+        "tagsReadyMs": 1543,
+        "warmPeekMs": 0
+      }
+    ],
+    "totalRequests": 9,
+    "limitations": [
+      "One live connection is not a representative latency benchmark.",
+      "The live engine probe does not establish all browser, manager or live-site markup combinations."
+    ]
+  },
+  "diagnosis": {
+    "discoPreviousAutomaticScore": 64,
+    "automaticThreshold": 85,
+    "fix": "Verified same-AppID alias with returned ID/name/type validation. Not a direct lookup shortcut or generic subtitle removal.",
+    "skyrim": "Protect Special/Anniversary edition words from commercial-tier cleanup; original, Special Edition and VR remain distinct.",
+    "aliasLimitation": "Unrelated semantic renames still require official evidence and an additional tested alias group.",
+    "steamEvidence": "https://store.steampowered.com/news/posts/?appids=632470&enddate=1616694036&feed=steam_community_announcements"
+  },
+  "publication": {
+    "url": "https://greasyfork.org/en/scripts/533774-1337x-steam-hover-preview",
+    "versionUrl": "https://greasyfork.org/en/scripts/533774-1337x-steam-hover-preview?version=1987088",
+    "method": "In-app browser: filled generated code and Markdown changelog, replaced the description screenshot, posted and verified public version, rendered version-only heading and loaded image.",
+    "scriptSha256": "79b4e484544a25f03f93ba72d1fd2e5f6fe0fb8e7f063a525ea0d2450d8cc4e8",
+    "imageUrl": "https://i.imgur.com/60gznUV.png?fb",
+    "repositoryImage": "docs/images/steam-hover-preview.png",
+    "imageSha256": "c7a2277252b16e0b9f53966154d7449a89207ad39322960657fd0446ffe67a47",
+    "imageSize": {
+      "width": 520,
+      "height": 537,
+      "bytes": 230303
+    },
+    "notes": "## 5.02\n\n- Recognize Disco Elysium as Disco Elysium – The Final Cut using its verified Steam identity.\n- Improve edition matching so Skyrim Special Edition matches directly while original Skyrim, Special Edition and VR stay separate.\n",
+    "historicalChangelogLimit": "New release headings use versions only. Greasy Fork exposes no author edit control for already-posted version changelogs; historical entries were not deleted."
+  }
+}

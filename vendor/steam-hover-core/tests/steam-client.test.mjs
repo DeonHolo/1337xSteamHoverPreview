@@ -176,6 +176,89 @@ test('candidate scoring uses both directions and rejects sequel/remake/VR mismat
     );
 });
 
+const discoSkyrim = JSON.parse(readFileSync(new URL('./fixtures/steam/disco-skyrim.json', import.meta.url), 'utf8'));
+
+test('verified Disco rename is restricted to the returned AppID and the two official names', () => {
+    const current = { appId: 632470, name: 'Disco Elysium - The Final Cut' };
+    assert.equal(scoreCandidate('Disco Elysium', current), 100);
+    assert.equal(
+        scoreCandidate('Disco Elysium - The Final Cut', { steam_appid: 632470, name: 'Disco Elysium', type: 'game' }),
+        100
+    );
+    assert.ok(scoreCandidate('Disco Elysium', { ...current, appId: 1233220 }) < 85);
+    assert.ok(scoreCandidate('Disco Elysium', { ...current, type: 'dlc' }) < 85);
+    assert.ok(scoreCandidate('Disco Elysium', { ...current, name: 'Disco Elysium - The Final Cut Soundtrack' }) < 85);
+    assert.ok(scoreCandidate('Disco Elysium 2', current) < 85);
+    assert.ok(scoreCandidate('Disco Elysium', 'Disco Elysium - The Final Cut') < 85);
+    assert.ok(scoreCandidate('Another Game', { appId: 10, name: 'Another Game - The Final Cut' }) < 85);
+});
+
+test('Skyrim punctuation is harmless while Special Edition, original and VR remain separate identities', () => {
+    const special = { appId: 489830, name: 'The Elder Scrolls V: Skyrim Special Edition' };
+    const original = { appId: 72850, name: 'The Elder Scrolls V: Skyrim' };
+    const vr = { appId: 611670, name: 'The Elder Scrolls V: Skyrim VR' };
+    assert.equal(scoreCandidate('The Elder Scrolls V Skyrim Special Edition', special), 100);
+    assert.equal(scoreCandidate('The Elder Scrolls V: Skyrim Special Edition', special), 100);
+    assert.equal(scoreCandidate('The Elder Scrolls V Skyrim', special), -Infinity);
+    assert.equal(scoreCandidate(special.name, original), -Infinity);
+    assert.equal(scoreCandidate(special.name, vr), -Infinity);
+    assert.equal(scoreCandidate('The Elder Scrolls V Skyrim Anniversary Edition', special), -Infinity);
+});
+
+for (const [title, appId] of [
+    ['Disco Elysium', 632470],
+    ['The Elder Scrolls V Skyrim Special Edition', 489830]
+]) {
+    test('recorded Steam candidates resolve directly without DLC detours: ' + title, async (t) => {
+        const f = fixtureClient((url) => {
+            if (url.pathname.includes('storesearch'))
+                return {
+                    body: {
+                        items:
+                            discoSkyrim.searches.find((item) => item.query === url.searchParams.get('term'))?.items ||
+                            []
+                    }
+                };
+            if (url.pathname.includes('appdetails')) {
+                const id = Number(url.searchParams.get('appids'));
+                const data = discoSkyrim.apps.find((item) => item.steam_appid === id);
+                return { body: { [id]: { success: Boolean(data), data: data && { ...app(id, data.name), ...data } } } };
+            }
+            return normalHandler(url);
+        });
+        t.after(() => f.client.dispose());
+        const data = await f.client.loadPreview(source(title));
+        assert.equal(data.appId, appId);
+        assert.deepEqual(data.match.parentChain, []);
+        assert.equal(data.match.kind, appId === 632470 ? 'alias' : 'search');
+        assert.deepEqual(data.tags, ['Exploration', 'Story Rich']);
+        const detailIds = f.calls
+            .filter((call) => call.url.includes('appdetails'))
+            .map((call) => Number(new URL(call.url).searchParams.get('appids')));
+        assert.equal(detailIds[0], appId, 'The exact base game must be validated first');
+        assert.equal(detailIds.includes(1746860), false, 'Special Edition must not depend on the Anniversary Upgrade');
+        if (appId === 632470) assert.equal(detailIds.length, 1);
+        assert.equal(f.calls.filter((call) => call.url.includes('storesearch')).length, 1);
+        assert.ok(f.calls.every((call) => !call.url.includes('/search/results/')));
+    });
+}
+
+test('a stale or dishonest search name cannot bypass appdetails validation with a known alias ID', async (t) => {
+    const f = fixtureClient((url) => {
+        if (url.pathname.includes('storesearch'))
+            return { body: { items: [{ id: 632470, name: 'Disco Elysium - The Final Cut', type: 'app' }] } };
+        if (url.pathname.includes('appdetails'))
+            return { body: { 632470: { success: true, data: app(632470, 'Unrelated Game') } } };
+        return normalHandler(url);
+    });
+    t.after(() => f.client.dispose());
+    await assert.rejects(f.client.loadPreview(source('Disco Elysium')), { code: 'NO_MATCH' });
+    assert.equal(
+        f.calls.some((call) => call.url.includes('/app/632470/')),
+        false
+    );
+});
+
 test('new review envelope distinguishes zero, a small valid count and malformed data', () => {
     assert.deepEqual(parseReviewSummary(review(4, 1)), {
         desc: 'Positive',

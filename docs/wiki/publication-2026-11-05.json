@@ -1,0 +1,10 @@
+{
+  "publishedAt": "2026-11-04T22:00:05.341Z",
+  "clientDate": "2026-11-05",
+  "version": "5.01",
+  "site": "Greasy Fork",
+  "id": 533774,
+  "method": "In-app browser release form; verified public version and rendered Markdown on history page",
+  "changelog": "## 5.01 — 5 November 2026\n\n- Move Wrong game? to the right of the game title, keeping Open on Steam at the bottom-left.\n- Allow long game titles to wrap beside the correction button, including on narrow screens.\n",
+  "sha256": "7df14aa770cd8c59a2cc5a6b7a5639c6ded4f3ab5ffb1b8c9c4d36ebc029ed44"
+}

@@ -1,6 +1,20 @@
 # Changelog
 
-## 5.00 — Unreleased
+## 5.02
+
+Changes since public version 5.01.
+
+- Recognize Disco Elysium as Disco Elysium – The Final Cut using its verified Steam identity.
+- Improve edition matching so Skyrim Special Edition matches directly while original Skyrim, Special Edition and VR stay separate.
+
+## 5.01
+
+Changes since public version 5.00.
+
+- Move Wrong game? to the right of the game title, keeping Open on Steam at the bottom-left.
+- Allow long game titles to wrap beside the correction button, including on narrow screens.
+
+## 5.00
 
 Changes since public version 4.1.
 
