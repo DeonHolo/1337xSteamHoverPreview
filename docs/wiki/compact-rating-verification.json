@@ -1,0 +1,158 @@
+{
+  "change": "Group the percentage with the Steam review category, retaining the stars and review count.",
+  "core": "1.0.14",
+  "resolver": 11,
+  "verification": {
+    "commands": [
+      "npm run lint",
+      "npm test",
+      "npm run build",
+      "npm run check",
+      "npm run format:check",
+      "npm run sync-core -- --check"
+    ],
+    "browser": {
+      "command": "npm run test:browser -- --no-baseline",
+      "scope": "Both adapters in isolated Chromium with mocked providers.",
+      "passed": 90,
+      "failed": 0
+    },
+    "visual": {
+      "scope": "Isolated Chromium fixtures with sample review counts, not live game data.",
+      "cases": [
+        {
+          "site": "1337x",
+          "font": "Verdana, serif",
+          "text": "Rating: ★★★★☆94% Very Positive | 300,000 reviews",
+          "metrics": {
+            "label": {
+              "baseline": 503.015625,
+              "fontFamily": "Verdana, serif",
+              "fontSize": "12px",
+              "color": "rgb(17, 17, 17)"
+            },
+            "stars": {
+              "baseline": 503.015625,
+              "fontFamily": "Verdana, serif",
+              "fontSize": "14px",
+              "color": "rgb(245, 197, 24)"
+            },
+            "text": {
+              "baseline": 503.015625,
+              "fontFamily": "Verdana, serif",
+              "fontSize": "12px",
+              "color": "rgb(17, 17, 17)"
+            }
+          }
+        },
+        {
+          "site": "1337x",
+          "font": "Arial, sans-serif",
+          "text": "Rating: ★★★★☆94% Very Positive | 300,000 reviews",
+          "metrics": {
+            "label": {
+              "baseline": 499.015625,
+              "fontFamily": "Arial, sans-serif",
+              "fontSize": "12px",
+              "color": "rgb(17, 17, 17)"
+            },
+            "stars": {
+              "baseline": 499.015625,
+              "fontFamily": "Arial, sans-serif",
+              "fontSize": "14px",
+              "color": "rgb(245, 197, 24)"
+            },
+            "text": {
+              "baseline": 499.015625,
+              "fontFamily": "Arial, sans-serif",
+              "fontSize": "12px",
+              "color": "rgb(17, 17, 17)"
+            }
+          }
+        },
+        {
+          "site": "csrinru",
+          "font": "Verdana, serif",
+          "text": "Rating: ★★★★☆94% Very Positive | 300,000 reviews",
+          "metrics": {
+            "label": {
+              "baseline": 615.953125,
+              "fontFamily": "Verdana, serif",
+              "fontSize": "12px",
+              "color": "rgb(242, 242, 242)"
+            },
+            "stars": {
+              "baseline": 615.953125,
+              "fontFamily": "Verdana, serif",
+              "fontSize": "14px",
+              "color": "rgb(245, 197, 24)"
+            },
+            "text": {
+              "baseline": 615.953125,
+              "fontFamily": "Verdana, serif",
+              "fontSize": "12px",
+              "color": "rgb(193, 204, 204)"
+            }
+          }
+        },
+        {
+          "site": "csrinru",
+          "font": "Arial, sans-serif",
+          "text": "Rating: ★★★★☆94% Very Positive | 300,000 reviews",
+          "metrics": {
+            "label": {
+              "baseline": 610.953125,
+              "fontFamily": "Arial, sans-serif",
+              "fontSize": "12px",
+              "color": "rgb(242, 242, 242)"
+            },
+            "stars": {
+              "baseline": 610.953125,
+              "fontFamily": "Arial, sans-serif",
+              "fontSize": "14px",
+              "color": "rgb(245, 197, 24)"
+            },
+            "text": {
+              "baseline": 610.953125,
+              "fontFamily": "Arial, sans-serif",
+              "fontSize": "12px",
+              "color": "rgb(193, 204, 204)"
+            }
+          }
+        }
+      ]
+    }
+  },
+  "publicScreenshots": {
+    "replacementsAwaitUserApproval": true,
+    "existingImagesUnchanged": true
+  },
+  "products": {
+    "1337x": {
+      "version": "5.08",
+      "previousPublicVersion": "5.07",
+      "unitTests": 146,
+      "artifactSha256": "44fdf09b6fd1d0702cfaacbd43bb55d6c8b9af2d8fe5dea0d6cfc7fc3156cdf8",
+      "publicScreenshotSha256": "c7a2277252b16e0b9f53966154d7449a89207ad39322960657fd0446ffe67a47",
+      "publication": {
+        "url": "https://greasyfork.org/en/scripts/533774-1337x-steam-hover-preview?version=1988652",
+        "download": "https://update.greasyfork.org/scripts/533774/1337x%20-%20Steam%20Hover%20Preview.user.js",
+        "implementationMatches": true,
+        "downloadSha256": "c864e21e9951d7e8a77be35ad20b9de6a8595cd613bbc19101d8ac949b539b81"
+      }
+    },
+    "csrinru": {
+      "version": "4.10",
+      "previousPublicVersion": "4.09",
+      "unitTests": 152,
+      "artifactSha256": "40bc40a2b292c2777d4fd8fda48e404a9e86cac1cf4ab65b708b11e832a07db1",
+      "publicScreenshotSha256": "96ffb61db237df10842f999d1f466f853042be05bccf807b2afe7d7ea6e9a1fc",
+      "publication": {
+        "url": "https://greasyfork.org/en/scripts/580613-cs-rin-ru-steam-hover-preview?version=1988653",
+        "download": "https://update.greasyfork.org/scripts/580613/CSRINRU%20-%20Steam%20Hover%20Preview.user.js",
+        "implementationMatches": true,
+        "downloadSha256": "339bdb19a8e1313cc5b1ce4bcb785d3754daa5213d9417018cf371565a33172b"
+      }
+    }
+  }
+}

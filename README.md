@@ -12,7 +12,7 @@ The preview screenshot above was taken with the [Dark Reader](https://darkreader
 
 ## Wiki and Code Review
 
-Version **5.04** fixes previews when a listing cuts off a repack tag or version note. The project wiki describes the matching rules and manual choices. [Project wiki](docs/wiki/Home.md) · [Release checklist](RELEASE_CHECKLIST.md) · [Greasy Fork notes](GREASYFORK_CHANGELOG.md)
+Version **5.08** groups the review percentage with Steam's category in a shorter rating row. [Project wiki](docs/wiki/Home.md) · [Release checklist](RELEASE_CHECKLIST.md) · [Greasy Fork notes](GREASYFORK_CHANGELOG.md)
 
 ## Features
 
@@ -20,7 +20,7 @@ Version **5.04** fixes previews when a listing cuts off a repack tag or version 
 - **Thumbnail Strip** - Quickly jump between available Steam media without leaving the hover card
 - **Theatre Mode** - Open screenshots and trailers in a larger Steam-style media viewer with navigation, video controls, and fullscreen support
 - **Description** - Short game description from Steam
-- **Steam Reviews** - Original plain Rating row with stars, Steam category and actual review count, plus distinct zero/error states
+- **Steam Reviews** - Plain Rating row with stars, positive percentage, Steam category and actual review count, plus distinct zero/error states
 - **Actual Steam Tags First** - Real Steam tags in the first meaningful preview, with no genre substitution
 - **Release Date** - Game release information
 - **Open on Steam** - Direct Steam store link from the hover card and theatre footer

@@ -1,6 +1,6 @@
 # Rating display
 
-Shared core 1.0.13 in 1337x 5.07 and CS.RIN 4.09 shows the positive review percentage beside the stars, Steam category and review count. The Rating label, stars and review text share a text baseline. Existing fonts, sizes, colors and spacing are preserved.
+Shared core 1.0.14 in 1337x 5.08 and CS.RIN 4.10 groups the positive review percentage with Steam's category: `Rating: ★★★★☆ 94% Very Positive | 300,000 reviews`. The Rating label, stars and review text share a text baseline. Existing fonts, sizes, colors and spacing are preserved.
 
 ## Stars
 
@@ -19,4 +19,4 @@ The existing star thresholds and review data are unchanged. Missing or invalid p
 
 ## Verification
 
-Release verification is recorded in [the verification report](rating-display-verification.json).
+Current release verification is recorded in [the compact-rating report](compact-rating-verification.json). [Previous rating-display verification](rating-display-verification.json) remains available for the earlier release.

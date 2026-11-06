@@ -144,7 +144,7 @@ export function previewReviewsMarkup(data) {
         '<strong>Rating:</strong> ' +
         stars +
         '<span class="ratingText">' +
-        (hasPercent ? Math.round(percent) + '% positive  |  ' : '') +
+        (hasPercent ? Math.round(percent) + '% ' : '') +
         desc +
         count +
         ' ' +

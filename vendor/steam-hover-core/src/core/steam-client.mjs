@@ -1,7 +1,7 @@
 import SteamTextFuse from '../assets/fuse.basic.min.mjs';
 
 /** Shared Steam providers, matching, request scheduling and field-level cache. No runtime dependencies. */
-export const CORE_VERSION = '1.0.13';
+export const CORE_VERSION = '1.0.14';
 
 const STEAM_SCHEMA = 3;
 const STEAM_RESOLVER = 11;
