@@ -1,0 +1,295 @@
+{
+  "provenance": "Captured from official Steam storesearch and appdetails; all title rules remain generic.",
+  "cases": [
+    {
+      "rawTitle": "Age of Wonders 4: 2026 Collector's Bundle (v1.017.001.126767 + 18 DLCs, MULTi9) [FitGirl Repack]",
+      "cleanTitle": "Age of Wonders 4: 2026 Collector's Bundle",
+      "query": "Age of Wonders 4",
+      "expectedAppId": 1669000
+    },
+    {
+      "rawTitle": "RoadCraft: 1-Year Anniversary Edition (v8.0.772884/772978 + 9 DLCs, MULTi17) [Fi...",
+      "cleanTitle": "RoadCraft: 1-Year Anniversary Edition",
+      "query": "RoadCraft",
+      "expectedAppId": 2104890
+    },
+    {
+      "rawTitle": "Lightyear Frontier & Soundtrack Bundle (v1.0.2540 + 2 DLCs/Bonuses, MULTi12) [Fi...",
+      "cleanTitle": "Lightyear Frontier & Soundtrack Bundle",
+      "query": "Lightyear Frontier",
+      "expectedAppId": 1677110
+    },
+    {
+      "rawTitle": "Victoria 3: Ultimate Bundle (v1.15.0 + 20 DLCs/Bonuses + Windows 7 Fix, MULTi11) [FitGirl Repack]",
+      "cleanTitle": "Victoria 3: Ultimate Bundle",
+      "query": "Victoria 3",
+      "expectedAppId": 529340
+    },
+    {
+      "rawTitle": "Victoria 3 State and Revolution-RUNE",
+      "cleanTitle": "Victoria 3 State and Revolution",
+      "query": "Victoria 3 State and Revolution",
+      "expectedAppId": 529340
+    }
+  ],
+  "searches": [
+    {
+      "query": "Age of Wonders 4 2026 Collector's Bundle",
+      "items": []
+    },
+    {
+      "query": "Age of Wonders 4",
+      "items": [
+        {
+          "id": 1669000,
+          "name": "Age of Wonders 4"
+        },
+        {
+          "id": 3976890,
+          "name": "Age of Wonders 4: Thrones of Blood"
+        },
+        {
+          "id": 3181500,
+          "name": "Age of Wonders 4: Giant Kings"
+        },
+        {
+          "id": 3976900,
+          "name": "Age of Wonders 4: Rise from Ruin"
+        },
+        {
+          "id": 3976910,
+          "name": "Age of Wonders 4: Secrets of the Archmages"
+        },
+        {
+          "id": 3181540,
+          "name": "Age of Wonders 4: Archon Prophecy"
+        },
+        {
+          "id": 5094370,
+          "name": "Age of Wonders 4: The Silver Seas"
+        },
+        {
+          "id": 2914280,
+          "name": "Age of Wonders 4: Ways of War"
+        },
+        {
+          "id": 2401860,
+          "name": "Age of Wonders 4: Eldritch Realms"
+        },
+        {
+          "id": 2401830,
+          "name": "Age of Wonders 4: Empires & Ashes"
+        }
+      ]
+    },
+    {
+      "query": "RoadCraft 1 Year Anniversary Edition Fi",
+      "items": []
+    },
+    {
+      "query": "RoadCraft",
+      "items": [
+        {
+          "id": 2104890,
+          "name": "RoadCraft"
+        },
+        {
+          "id": 5075700,
+          "name": "RoadCraft - Foundations Expansion"
+        },
+        {
+          "id": 4511610,
+          "name": "RoadCraft – Crawler Pack"
+        },
+        {
+          "id": 4159460,
+          "name": "RoadCraft - Reclaim Expansion"
+        },
+        {
+          "id": 4124160,
+          "name": "RoadCraft – Timberworks Pack"
+        },
+        {
+          "id": 3456580,
+          "name": "RoadCraft Demo"
+        },
+        {
+          "id": 3470730,
+          "name": "RoadCraft - Rebuild Expansion"
+        },
+        {
+          "id": 2806770,
+          "name": "RoadCraft – Aramatsu Bowhead 20T"
+        },
+        {
+          "id": 3510890,
+          "name": "RoadCraft - 4K Texture Pack"
+        },
+        {
+          "id": 3470710,
+          "name": "RoadCraft – Invictus Type A Scout"
+        }
+      ]
+    },
+    {
+      "query": "Lightyear Frontier and Soundtrack Bundle Fi",
+      "items": []
+    },
+    {
+      "query": "Lightyear Frontier",
+      "items": [
+        {
+          "id": 1677110,
+          "name": "Lightyear Frontier"
+        },
+        {
+          "id": 2881710,
+          "name": "Lightyear Frontier Soundtrack"
+        }
+      ]
+    },
+    {
+      "query": "Victoria 3 Ultimate Bundle",
+      "items": []
+    },
+    {
+      "query": "Victoria 3",
+      "items": [
+        {
+          "id": 529340,
+          "name": "Victoria 3"
+        },
+        {
+          "id": 4314660,
+          "name": "Victoria 3: State and Revolution - Immersion Pack"
+        },
+        {
+          "id": 3450170,
+          "name": "Victoria 3: Charters of Commerce - Mechanics Pack"
+        },
+        {
+          "id": 2411231,
+          "name": "Victoria 3: Sphere of Influence - Expansion"
+        },
+        {
+          "id": 3562890,
+          "name": "Victoria 3: Iberian Twilight - Immersion Pack"
+        },
+        {
+          "id": 3562730,
+          "name": "Victoria 3: National Awakening - Immersion Pack"
+        },
+        {
+          "id": 4314630,
+          "name": "Victoria 3: Volume 3"
+        },
+        {
+          "id": 3174360,
+          "name": "Victoria 3: Pivot of Empire - Immersion Pack"
+        },
+        {
+          "id": 4314650,
+          "name": "Victoria 3: The Great Wave - Expansion"
+        },
+        {
+          "id": 3562810,
+          "name": "Victoria 3: Songs of the Homeland - Music Pack"
+        }
+      ]
+    },
+    {
+      "query": "Victoria 3 State and Revolution",
+      "items": [
+        {
+          "id": 4314660,
+          "name": "Victoria 3: State and Revolution - Immersion Pack"
+        }
+      ]
+    }
+  ],
+  "apps": {
+    "529340": {
+      "steam_appid": 529340,
+      "name": "Victoria 3",
+      "type": "game"
+    },
+    "1669000": {
+      "steam_appid": 1669000,
+      "name": "Age of Wonders 4",
+      "type": "game"
+    },
+    "1677110": {
+      "steam_appid": 1677110,
+      "name": "Lightyear Frontier",
+      "type": "game"
+    },
+    "2104890": {
+      "steam_appid": 2104890,
+      "name": "RoadCraft",
+      "type": "game"
+    },
+    "2881710": {
+      "steam_appid": 2881710,
+      "name": "Lightyear Frontier Soundtrack",
+      "type": "music",
+      "fullgame": {
+        "appid": "1677110",
+        "name": "Lightyear Frontier"
+      }
+    },
+    "3181500": {
+      "steam_appid": 3181500,
+      "name": "Age of Wonders 4: Giant Kings",
+      "type": "dlc",
+      "fullgame": {
+        "appid": "1669000",
+        "name": "Age of Wonders 4"
+      }
+    },
+    "3450170": {
+      "steam_appid": 3450170,
+      "name": "Victoria 3: Charters of Commerce - Mechanics Pack",
+      "type": "dlc",
+      "fullgame": {
+        "appid": "529340",
+        "name": "Victoria 3"
+      }
+    },
+    "3976890": {
+      "steam_appid": 3976890,
+      "name": "Age of Wonders 4: Thrones of Blood",
+      "type": "dlc",
+      "fullgame": {
+        "appid": "1669000",
+        "name": "Age of Wonders 4"
+      }
+    },
+    "4314660": {
+      "steam_appid": 4314660,
+      "name": "Victoria 3: State and Revolution - Immersion Pack",
+      "type": "dlc",
+      "fullgame": {
+        "appid": "529340",
+        "name": "Victoria 3"
+      }
+    },
+    "4511610": {
+      "steam_appid": 4511610,
+      "name": "RoadCraft – Crawler Pack",
+      "type": "dlc",
+      "fullgame": {
+        "appid": "2104890",
+        "name": "RoadCraft"
+      }
+    },
+    "5075700": {
+      "steam_appid": 5075700,
+      "name": "RoadCraft - Foundations Expansion",
+      "type": "dlc",
+      "fullgame": {
+        "appid": "2104890",
+        "name": "RoadCraft"
+      }
+    }
+  }
+}

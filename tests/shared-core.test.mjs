@@ -4,3 +4,4 @@ import '../vendor/steam-hover-core/tests/preview.test.mjs';
 import '../vendor/steam-hover-core/tests/site-utils.test.mjs';
 
 import '../vendor/steam-hover-core/tests/title-regressions.test.mjs';
+import '../vendor/steam-hover-core/tests/package-matching.test.mjs';

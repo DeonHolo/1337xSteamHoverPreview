@@ -4,6 +4,8 @@ Both userscripts use the same matcher. It has no per-game title-to-AppID table. 
 
 ## What the rules handle
 
+Local core 1.0.11 also handles [commercial bundles, clipped partial release tags and verified DLC product descriptions](Package-and-DLC-Matching.md). Historical verification below describes the public release it tested.
+
 - Compare complete titles while tolerating spacing, joined words, camel case, dotted initials, apostrophes and punctuation. Roman numerals and Arabic numerals share the same identity.
 - Recognize purchase labels such as Complete, Deluxe and GOTY editions, and the naming structure of Final Cut, Director's Cut and Extended Cut. These rules apply to every name. An exact full title ranks above a cut-label variant; conflicting cut labels and tied AppIDs do not get selected arbitrarily.
 - Handle bounded spelling errors, including adjacent letter swaps in four-letter words with a distinct unchanged anchor, and up to two small errors in longer titles. Fuse contributes a local whole-title ranking signal. Short unrelated substitutions and generic words alone are insufficient.

@@ -22,6 +22,7 @@ const sharedTests = new Set([
     'tests/steam-client.test.mjs',
     'tests/preview.test.mjs',
     'tests/site-utils.test.mjs',
+    'tests/package-matching.test.mjs',
     'tests/title-regressions.test.mjs'
 ]);
 await collect('tests', (file) => sharedTests.has(file) || file.includes('/fixtures/steam/'));

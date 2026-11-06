@@ -1,10 +1,10 @@
 import SteamTextFuse from '../assets/fuse.basic.min.mjs';
 
 /** Shared Steam providers, matching, request scheduling and field-level cache. No runtime dependencies. */
-export const CORE_VERSION = '1.0.10';
+export const CORE_VERSION = '1.0.11';
 
 const STEAM_SCHEMA = 3;
-const STEAM_RESOLVER = 9;
+const STEAM_RESOLVER = 10;
 const STEAM_PROVIDER = 2;
 const STEAM_DAY = 86400000;
 const STEAM_LANGUAGE = 'english';
@@ -54,9 +54,21 @@ export function normalizeForMatch(value) {
 
 function steamStripCommercialEdition(value) {
     const title = String(value).trim();
+    // A purchase year belongs to the package only after an explicit subtitle separator.
+    // Keep years in the game's own name, and keep standalone Anniversary Edition identities.
+    const datedPackage = title.match(
+        /^(.+?)\s*(?::|[–—]|\s-\s)\s*(?:(?:19|20)\d{2}\s+)?(?:(?:digital\s+)?deluxe|ultimate|gold|premium|complete|collector['’]?s|game\s+of\s+the\s+year|goty)\s+(?:edition|bundle)$/i
+    );
+    if (datedPackage) return datedPackage[1].trim();
+    const anniversaryPackage = title.match(/^(.+?)\s*(?::|[–—]|\s-\s)\s*\d{1,2}[- ]year\s+anniversary\s+edition$/i);
+    if (anniversaryPackage) return anniversaryPackage[1].trim();
+    // Explicit game + soundtrack bundles do not turn a soundtrack into the target product.
+    // Do not unwrap arbitrary multi-game bundles.
+    const soundtrackBundle = title.match(/^(.+?)\s+(?:&|and|\+)\s+(?:original\s+)?soundtrack\s+bundle$/i);
+    if (soundtrackBundle) return soundtrackBundle[1].trim();
     const standard = title
         .replace(
-            /\s*[:\-–—]?\s+(?:(?:digital\s+)?deluxe|ultimate|gold|premium|complete|collector['’]?s|game\s+of\s+the\s+year|goty)\s+edition(?:\s*[:\-].*)?$/i,
+            /\s*[:\-–—]?\s+(?:(?:digital\s+)?deluxe|ultimate|gold|premium|complete|collector['’]?s|game\s+of\s+the\s+year|goty)\s+(?:edition|bundle)(?:\s*[:\-].*)?$/i,
             ''
         )
         .trim();
@@ -156,6 +168,17 @@ export function cleanTorrentTitle(raw) {
         /\[[^\]]*\b(?:repack|fitgirl|dodi|elamigos|gog|multi\d*|p2p|iso|linux|windows|x64|x86)\b[^\]]*\]/gi,
         ' '
     );
+    // Two-letter publisher fragments are metadata only in a clipped tag after a version block.
+    // Without that release context, bracketed title words must survive.
+    const fragment = title.match(/\[\s*([a-z][a-z ]{1,15})(?:\.{2,}|…)?$/i);
+    if (
+        fragment &&
+        /\(\s*(?:v\d|build\s*[#:]?\s*\d+|multi\d+)[^()]*\)\s*$/i.test(title.slice(0, fragment.index)) &&
+        ['fitgirl', 'dodi', 'elamigos', 'repack', 'gog', 'p2p', 'multi', 'x64', 'x86'].some((name) =>
+            name.startsWith(fragment[1].trim().toLowerCase())
+        )
+    )
+        title = title.slice(0, fragment.index);
     // Listings can end midway through a release tag. Strip only recognized trailing metadata.
     title = title
         .replace(/\[\s*(?:fitgirl|dodi|elamigos|repack|bober\s*bros|gog|p2p|multi\d+|x64|x86)\b[^[\]]*$/i, ' ')
@@ -400,6 +423,18 @@ export function scoreCandidate(query, candidate) {
     const tokenScore = precision + recall ? Math.round((100 * (2 * precision * recall)) / (precision + recall)) : 0;
     // Overlap alone cannot authorize dropping meaningful subtitle words or reordering a title.
     return Math.max(Math.min(tokenScore, 84), steamFuzzyTitleScore(left, right));
+}
+
+// These describe a DLC product, not a removable game subtitle. Use the variant to retrieve
+// candidates, but authorize it only after appdetails confirms a DLC and its game parent.
+function steamDlcTitle(value) {
+    return String(value)
+        .replace(/^(?:expansion|downloadable\s+content|dlc)\s*[-:–—]\s*/i, '')
+        .replace(
+            /\s*[-:–—]\s*(?:(?:immersion|mechanics|content|story|cosmetic|music|expansion)\s+pack|expansion|dlc)\s*$/i,
+            ''
+        )
+        .trim();
 }
 
 /** Steam's website search can find localized aliases missing from the small storesearch API index. */
@@ -1453,7 +1488,10 @@ export function createSteamClient(env = {}) {
         for (const lookup of lookups) {
             const items = await search(lookup.query, context, force, lookup.storefront);
             for (const item of items) {
-                const score = scoreCandidate(primary, item);
+                const score = Math.max(
+                    scoreCandidate(primary, item),
+                    Math.min(84, scoreCandidate(primary, steamDlcTitle(item.name)))
+                );
                 if (!considered.has(item.appId)) considered.set(item.appId, { ...item, score });
             }
             const ranked = [...considered.values()]
@@ -1467,8 +1505,12 @@ export function createSteamClient(env = {}) {
                     const original = touch('details', candidate.appId)?.data;
                     const originalScore = scoreCandidate(primary, original || candidate);
                     const parentScore = scoreCandidate(primary, resolved.app);
+                    const verifiedDlcScore =
+                        original?.type === 'dlc' && resolved.match.parentChain.length
+                            ? Math.min(94, scoreCandidate(primary, steamDlcTitle(original.name)))
+                            : -Infinity;
                     const score = resolved.match.parentChain.length
-                        ? Math.max(originalScore, parentScore)
+                        ? Math.max(originalScore, parentScore, verifiedDlcScore)
                         : parentScore;
                     if (!Number.isFinite(score) || score < 85) return;
                     if (!valid.some((item) => item.app.steam_appid === resolved.app.steam_appid))

@@ -1188,6 +1188,66 @@ try {
         });
     }
 
+    for (const site of Object.keys(products)) {
+        const fixtureRoot = localSite === 'csrinru' ? root : path.join(root, 'vendor/steam-hover-core');
+        const captured = JSON.parse(
+            await readFile(path.join(fixtureRoot, 'tests/fixtures/steam/bundle-and-dlc-search.json'), 'utf8')
+        );
+        for (const [index, row] of captured.cases.entries()) {
+            await run(`${site}: bundle and DLC naming patterns show base-game tags: ${row.cleanTitle}`, async () => {
+                const id = 950 + index;
+                const t = await setup(site, {
+                    rows: [{ id, ...(site === '1337x' ? { rawTitle: row.rawTitle } : { title: row.cleanTitle }) }],
+                    config: {
+                        searchTerms: Object.fromEntries(
+                            captured.searches.map(({ query, items }) => [query, items.map((item) => item.id)])
+                        ),
+                        games: Object.fromEntries(
+                            Object.entries(captured.apps).map(([appId, app]) => [
+                                appId,
+                                { ...game(Number(appId)), ...app }
+                            ])
+                        ),
+                        tags: { [row.expectedAppId]: ['Exploration', 'Strategy'] }
+                    }
+                });
+                try {
+                    await t.hover(id);
+                    await t.ready(row.expectedAppId);
+                    const observed = await t.fixture();
+                    assert.equal(observed.firstReady.hasTags, true);
+                    assert.match(await t.card.locator('.steamTags').innerText(), /Exploration/);
+                    assert.equal(
+                        await t.card.getByRole('link', { name: 'Open on Steam', exact: true }).getAttribute('href'),
+                        `https://store.steampowered.com/app/${row.expectedAppId}/`
+                    );
+                    assert.equal(
+                        await t.card.locator('.steamGameTitle strong').innerText(),
+                        captured.apps[row.expectedAppId].name
+                    );
+                    assert.equal(observed.requests.filter((request) => request.kind === 'search').length, 1);
+                    assert.equal(
+                        observed.requests.some((request) => request.kind === 'searchFallback'),
+                        false
+                    );
+                    assert.deepEqual(
+                        observed.requests
+                            .filter((request) => request.kind === 'details')
+                            .flatMap((request) => request.appIds),
+                        index === 4 ? [4314660, row.expectedAppId] : [row.expectedAppId]
+                    );
+                    const before = await t.card.boundingBox();
+                    await t.page.mouse.move(before.x + 12, before.y + 12);
+                    assert.deepEqual(await t.card.boundingBox(), before);
+                    t.noErrors();
+                    return { requestCounts: counts(observed.requests) };
+                } finally {
+                    await t.close();
+                }
+            });
+        }
+    }
+
     await run('1337x: clipped release tag still previews the base game with tags on the first card', async () => {
         const fixtureRoot = localSite === 'csrinru' ? root : path.join(root, 'vendor/steam-hover-core');
         const { rawTitle, expectedAppId, query, searchResults, apps } = JSON.parse(

@@ -1,3 +1,5 @@
-## 5.04
+## 5.05
 
-- Fix hover previews for listings whose repack tags or version notes are cut off.
+- Improve matching for commercial bundles and numbered anniversary packages while preserving standalone editions.
+- Handle partially clipped repack tags after version notes.
+- Recognize DLC product descriptions and follow verified Steam parents to the base game.
