@@ -1,5 +1,4 @@
-## 5.05
+## 5.06
 
-- Improve matching for commercial bundles and numbered anniversary packages while preserving standalone editions.
-- Handle partially clipped repack tags after version notes.
-- Recognize DLC product descriptions and follow verified Steam parents to the base game.
+- Match commercial editions followed by included DLCs, soundtracks or bonuses, including stacked packaging labels.
+- Preserve meaningful trailing subtitles when removing edition labels.

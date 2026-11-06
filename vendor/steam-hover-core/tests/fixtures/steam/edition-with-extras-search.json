@@ -1,0 +1,59 @@
+{
+  "provenance": "Title transcribed from the attached failed-preview card. Search results, app types and parent relationships captured from official Steam APIs; the full torrent title was not available.",
+  "reportedTitle": "Godzilla: Destroy All Monsters Melee Remastered - Digital Deluxe Edition + DLC.",
+  "cleanTitle": "Godzilla: Destroy All Monsters Melee Remastered - Digital Deluxe Edition + DLC",
+  "expectedTitle": "Godzilla: Destroy All Monsters Melee Remastered",
+  "expectedAppId": 4251460,
+  "queriesBefore": [
+    "Godzilla Destroy All Monsters Melee Remastered Digital Deluxe Edition + DLC",
+    "Godzilla: Destroy All Monsters Melee Remastered - Digital Deluxe Edition + DLC",
+    "Godzilla"
+  ],
+  "scoresBefore": [
+    {
+      "id": 4251460,
+      "name": "Godzilla: Destroy All Monsters Melee Remastered",
+      "score": 80
+    },
+    {
+      "id": 4653170,
+      "name": "Godzilla: Destroy All Monsters Melee Remastered - Digital Deluxe Upgrade",
+      "score": 84
+    }
+  ],
+  "searches": [
+    {
+      "query": "Godzilla Destroy All Monsters Melee Remastered Digital Deluxe Edition + DLC",
+      "items": []
+    },
+    {
+      "query": "Godzilla Destroy All Monsters Melee Remastered",
+      "items": [
+        {
+          "id": 4251460,
+          "name": "Godzilla: Destroy All Monsters Melee Remastered"
+        },
+        {
+          "id": 4653170,
+          "name": "Godzilla: Destroy All Monsters Melee Remastered - Digital Deluxe Upgrade"
+        }
+      ]
+    }
+  ],
+  "apps": {
+    "4251460": {
+      "steam_appid": 4251460,
+      "name": "Godzilla: Destroy All Monsters Melee Remastered",
+      "type": "game"
+    },
+    "4653170": {
+      "steam_appid": 4653170,
+      "name": "Godzilla: Destroy All Monsters Melee Remastered - Digital Deluxe Upgrade",
+      "type": "dlc",
+      "fullgame": {
+        "appid": "4251460",
+        "name": "Godzilla: Destroy All Monsters Melee Remastered"
+      }
+    }
+  }
+}

@@ -365,13 +365,16 @@ export function installMockUserscriptEnvironment(config) {
             }
         };
     };
+    const expectedTagLabels = Object.values(config.tags || {})
+        .flat()
+        .filter((tag) => typeof tag === 'string' && tag);
     const observer = new MutationObserver(() => {
         const card = document.querySelector('.steamHoverPreview, .steamHoverTip, .csrinruSteamHoverTip');
         if (!card || getComputedStyle(card).display === 'none') return;
         const tags = card.querySelector('.steamTags');
         const hasTags =
             tags &&
-            /Puzzle|Exploration|Souls-like|Open World|Story Rich|Horror|Space/.test(tags.textContent) &&
+            expectedTagLabels.some((tag) => tags.textContent.includes(tag)) &&
             !tags.textContent.includes('GENRE_ONLY_SENTINEL');
         const ready = card.dataset.previewState === 'ready' || Boolean(card.querySelector('.steamMediaShell'));
         if (ready && !window.__fixture.firstReady)

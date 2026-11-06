@@ -1248,6 +1248,59 @@ try {
         }
     }
 
+    for (const site of Object.keys(products)) {
+        await run(`${site}: edition plus extras resolves the exact remaster before its deluxe upgrade`, async () => {
+            const fixtureRoot = localSite === 'csrinru' ? root : path.join(root, 'vendor/steam-hover-core');
+            const captured = JSON.parse(
+                await readFile(path.join(fixtureRoot, 'tests/fixtures/steam/edition-with-extras-search.json'), 'utf8')
+            );
+            const t = await setup(site, {
+                rows: [
+                    {
+                        id: 960,
+                        ...(site === '1337x' ? { rawTitle: captured.reportedTitle } : { title: captured.cleanTitle })
+                    }
+                ],
+                config: {
+                    searchTerms: Object.fromEntries(
+                        captured.searches.map(({ query, items }) => [query, items.map((item) => item.id).reverse()])
+                    ),
+                    games: Object.fromEntries(
+                        Object.entries(captured.apps).map(([appId, app]) => [appId, { ...game(Number(appId)), ...app }])
+                    ),
+                    tags: { [captured.expectedAppId]: ['Fighting', 'Destruction'] }
+                }
+            });
+            try {
+                await t.hover(960);
+                await t.ready(captured.expectedAppId);
+                const observed = await t.fixture();
+                assert.equal(observed.firstReady.hasTags, true);
+                assert.match(await t.card.locator('.steamTags').innerText(), /Fighting/);
+                assert.equal(await t.card.locator('.steamGameTitle strong').innerText(), captured.expectedTitle);
+                assert.equal(
+                    await t.card.getByRole('link', { name: 'Open on Steam', exact: true }).getAttribute('href'),
+                    `https://store.steampowered.com/app/${captured.expectedAppId}/`
+                );
+                assert.equal(observed.requests.filter((request) => request.kind === 'search').length, 1);
+                assert.deepEqual(
+                    observed.requests
+                        .filter((request) => request.kind === 'details')
+                        .flatMap((request) => request.appIds),
+                    [captured.expectedAppId]
+                );
+                assert.equal(
+                    observed.requests.some((request) => request.kind === 'searchFallback'),
+                    false
+                );
+                t.noErrors();
+                return { requestCounts: counts(observed.requests) };
+            } finally {
+                await t.close();
+            }
+        });
+    }
+
     await run('1337x: clipped release tag still previews the base game with tags on the first card', async () => {
         const fixtureRoot = localSite === 'csrinru' ? root : path.join(root, 'vendor/steam-hover-core');
         const { rawTitle, expectedAppId, query, searchResults, apps } = JSON.parse(

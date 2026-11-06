@@ -1,0 +1,107 @@
+{
+  "scope": "Release verification for 1337x 5.06 and CS.RIN 4.08 on shared core 1.0.12. Release metadata changes preserve the implementation tested by the local browser and live Steam checks.",
+  "core": "1.0.12",
+  "resolver": 11,
+  "threshold": {
+    "automatic": 85,
+    "unchanged": true,
+    "meaning": "Ranking heuristic, not a probability"
+  },
+  "products": {
+    "1337x": {
+      "headerVersion": "5.06",
+      "generatedFile": "1337xSteamHoverPreview.js",
+      "generatedSha256": "83069ccaeab3bf92a7d2c41089eff1316ca980fe6d8791f65513f76a41818ffc",
+      "unitTests": 145,
+      "unitFailures": 0,
+      "browserChecks": 43,
+      "coreSha256": "98cc8be95aa9b727d31ec87d27650ab76eca1bd3e5d0db13a46afa6cea9ba7cf",
+      "implementationUnchangedSinceBrowserVerification": true,
+      "publication": {
+        "url": "https://greasyfork.org/en/scripts/533774-1337x-steam-hover-preview?version=1988162",
+        "downloadUrl": "https://update.greasyfork.org/scripts/533774/1337x%20-%20Steam%20Hover%20Preview.user.js",
+        "versionId": 1988162,
+        "downloadedImplementationMatches": true,
+        "downloadedSha256": "da0bd992e5b19da11b557ce4aebff07235f77c835f595f1416abc7990b93bc23"
+      }
+    },
+    "csrinru": {
+      "headerVersion": "4.08",
+      "generatedFile": "csrinruSteamHoverPreview.user.js",
+      "generatedSha256": "8bdadc4931796ddc6c347d97620237b9368e32bc14ab99a8fd0a115bea2043f8",
+      "unitTests": 151,
+      "unitFailures": 0,
+      "browserChecks": 47,
+      "coreSha256": "98cc8be95aa9b727d31ec87d27650ab76eca1bd3e5d0db13a46afa6cea9ba7cf",
+      "implementationUnchangedSinceBrowserVerification": true,
+      "publication": {
+        "url": "https://greasyfork.org/en/scripts/580613-cs-rin-ru-steam-hover-preview?version=1988164",
+        "downloadUrl": "https://update.greasyfork.org/scripts/580613/CSRINRU%20-%20Steam%20Hover%20Preview.user.js",
+        "versionId": 1988164,
+        "downloadedImplementationMatches": true,
+        "downloadedSha256": "891245f8beed9951e4662bd304a2c5cba4598fc0f2d580a80ba3405c4cb1389e"
+      }
+    }
+  },
+  "browser": {
+    "passed": 90,
+    "failed": 0,
+    "regression": [
+      {
+        "name": "1337x: edition plus extras resolves the exact remaster before its deluxe upgrade",
+        "requestCounts": {
+          "search": 1,
+          "details": 1,
+          "tags": 1,
+          "reviews": 1
+        }
+      },
+      {
+        "name": "csrinru: edition plus extras resolves the exact remaster before its deluxe upgrade",
+        "requestCounts": {
+          "search": 1,
+          "details": 1,
+          "tags": 1,
+          "reviews": 1
+        }
+      }
+    ]
+  },
+  "live": {
+    "environment": "Official Steam requests using the shared client and Chromium DOMParser. No user browser, torrent downloads, or video preload. Timings describe this run only.",
+    "results": [
+      {
+        "rawTitle": "Godzilla: Destroy All Monsters Melee Remastered - Digital Deluxe Edition + DLC.",
+        "appId": 4251460,
+        "name": "Godzilla: Destroy All Monsters Melee Remastered",
+        "tags": [
+          "Multiplayer",
+          "Remake",
+          "Destruction",
+          "Nostalgia",
+          "Fighting"
+        ],
+        "kind": "search",
+        "parentChain": [],
+        "tagsReadyMs": 1096,
+        "status": "passed"
+      }
+    ],
+    "requestCount": 3
+  },
+  "checks": [
+    "lint",
+    "test",
+    "build",
+    "check",
+    "format:check",
+    "sync-core -- --check",
+    "git diff --check"
+  ],
+  "additionalCoverage": [
+    "192 unfamiliar-name, edition and extra combinations plus reversed and stacked components.",
+    "Sequel, remaster, VR, standalone edition and product-type conflicts remain rejected.",
+    "Unknown extras and named DLC subtitles remain intact.",
+    "Competing exact AppIDs require a choice."
+  ]
+}

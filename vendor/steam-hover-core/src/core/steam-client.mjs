@@ -1,10 +1,10 @@
 import SteamTextFuse from '../assets/fuse.basic.min.mjs';
 
 /** Shared Steam providers, matching, request scheduling and field-level cache. No runtime dependencies. */
-export const CORE_VERSION = '1.0.11';
+export const CORE_VERSION = '1.0.12';
 
 const STEAM_SCHEMA = 3;
-const STEAM_RESOLVER = 10;
+const STEAM_RESOLVER = 11;
 const STEAM_PROVIDER = 2;
 const STEAM_DAY = 86400000;
 const STEAM_LANGUAGE = 'english';
@@ -68,7 +68,7 @@ function steamStripCommercialEdition(value) {
     if (soundtrackBundle) return soundtrackBundle[1].trim();
     const standard = title
         .replace(
-            /\s*[:\-–—]?\s+(?:(?:digital\s+)?deluxe|ultimate|gold|premium|complete|collector['’]?s|game\s+of\s+the\s+year|goty)\s+(?:edition|bundle)(?:\s*[:\-].*)?$/i,
+            /\s*[:\-–—]?\s+(?:(?:digital\s+)?deluxe|ultimate|gold|premium|complete|collector['’]?s|game\s+of\s+the\s+year|goty)\s+(?:edition|bundle)$/i,
             ''
         )
         .trim();
@@ -82,9 +82,31 @@ function steamStripCommercialEdition(value) {
         : title;
 }
 
+function steamStripIncludedExtra(value) {
+    // Require an explicit join/including marker and a complete metadata component.
+    // Keep names such as DLC Quest, C++ DLC and named expansions intact.
+    return String(value)
+        .replace(
+            /(?:\s*(?<![+&])[+&](?![+&])\s*|\s+(?:incl\.?|including)\s+)(?:(?:(?:all|\d+)\s*)?dlcs?(?:\s*\/\s*(?:bonuses|extras))?|(?:original\s+|digital\s+)?soundtrack|ost|(?:digital\s+)?artbook|bonus(?:es|\s+content)?|extras?)\s*[.…]*$/i,
+            ''
+        )
+        .trim();
+}
+
+function steamStripPackaging(value) {
+    let title = String(value).trim();
+    // Components compose in either order. Never remove arbitrary subtitle words.
+    for (let pass = 0; pass < 16; pass++) {
+        const next = steamStripCommercialEdition(steamStripIncludedExtra(title));
+        if (!next || next === title) break;
+        title = next;
+    }
+    return title;
+}
+
 export function steamTitleQueries(value) {
     const title = String(value).trim();
-    const primary = steamStripCommercialEdition(title);
+    const primary = steamStripPackaging(title);
     const variants = [];
     if (/\benhanced\s+remaster\b/i.test(primary) && /\b4k\s*[/ ]\s*hd\s+edition\b/i.test(primary)) {
         variants.push(
@@ -296,7 +318,7 @@ function steamPresentationTitle(value) {
 }
 
 function steamIdentity(value) {
-    const title = steamComparisonText(steamStripCommercialEdition(value));
+    const title = steamComparisonText(steamStripPackaging(value));
     const normalized = normalizeForMatch(title).replace(/\s+dlc$/i, '');
     const tokens = normalized
         .split(' ')

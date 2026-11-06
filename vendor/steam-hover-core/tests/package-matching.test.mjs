@@ -13,6 +13,9 @@ import {
 const fixture = JSON.parse(
     readFileSync(new URL('./fixtures/steam/bundle-and-dlc-search.json', import.meta.url), 'utf8')
 );
+const editionExtras = JSON.parse(
+    readFileSync(new URL('./fixtures/steam/edition-with-extras-search.json', import.meta.url), 'utf8')
+);
 
 function clientFor(t, { searches = fixture.searches, apps = fixture.apps } = {}) {
     const requests = [];
@@ -59,6 +62,107 @@ function clientFor(t, { searches = fixture.searches, apps = fixture.apps } = {})
     t.after(() => client.dispose());
     return { client, requests };
 }
+
+test('reported edition plus DLC resolves its exact remaster before the deluxe upgrade', async (t) => {
+    const title = cleanTorrentTitle(editionExtras.reportedTitle);
+    const { client, requests } = clientFor(t, {
+        searches: editionExtras.searches.map((row) => ({ ...row, items: [...row.items].reverse() })),
+        apps: editionExtras.apps
+    });
+    assert.equal(steamTitleQueries(title)[0], editionExtras.expectedTitle);
+    assert.equal(scoreCandidate(title, { name: editionExtras.expectedTitle }), 100);
+    const data = await client.loadPreview({ key: 'reported:edition-extras', title });
+    assert.equal(data.appId, editionExtras.expectedAppId);
+    assert.deepEqual(data.tags, ['Exploration', 'Strategy']);
+    assert.equal(requests.filter((url) => url.pathname.includes('storesearch')).length, 1);
+    assert.deepEqual(
+        requests
+            .filter((url) => url.pathname.includes('appdetails'))
+            .map((url) => Number(url.searchParams.get('appids'))),
+        [editionExtras.expectedAppId]
+    );
+});
+
+test('edition and included-extra components compose across unfamiliar names and protected identities', () => {
+    for (const base of [
+        'Clockwork Harbor 9 Remastered',
+        'Northwind Circuit IV Special Edition',
+        'Velocity 2026 VR',
+        'Verdant Moon'
+    ]) {
+        for (const edition of [
+            '',
+            ' - Digital Deluxe Edition',
+            ': Ultimate Bundle',
+            ": 2027 Collector's Bundle",
+            ': Apex Predator Edition',
+            ' - 1-Year Anniversary Edition'
+        ]) {
+            for (const extras of [
+                ' + DLC.',
+                '+DLC',
+                ' + All DLCs',
+                ' + 3 DLCs/Bonuses',
+                ' + 3 DLCs + Original Soundtrack + Digital Artbook',
+                ' + Bonus Content',
+                ' & Extras',
+                ' incl. All DLCs'
+            ]) {
+                const title = base + edition + extras;
+                assert.equal(steamTitleQueries(title)[0], base, title);
+                assert.equal(scoreCandidate(title, { name: base }), 100, title);
+                for (const clean of [cleanTorrentTitle, cleanForumTitle])
+                    assert.equal(scoreCandidate(clean(title), { name: base }), 100, title);
+            }
+        }
+    }
+    assert.equal(steamTitleQueries('Verdant Moon + DLC - Deluxe Edition')[0], 'Verdant Moon');
+    assert.equal(steamTitleQueries('Verdant Moon - Deluxe Edition - Ultimate Bundle + DLC')[0], 'Verdant Moon');
+});
+
+test('packaging cleanup preserves actual product words, unknown extras and trailing edition identities', () => {
+    for (const title of [
+        'DLC Quest',
+        'C++ DLC',
+        'Verdant Moon Soundtrack',
+        'Verdant Moon + DLC Quest',
+        'Verdant Moon + DLC: Northern Frontier',
+        'Verdant Moon + Other Game',
+        'Verdant Moon - Deluxe Edition - Remastered'
+    ])
+        assert.equal(steamTitleQueries(title)[0], title, title);
+    for (const [title, candidate] of [
+        ['Clockwork Harbor 9 Remastered - Deluxe Edition + DLC', 'Clockwork Harbor 9'],
+        ['Clockwork Harbor 9 Special Edition + 3 DLCs', 'Clockwork Harbor 9 Anniversary Edition'],
+        ['Clockwork Harbor 9 VR + All DLCs', 'Clockwork Harbor 9'],
+        ['Clockwork Harbor 9 + All DLCs', 'Clockwork Harbor 8'],
+        ['Clockwork Harbor 9 Soundtrack + Bonus Content', 'Clockwork Harbor 9'],
+        ['Clockwork Harbor 9 + DLC', 'Clockwork Harbor 9 Demo']
+    ])
+        assert.equal(scoreCandidate(title, { name: candidate }), -Infinity, title);
+});
+
+test('edition plus extras still requires a choice between competing exact game identities', async (t) => {
+    const title = 'Clockwork Harbor 9 Remastered - Deluxe Edition + 3 DLCs';
+    const name = 'Clockwork Harbor 9 Remastered';
+    const query = name;
+    const { client } = clientFor(t, {
+        searches: [
+            {
+                query,
+                items: [
+                    { id: 70, name },
+                    { id: 80, name }
+                ]
+            }
+        ],
+        apps: {
+            70: { steam_appid: 70, name, type: 'game' },
+            80: { steam_appid: 80, name, type: 'game' }
+        }
+    });
+    await assert.rejects(client.loadPreview({ key: 'edition-extras:ambiguous', title }), { code: 'AMBIGUOUS_MATCH' });
+});
 
 for (const row of fixture.cases) {
     test(`reported packaging resolves using captured Steam data: ${row.rawTitle}`, async (t) => {

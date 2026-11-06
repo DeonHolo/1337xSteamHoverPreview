@@ -1,6 +1,7 @@
 # 1337x Steam Hover Preview wiki
 
-Version **5.05** uses shared core **1.0.11**. See [package and DLC naming fixes](Package-and-DLC-Matching.md).
+Version **5.06** uses shared core **1.0.12**. See [edition and included-extra matching](Edition-and-Extras-Matching.md).
+
 
 - [Search by name inside the chooser](Search-by-Name.md)
 - [Why matching failed and what changed](Matching-Explained.md)
