@@ -1,7 +1,7 @@
 <p>Hover over a game torrent title on 1337x to see its Steam information without leaving the torrent list.</p>
 
 <center>
-  <img src="https://i.imgur.com/60gznUV.png?fb" alt="Skyrim Special Edition preview on 1337x" style="max-width:100%; margin:8px 0;" />
+  <img src="https://i.imgur.com/ZCo7OOr.png" alt="Skyrim Special Edition preview on 1337x" style="max-width:100%; margin:8px 0;" />
 </center>
 
 <p>The screenshot uses <a href="https://darkreader.org/" rel="nofollow noopener">Dark Reader</a>. The script also supports the original 1337x light theme.</p>
