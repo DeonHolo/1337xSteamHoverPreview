@@ -125,8 +125,9 @@ export function previewReviewsMarkup(data) {
         return '<span>Reviews unavailable</span> <button type="button" class="steamMetadataRetry" data-retry="reviews">Retry reviews</button>';
     const count = total.toLocaleString('en-US');
     const percent = review.percent == null ? NaN : Number(review.percent);
+    const hasPercent = Number.isFinite(percent) && percent >= 0 && percent <= 100;
     let stars = '';
-    if (Number.isFinite(percent) && percent >= 0 && percent <= 100) {
+    if (hasPercent) {
         const filled =
             percent >= 95 ? 5 : percent >= 80 ? 4 : percent >= 70 ? 3 : percent >= 40 ? 2 : percent >= 20 ? 1 : 0;
         stars =
@@ -143,6 +144,7 @@ export function previewReviewsMarkup(data) {
         '<strong>Rating:</strong> ' +
         stars +
         '<span class="ratingText">' +
+        (hasPercent ? Math.round(percent) + '% positive  |  ' : '') +
         desc +
         count +
         ' ' +
@@ -546,10 +548,10 @@ export function mountSteamHoverPreview({
             letter-spacing: 1px;
             font-size: 14px;
             display: inline-block;
-            vertical-align: middle;
+            vertical-align: baseline;
         }
         .steamHoverPreview .ratingText {
-            vertical-align: middle;
+            vertical-align: baseline;
         }
         .steamHoverPreview .loadingContainer {
             display: flex;

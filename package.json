@@ -1,6 +1,6 @@
 {
   "name": "1337x-steam-hover-preview",
-  "version": "5.0.6",
+  "version": "5.0.7",
   "private": true,
   "type": "module",
   "description": "Standalone 1337x Steam hover userscript using a pinned shared core",

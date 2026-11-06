@@ -1,0 +1,314 @@
+{
+  "scope": "Release verification for 1337x 5.07 and CS.RIN 4.09.",
+  "core": "1.0.13",
+  "products": {
+    "1337x": {
+      "version": "5.07",
+      "file": "1337xSteamHoverPreview.js",
+      "sha256": "407cb4577e97543b0a05e6e6843447b1a2eeaada416dadd1428f150c77220dcd",
+      "unitTests": 146,
+      "unitFailures": 0,
+      "browserChecks": 43,
+      "publication": {
+        "url": "https://greasyfork.org/en/scripts/533774-1337x-steam-hover-preview?version=1988629",
+        "download": "https://update.greasyfork.org/scripts/533774/1337x%20-%20Steam%20Hover%20Preview.user.js",
+        "implementationMatches": true,
+        "remoteSha256": "ff4f198b4929865f5058e93c26830b673db93862aa2d7db23bfd0cc45b2eba22"
+      }
+    },
+    "csrinru": {
+      "version": "4.09",
+      "file": "csrinruSteamHoverPreview.user.js",
+      "sha256": "f595e127e1a776e09f7c5366e1edcf404211e3fea1d39f1ab3f9f1795959577c",
+      "unitTests": 152,
+      "unitFailures": 0,
+      "browserChecks": 47,
+      "publication": {
+        "url": "https://greasyfork.org/en/scripts/580613-cs-rin-ru-steam-hover-preview?version=1988630",
+        "download": "https://update.greasyfork.org/scripts/580613/CSRINRU%20-%20Steam%20Hover%20Preview.user.js",
+        "implementationMatches": true,
+        "remoteSha256": "994baaced23a3983244723d026b6f823f89afee3c53290a8ce6d95c5414f0fc8"
+      }
+    }
+  },
+  "browser": {
+    "passed": 90,
+    "failed": 0
+  },
+  "visual": {
+    "scope": "Isolated Chromium fixtures, not live-site or userscript-manager verification.",
+    "results": [
+      {
+        "site": "1337x",
+        "font": "Verdana, serif",
+        "before": {
+          "text": "Rating: ★★★★★Positive | 44 reviews",
+          "metrics": {
+            "label": {
+              "baseline": 501.4375,
+              "fontFamily": "Verdana, serif",
+              "fontSize": "12px",
+              "color": "rgb(17, 17, 17)"
+            },
+            "stars": {
+              "baseline": 503.015625,
+              "fontFamily": "Verdana, serif",
+              "fontSize": "14px",
+              "color": "rgb(245, 197, 24)"
+            },
+            "text": {
+              "baseline": 502.46875,
+              "fontFamily": "Verdana, serif",
+              "fontSize": "12px",
+              "color": "rgb(17, 17, 17)"
+            }
+          },
+          "card": {
+            "fontFamily": "Verdana, serif",
+            "fontSize": "12px",
+            "width": "420px",
+            "padding": "8px"
+          },
+          "reviewLinks": 0
+        },
+        "after": {
+          "text": "Rating: ★★★★★100% positive | Positive | 44 reviews",
+          "metrics": {
+            "label": {
+              "baseline": 503.015625,
+              "fontFamily": "Verdana, serif",
+              "fontSize": "12px",
+              "color": "rgb(17, 17, 17)"
+            },
+            "stars": {
+              "baseline": 503.015625,
+              "fontFamily": "Verdana, serif",
+              "fontSize": "14px",
+              "color": "rgb(245, 197, 24)"
+            },
+            "text": {
+              "baseline": 503.015625,
+              "fontFamily": "Verdana, serif",
+              "fontSize": "12px",
+              "color": "rgb(17, 17, 17)"
+            }
+          },
+          "card": {
+            "fontFamily": "Verdana, serif",
+            "fontSize": "12px",
+            "width": "420px",
+            "padding": "8px"
+          },
+          "reviewLinks": 0
+        }
+      },
+      {
+        "site": "1337x",
+        "font": "Arial, sans-serif",
+        "before": {
+          "text": "Rating: ★★★★★Positive | 44 reviews",
+          "metrics": {
+            "label": {
+              "baseline": 497.28125,
+              "fontFamily": "Arial, sans-serif",
+              "fontSize": "12px",
+              "color": "rgb(17, 17, 17)"
+            },
+            "stars": {
+              "baseline": 499.015625,
+              "fontFamily": "Arial, sans-serif",
+              "fontSize": "14px",
+              "color": "rgb(245, 197, 24)"
+            },
+            "text": {
+              "baseline": 497.46875,
+              "fontFamily": "Arial, sans-serif",
+              "fontSize": "12px",
+              "color": "rgb(17, 17, 17)"
+            }
+          },
+          "card": {
+            "fontFamily": "Arial, sans-serif",
+            "fontSize": "12px",
+            "width": "420px",
+            "padding": "8px"
+          },
+          "reviewLinks": 0
+        },
+        "after": {
+          "text": "Rating: ★★★★★100% positive | Positive | 44 reviews",
+          "metrics": {
+            "label": {
+              "baseline": 499.015625,
+              "fontFamily": "Arial, sans-serif",
+              "fontSize": "12px",
+              "color": "rgb(17, 17, 17)"
+            },
+            "stars": {
+              "baseline": 499.015625,
+              "fontFamily": "Arial, sans-serif",
+              "fontSize": "14px",
+              "color": "rgb(245, 197, 24)"
+            },
+            "text": {
+              "baseline": 499.015625,
+              "fontFamily": "Arial, sans-serif",
+              "fontSize": "12px",
+              "color": "rgb(17, 17, 17)"
+            }
+          },
+          "card": {
+            "fontFamily": "Arial, sans-serif",
+            "fontSize": "12px",
+            "width": "420px",
+            "padding": "8px"
+          },
+          "reviewLinks": 0
+        }
+      },
+      {
+        "site": "csrinru",
+        "font": "Verdana, serif",
+        "before": {
+          "text": "Rating: ★★★★★Positive | 44 reviews",
+          "metrics": {
+            "label": {
+              "baseline": 614.375,
+              "fontFamily": "Verdana, serif",
+              "fontSize": "12px",
+              "color": "rgb(242, 242, 242)"
+            },
+            "stars": {
+              "baseline": 615.953125,
+              "fontFamily": "Verdana, serif",
+              "fontSize": "14px",
+              "color": "rgb(245, 197, 24)"
+            },
+            "text": {
+              "baseline": 615.40625,
+              "fontFamily": "Verdana, serif",
+              "fontSize": "12px",
+              "color": "rgb(193, 204, 204)"
+            }
+          },
+          "card": {
+            "fontFamily": "Verdana, serif",
+            "fontSize": "12px",
+            "width": "420px",
+            "padding": "8px"
+          },
+          "reviewLinks": 0
+        },
+        "after": {
+          "text": "Rating: ★★★★★100% positive | Positive | 44 reviews",
+          "metrics": {
+            "label": {
+              "baseline": 615.953125,
+              "fontFamily": "Verdana, serif",
+              "fontSize": "12px",
+              "color": "rgb(242, 242, 242)"
+            },
+            "stars": {
+              "baseline": 615.953125,
+              "fontFamily": "Verdana, serif",
+              "fontSize": "14px",
+              "color": "rgb(245, 197, 24)"
+            },
+            "text": {
+              "baseline": 615.953125,
+              "fontFamily": "Verdana, serif",
+              "fontSize": "12px",
+              "color": "rgb(193, 204, 204)"
+            }
+          },
+          "card": {
+            "fontFamily": "Verdana, serif",
+            "fontSize": "12px",
+            "width": "420px",
+            "padding": "8px"
+          },
+          "reviewLinks": 0
+        }
+      },
+      {
+        "site": "csrinru",
+        "font": "Arial, sans-serif",
+        "before": {
+          "text": "Rating: ★★★★★Positive | 44 reviews",
+          "metrics": {
+            "label": {
+              "baseline": 609.21875,
+              "fontFamily": "Arial, sans-serif",
+              "fontSize": "12px",
+              "color": "rgb(242, 242, 242)"
+            },
+            "stars": {
+              "baseline": 610.953125,
+              "fontFamily": "Arial, sans-serif",
+              "fontSize": "14px",
+              "color": "rgb(245, 197, 24)"
+            },
+            "text": {
+              "baseline": 609.40625,
+              "fontFamily": "Arial, sans-serif",
+              "fontSize": "12px",
+              "color": "rgb(193, 204, 204)"
+            }
+          },
+          "card": {
+            "fontFamily": "Arial, sans-serif",
+            "fontSize": "12px",
+            "width": "420px",
+            "padding": "8px"
+          },
+          "reviewLinks": 0
+        },
+        "after": {
+          "text": "Rating: ★★★★★100% positive | Positive | 44 reviews",
+          "metrics": {
+            "label": {
+              "baseline": 610.953125,
+              "fontFamily": "Arial, sans-serif",
+              "fontSize": "12px",
+              "color": "rgb(242, 242, 242)"
+            },
+            "stars": {
+              "baseline": 610.953125,
+              "fontFamily": "Arial, sans-serif",
+              "fontSize": "14px",
+              "color": "rgb(245, 197, 24)"
+            },
+            "text": {
+              "baseline": 610.953125,
+              "fontFamily": "Arial, sans-serif",
+              "fontSize": "12px",
+              "color": "rgb(193, 204, 204)"
+            }
+          },
+          "card": {
+            "fontFamily": "Arial, sans-serif",
+            "fontSize": "12px",
+            "width": "420px",
+            "padding": "8px"
+          },
+          "reviewLinks": 0
+        }
+      }
+    ]
+  },
+  "checks": [
+    "lint",
+    "test",
+    "build",
+    "check",
+    "format:check",
+    "sync-core -- --check",
+    "git diff --check"
+  ],
+  "behavior": [
+    "Show the existing rounded positive-review percentage with stars, Steam label and review count.",
+    "Preserve the existing star thresholds, plain-text review row and per-AppID cached data.",
+    "Omit unavailable percentages while preserving a valid 0% with nonzero reviews.",
+    "Align the label, stars and summary to the same text baseline."
+  ]
+}

@@ -103,6 +103,7 @@ test('small review counts remain visible without an official category or percent
         reviewInfo: { total: 44, percent: 100, desc: 'Positive' }
     });
     assert.match(recent, /44 reviews/);
+    assert.match(recent, /100% positive\s+\|\s+Positive\s+\|\s+44 reviews/);
     assert.match(recent, /ratingStars/);
     assert.doesNotMatch(recent, /<a\b|href=/);
     assert.match(recent, /Positive/);
@@ -110,6 +111,29 @@ test('small review counts remain visible without an official category or percent
         previewReviewsMarkup({ reviewState: 'ready', reviewInfo: { total: 'invalid' } }),
         /Reviews unavailable/
     );
+});
+
+test('review percentage distinguishes zero positive votes from an unavailable percentage', () => {
+    const zero = previewReviewsMarkup({
+        reviewState: 'ready',
+        reviewInfo: { total: 10, percent: 0, desc: 'Negative' }
+    });
+    assert.match(zero, /0% positive\s+\|\s+Negative\s+\|\s+10 reviews/);
+    assert.match(zero, /☆☆☆☆☆/);
+    const mixed = previewReviewsMarkup({
+        reviewState: 'ready',
+        reviewInfo: { total: 100, percent: 69, desc: 'Mixed' }
+    });
+    assert.match(mixed, /69% positive/);
+    assert.match(mixed, /★★☆☆☆/);
+    for (const percent of [null, undefined, NaN, -1, 101]) {
+        const unknown = previewReviewsMarkup({
+            reviewState: 'ready',
+            reviewInfo: { total: 10, percent, desc: 'User reviews' }
+        });
+        assert.doesNotMatch(unknown, /% positive|ratingStars/);
+        assert.match(unknown, /10 reviews/);
+    }
 });
 
 test('upcoming release text is never labeled as already released', () => {

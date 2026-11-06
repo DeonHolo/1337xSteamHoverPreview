@@ -1,69 +1,19 @@
-<h2>Overview</h2>
-<p>
-  Adds instant Steam store previews when you hover over supported game titles on 1337x.
-  Browse Steam media, ratings, tags, store links, and quick actions without leaving the page.
-</p>
+<p>Hover over a game torrent title on 1337x to see its Steam information without leaving the torrent list.</p>
 
 <center>
-  <img
-    src="https://i.imgur.com/60gznUV.png?fb"
-    alt="Skyrim Special Edition preview on 1337x"
-    style="max-width:100%; margin:8px 0;"
-  />
+  <img src="https://i.imgur.com/60gznUV.png?fb" alt="Skyrim Special Edition preview on 1337x" style="max-width:100%; margin:8px 0;" />
 </center>
 
-<p>
-  The screenshot above was taken with the
-  <a href="https://darkreader.org/" rel="nofollow noopener">Dark Reader</a>
-  browser extension enabled. The script still fully supports the original 1337x light mode.
-</p>
-
-<hr>
+<p>The screenshot uses <a href="https://darkreader.org/" rel="nofollow noopener">Dark Reader</a>. The script also supports the original 1337x light theme.</p>
 
 <h2>Features</h2>
 <ul>
-    <li>
-        <strong>Instant Hover Preview</strong><br>
-        Displays Steam media, date released, and short game description when you hover over a supported game title.
-    </li>
-    <li>
-        <strong>Steam Media Carousel</strong><br>
-        Starts with the official Steam header image, then lets you browse screenshots and click-to-play videos when available.
-    </li>
-    <li>
-        <strong>Theatre Mode</strong><br>
-        Opens screenshots and trailers in a larger Steam-style viewer with navigation, video controls, fullscreen support, and footer actions.
-    </li>
-    <li>
-        <strong>See Steam Ratings</strong><br>
-        View the original plain rating row with stars, Steam review category, and actual review count directly in the preview; the review summary is not a link.</li>
-    <li>
-        <strong>Popular Steam Tags</strong><br>
-        Prioritizes up to 5 actual Steam tags on the first meaningful preview, without substituting genres (like "RPG", "Open World") and shows them below the Steam Ratings.
-    </li>
-    <li>
-        <strong>Quick Actions</strong><br>
-        Includes direct "Open on Steam" and "Magnet Download" actions in both the hover card and theatre footer.
-    </li>
-    <li>
-        <strong>Smart Steam Matching</strong><br>
-        Prefers the main Steam game page over DLC, upgrade pages, season passes, and store extras.
-    </li>
-    <li>
-        <strong>Snappy & Lightweight</strong><br>
-        Previews are cached and preloaded for smooth browsing without constantly bothering Steam, including media metadata when available.
-    </li>
+  <li><strong>Game information:</strong> Steam description, release date, review rating, positive percentage and count, and up to five user-defined tags.</li>
+  <li><strong>Screenshots and trailers:</strong> Browse media with thumbnail navigation. Click a trailer to play it.</li>
+  <li><strong>Theatre mode:</strong> View screenshots and trailers in a larger player with video controls and fullscreen support.</li>
+  <li><strong>Quick actions:</strong> Open on Steam and Magnet Download are available in the preview and theatre footer.</li>
+  <li><strong>Choose a game:</strong> Search by name or enter a Steam AppID or store URL, then save your selection for future visits.</li>
+  <li><strong>Cached previews:</strong> Reuse saved game information and preload titles before hovering.</li>
 </ul>
 
-<hr>
-
-<h2>Usage</h2>
-<ol>
-  <li>Navigate to any supported 1337x domain.</li>
-  <li>Hover over a supported game title.</li>
-  <li>Browse Steam media, open theatre mode, or use the included actions directly.</li>
-</ol>
-
-<hr>
-
-<p>Updated source: actual tags first, independently refreshed Steam reviews, verified DLC-parent matching, saved match corrections, configurable preloading, and bundled action icons. Userscript menu settings control background warming.</p>
+<p>Use your userscript manager's menu to choose preloading for nearby rows, the entire page or hover only, and to set the preview theme and review filter.</p>
