@@ -15,6 +15,8 @@ Opening the panel reuses candidates from the completed lookup and makes no extra
 
 Genuine ambiguity still opens the choices automatically. Cancel closes the panel; Choose Steam game… can reopen it. Search on Steam and site actions remain available outside the panel. The 20 px action gap, blue links, inherited typography and settled-card pointer locking remain.
 
+In shared core 1.0.15, an open chooser stays active when it expands upward or the pointer crosses other game titles. Moving the pointer or keyboard focus outside does not dismiss it. Select a game, use Cancel or Escape to collapse the chooser, or click outside to dismiss the preview. Outside clicks retain their normal page action and cancel pending chooser searches. Ordinary row previews resume after dismissal.
+
 ## Verification
 
 **68 CS.RIN Node tests, 65 1337x Node tests and 57 browser checks passed**, including both adapters. The browser cases exercise no-candidate manual URL entry, candidate suggestions after a low-confidence failure, correct labels before/after selection, ambiguity cancellation/reopening, no Retry lookup control, no extra search when opening the panel, and the existing presentation/media/tag/review behavior. Independent CI mode omits two original-pipeline comparison cases.

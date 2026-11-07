@@ -1,3 +1,4 @@
-## 5.08
+## 5.09
 
-- Shorten the review row by grouping the percentage with Steam's rating label, for example: 94% Very Positive | 58,296 reviews.
+- Keep Choose Steam game open when the expanded chooser moves above the pointer or the pointer crosses other game titles.
+- Dismiss the chooser by selecting a game, using Cancel or Escape, or clicking outside. Cancel pending searches when dismissed.

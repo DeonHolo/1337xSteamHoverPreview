@@ -1,13 +1,12 @@
-# 5.08 release checklist
+# 5.09 release checklist
 
-Changes since public 5.07. [Greasy Fork Markdown notes](GREASYFORK_CHANGELOG.md)
+Changes since public 5.08. [Greasy Fork Markdown notes](GREASYFORK_CHANGELOG.md)
 
-- [x] Group the percentage and Steam category without repeated wording or an extra separator.
-- [x] Preserve star thresholds, baseline alignment, typography and review states.
-- [x] Verify lint, unit tests, build, generated output, formatting and isolated browser checks in both products.
-- [x] Publish on Greasy Fork and verify the versions, notes and downloaded implementations. [Published release](https://greasyfork.org/en/scripts/533774-1337x-steam-hover-preview?version=1988652)
-GitHub Actions verifies the pushed release on the default branch.
+- [x] Keep the expanded chooser open across nearby rows, including when it moves above the pointer.
+- [x] Preserve selection, Cancel, Escape and outside-click dismissal, with pending-search cancellation.
+- [x] Synchronize shared core 1.0.15 into both products and rebuild the installable scripts.
+- [x] Verify lint, 298 unit tests, build, generated output, formatting and 94 isolated browser checks across both products.
+- [ ] Publish on GitHub and verify the pushed changes.
+- [ ] Publish on Greasy Fork and verify the version, Markdown notes and script.
 
-Replacement screenshots are prepared separately for user approval. Existing public images stay in place.
-
-[Rating display](docs/wiki/Rating-Display.md) · [Verification report](docs/wiki/compact-rating-verification.json)
+[Chooser behavior](docs/wiki/Match-Recovery.md)

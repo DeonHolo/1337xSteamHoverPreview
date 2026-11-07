@@ -1,6 +1,6 @@
 # 1337x Steam Hover Preview wiki
 
-Version **5.08** uses shared core **1.0.14**. See [rating display and alignment](Rating-Display.md).
+Version **5.09** uses shared core **1.0.15** to [keep the chooser open while moving to it](Match-Recovery.md). See [rating display and alignment](Rating-Display.md).
 
 
 - [Search by name inside the chooser](Search-by-Name.md)

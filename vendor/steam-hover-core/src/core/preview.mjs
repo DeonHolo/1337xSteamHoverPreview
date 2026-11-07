@@ -1186,7 +1186,12 @@ export function mountSteamHoverPreview({
         }
     }
 
+    function isCorrectionOpen() {
+        return tip.style.display === 'block' && Boolean(tip.querySelector('.steamCorrection:not([hidden])'));
+    }
+
     function queueShow(link, event) {
+        if (isCorrectionOpen()) return;
         const source = adapter.getSource(link);
         if (!source) return;
         cancel(hideTimeout);
@@ -1253,6 +1258,7 @@ export function mountSteamHoverPreview({
         hideTimeout = schedule(() => {
             if (
                 isTheatreOpen() ||
+                isCorrectionOpen() ||
                 tip.matches(':hover') ||
                 currentHoveredLink?.matches(':hover') ||
                 tip.contains(document.activeElement) ||
@@ -1317,6 +1323,9 @@ export function mountSteamHoverPreview({
         const panel = tip.querySelector('.steamCorrection');
         if (!panel || !currentSource) return;
         cancelNameSearch();
+        cancel(showTimeout);
+        cancel(hideTimeout);
+        trackingMove = false;
         const candidates = currentError?.candidates || currentData?.match?.candidates || [];
         panel.hidden = false;
         panel.setAttribute('role', 'group');
@@ -2328,6 +2337,14 @@ export function mountSteamHoverPreview({
             updateTheatreVideoControls(video);
         }
     });
+    listen(
+        document,
+        'pointerdown',
+        (event) => {
+            if (isCorrectionOpen() && !tip.contains(event.target)) hide();
+        },
+        true
+    );
     listen(
         document,
         'mouseover',

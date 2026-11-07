@@ -1058,6 +1058,102 @@ try {
     }
 
     for (const site of Object.keys(products)) {
+        await run(site + ': expanded chooser stays open across nearby rows after flipping upward', async () => {
+            const t = await setup(site, {
+                rows: [
+                    ...Array.from({ length: 8 }, (_, index) => ({ ...defaultRows[0], id: 950 + index })),
+                    { id: 930, appId: 620, title: 'Unknown release title' },
+                    defaultRows[1]
+                ],
+                viewport: { width: 1280, height: 650 }
+            });
+            try {
+                await t.page
+                    .locator('[data-fixture-id="930"]')
+                    .evaluate((link) => link.scrollIntoView({ block: 'center' }));
+                await t.hover(930);
+                const toggle = t.card.getByRole('button', { name: 'Choose Steam game…', exact: true });
+                await toggle.waitFor({ state: 'visible' });
+                const before = await t.card.boundingBox();
+                const trigger = await toggle.boundingBox();
+                await toggle.click();
+                const chooser = t.card.getByRole('group', { name: 'Choose a Steam game', exact: true });
+                await t.page.waitForFunction(
+                    (top) => document.querySelector('.steamHoverPreview').getBoundingClientRect().top < top - 50,
+                    before.y
+                );
+                const after = await t.card.boundingBox();
+                assert.ok(
+                    trigger.y + trigger.height / 2 > after.y + after.height,
+                    'Expansion leaves pointer below card'
+                );
+                const neighbor = await t.page.locator('[data-fixture-id="101"]').boundingBox();
+                assert.ok(neighbor.x + 10 < after.x, 'Route crosses a nearby title outside the expanded card');
+                await t.page.mouse.move(neighbor.x + 10, neighbor.y + neighbor.height / 2, { steps: 8 });
+                await t.page.waitForTimeout(300);
+                assert.equal(await chooser.isVisible(), true, 'Nearby hovers must not replace the open chooser');
+                const search = chooser.getByRole('searchbox', { name: 'Search by name', exact: true });
+                assert.equal(await search.inputValue(), 'Unknown release title');
+                await search.fill('Portal 2');
+                await chooser.getByRole('button', { name: 'Portal 2', exact: true }).click();
+                await t.ready(620);
+                t.noErrors();
+            } finally {
+                await t.close();
+            }
+        });
+
+        await run(site + ': chooser dismisses explicitly and cancels searches on outside clicks', async () => {
+            const t = await setup(site, {
+                rows: [{ id: 930, appId: 620, title: 'Unknown release title' }, defaultRows[0]],
+                config: { delaysByTerm: { NoSuchOldTitle: { search: 800 } } }
+            });
+            try {
+                await t.page.addStyleTag({ content: '#outside-focus{position:fixed;right:12px;top:12px}' });
+                const chooser = t.card.getByRole('group', { name: 'Choose a Steam game', exact: true });
+                const outside = t.page.getByRole('button', { name: 'Outside control', exact: true });
+                for (const dismiss of ['Cancel', 'Escape']) {
+                    await t.hover(930);
+                    await t.card.getByRole('button', { name: 'Choose Steam game…', exact: true }).click();
+                    await outside.focus();
+                    await t.page.mouse.move(1200, 760);
+                    await t.page.waitForTimeout(300);
+                    assert.equal(
+                        await chooser.isVisible(),
+                        true,
+                        'Chooser remains open without pointer or input focus'
+                    );
+                    if (dismiss === 'Cancel')
+                        await chooser.getByRole('button', { name: 'Cancel', exact: true }).click();
+                    else await t.page.keyboard.press('Escape');
+                    assert.equal(await chooser.isVisible(), false);
+                    await t.hover(100);
+                    await t.ready(620);
+                }
+                await t.hover(930);
+                await t.card.getByRole('button', { name: 'Choose Steam game…', exact: true }).click();
+                const search = chooser.getByRole('searchbox', { name: 'Search by name', exact: true });
+                await search.fill('NoSuchOldTitle');
+                await search.press('Enter');
+                await t.page.waitForFunction(() =>
+                    window.__fixture.requests.some((request) => request.term === 'NoSuchOldTitle')
+                );
+                await outside.click();
+                assert.equal(await t.card.isVisible(), false);
+                assert.equal(await outside.evaluate((button) => button === document.activeElement), true);
+                await t.page.waitForTimeout(900);
+                assert.equal(await t.card.isVisible(), false, 'Late search results must not reopen the chooser');
+                assert.ok(
+                    (await t.fixture()).requests.some((request) => request.term === 'NoSuchOldTitle' && request.aborted)
+                );
+                await t.hover(100);
+                await t.ready(620);
+                t.noErrors();
+            } finally {
+                await t.close();
+            }
+        });
+
         await run(site + ': typed chooser search suggests titles and waits for explicit selection', async () => {
             const t = await setup(site, { rows: [{ id: 930, appId: 620, title: 'Unknown release title' }] });
             try {

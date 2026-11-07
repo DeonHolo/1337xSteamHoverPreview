@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         1337x - Steam Hover Preview 
 // @namespace    https://greasyfork.org/en/users/1340389-deonholo
-// @version      5.08
+// @version      5.09
 // @description  Actual Steam tags first, validated base-game matching, reviews, screenshots, trailers, and quick site actions
 // @icon         https://greasyfork.s3.us-east-2.amazonaws.com/x432yc9hx5t6o2gbe9ccr7k5l6u8
 // @author       DeonHolo
@@ -35,8 +35,8 @@
 // @run-at       document-idle
 // ==/UserScript==
 
-// Generated from source; edit src/ and rebuild. Shared core 1.0.14.
-// Build SHA-256: 1e7b9f5cbc22ae08c24e5b9d973c74b5f6f59104d36a4fbc38df7324300a8801
+// Generated from source; edit src/ and rebuild. Shared core 1.0.15.
+// Build SHA-256: 5351072d24975cc525eb1e9169cd151272ef9cb7b8b6171eb1e6ce2fa6ea2ea5
 (() => {
 'use strict';
 
@@ -261,7 +261,7 @@ return re;
 
 // Source: vendor/steam-hover-core/src/core/steam-client.mjs
 /** Shared Steam providers, matching, request scheduling and field-level cache. No runtime dependencies. */
-const CORE_VERSION = '1.0.14';
+const CORE_VERSION = '1.0.15';
 
 const STEAM_SCHEMA = 3;
 const STEAM_RESOLVER = 11;
@@ -3611,7 +3611,12 @@ function mountSteamHoverPreview({
         }
     }
 
+    function isCorrectionOpen() {
+        return tip.style.display === 'block' && Boolean(tip.querySelector('.steamCorrection:not([hidden])'));
+    }
+
     function queueShow(link, event) {
+        if (isCorrectionOpen()) return;
         const source = adapter.getSource(link);
         if (!source) return;
         cancel(hideTimeout);
@@ -3678,6 +3683,7 @@ function mountSteamHoverPreview({
         hideTimeout = schedule(() => {
             if (
                 isTheatreOpen() ||
+                isCorrectionOpen() ||
                 tip.matches(':hover') ||
                 currentHoveredLink?.matches(':hover') ||
                 tip.contains(document.activeElement) ||
@@ -3742,6 +3748,9 @@ function mountSteamHoverPreview({
         const panel = tip.querySelector('.steamCorrection');
         if (!panel || !currentSource) return;
         cancelNameSearch();
+        cancel(showTimeout);
+        cancel(hideTimeout);
+        trackingMove = false;
         const candidates = currentError?.candidates || currentData?.match?.candidates || [];
         panel.hidden = false;
         panel.setAttribute('role', 'group');
@@ -4753,6 +4762,14 @@ function mountSteamHoverPreview({
             updateTheatreVideoControls(video);
         }
     });
+    listen(
+        document,
+        'pointerdown',
+        (event) => {
+            if (isCorrectionOpen() && !tip.contains(event.target)) hide();
+        },
+        true
+    );
     listen(
         document,
         'mouseover',

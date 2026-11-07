@@ -1,15 +1,15 @@
 {
-  "version": "1.0.14",
+  "version": "1.0.15",
   "sourceRepository": "https://github.com/DeonHolo/csrinruSteamHoverPreview",
   "files": {
     "LICENSE": "e248224ea515fe5cb6605d5d25fa6d7114dd51b9dc06e0a733d7112dc06a2131",
     "src/assets/FUSE-LICENSE.txt": "cc807e3caa26cdee316bab2ff6fdb508a2f619b74959fe59e513ef6e61635ebe",
     "src/assets/fuse.basic.min.mjs": "d1e25fff4fe857999eb2efe9f4cfcfac4430dca43a028f490e21242fd659fb60",
     "src/assets/NOTICE.md": "9eced38f63bd43c20ea2c901bcb90472c7591d01f4001b397802765e0f425749",
-    "src/core/preview.mjs": "b7e2649b9f9f536a700e255910a82b9996c8ce870e885e5d9c69483ef87b0732",
+    "src/core/preview.mjs": "513577b6432e9a40a038cf9673bc66217837912947feef3506b022345aa3bc31",
     "src/core/runtime.mjs": "1a6dbfa028a4732e8aa73e2f0e90023f230125416dcfa4b0f73429b1657d41f7",
     "src/core/site-utils.mjs": "544f605a88b9d9e70a87c321818acb4e97d2081eb6e4ba18767588b23785b5e8",
-    "src/core/steam-client.mjs": "f5de00f2b099a1ad5da7e5af662e907db0b96ea7a997b51c88b93d96d3c1d190",
+    "src/core/steam-client.mjs": "c73166c500823c92f077f1d9ad60dff9af2b241cdf6212ace06666b9431d13b0",
     "tests/fixtures/steam/asgard-search.json": "0d76e08e7b7afd6b6e3ddd06ee6e73a43ce9aaedcd038458c70e4cf46a98bd43",
     "tests/fixtures/steam/bundle-and-dlc-search.json": "a2029e43b649457059040cbfb11f4a50926e175f00e369fc5fe3a15b8ea8e100",
     "tests/fixtures/steam/cairn-clipped-release.json": "40f636eb5c4055c829e06055f4ed7862cd95c870b1fe5332db4449657235ab1a",

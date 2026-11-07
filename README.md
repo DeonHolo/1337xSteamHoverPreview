@@ -12,7 +12,7 @@ The preview screenshot above was taken with the [Dark Reader](https://darkreader
 
 ## Wiki and Code Review
 
-Version **5.08** groups the review percentage with Steam's category in a shorter rating row. [Project wiki](docs/wiki/Home.md) · [Release checklist](RELEASE_CHECKLIST.md) · [Greasy Fork notes](GREASYFORK_CHANGELOG.md)
+Version **5.09** keeps the game chooser open while you move to it. [Project wiki](docs/wiki/Home.md) · [Release checklist](RELEASE_CHECKLIST.md) · [Greasy Fork notes](GREASYFORK_CHANGELOG.md)
 
 ## Features
 
